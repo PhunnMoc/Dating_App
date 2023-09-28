@@ -1,0 +1,9 @@
+:root{
+    --color-theme: linear-gradient(to bottom right, lightyellow, lightpink);
+/* font, size, color ... */
+}
+
+body{
+    padding: 0;
+    margin: 0;
+}
