@@ -1,15 +1,10 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'poppins',sans-serif;
+
     box-sizing: border-box;
 }
-:root{
-    --body-color:#efefef;
-    --nav-color: linear-gradient(to bottom right, lightyellow, lightpink);
-    --bg-color: lightpink;
 
-}
 .dark-theme{
     --body-color:#0a0a0a;
     --nav-color: #000;
@@ -19,14 +14,12 @@
 body{
     background: var(--body-color);
     transition: background 0.3s;
-
-
 }
 nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--nav-color);
+    background: var(--nav-bar-color);
     padding: 5px 5%;
     position: sticky;
     top: 0;
@@ -34,7 +27,7 @@ nav{
 
 }
 .logo{
-    width: 160px;
+    width: 40px;
     margin-right: 45px;
 
 }
@@ -99,12 +92,16 @@ nav{
 
 }
 .container{
+    padding: 0;
+    height: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 13px 5%;
+    background: var(--color-theme);
 
 }
 .left-sidebar{
+    background:var(--side-bar-color);
+    height: 100%;
     flex-basis: 25%;
     position: sticky;
     top: 70px;
@@ -448,7 +445,7 @@ nav{
     position: absolute;
     width: 90%;
     max-width: 350px;
-    background: var(--bg-color);
+    background: var(--box-ava);
     box-shadow: 0 0 10px rgba(0,0,0, 0.4);
     border-radius: 4px;
     overflow: hidden;
@@ -460,7 +457,7 @@ nav{
 }
 .settings-menu-height{
     max-height: 450px;
-
+    background: var(--box-ava);
 }
 .user-profile a{
     font-size: 12px;
@@ -717,7 +714,7 @@ nav{
 
 }
 /*----------------- Media Query For Home Page -----------------*/
-
+/* 
 @media (max-width: 900px){
     .right-sidebar{
         display: none;
@@ -780,7 +777,7 @@ nav{
 
     }
 
-}
+} */
 /*----------------------- Media Query For Profile Page------------------------*/
 @media (max-width: 900px){
     .pofile-container{
