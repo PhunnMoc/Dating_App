@@ -91,7 +91,7 @@ nav{
     right: 0;
 
 }
-.container{
+.container_chung{
     padding: 0;
     height: 100%;
     display: flex;
@@ -106,7 +106,7 @@ nav{
     position: sticky;
     top: 70px;
     align-self: flex-start;
-
+    width: 380px;
 }
 .right-sidebar{
     flex-basis: 25%;
@@ -156,6 +156,10 @@ nav{
     font-weight: 500;
 
 
+}
+.shortcut-link
+{
+    width: 380px;
 }
 .sidebar-title{
     display: flex;
@@ -811,4 +815,24 @@ nav{
 
     }
 
+}
+/* Thoại */
+.custom-img {
+    width: 100%; /* Đặt kích thước chiều rộng thành 50% */
+    height:200px; /* Giữ tỷ lệ khung hình */
+    border-radius: 5%;
+    cursor: pointer;
+}
+.image-text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    color: #fff;
+    font-weight: 900;
+    transform: translate(-50%, -50%);
+    background-color: transparent; /* Tạo một nền mờ trắng cho văn bản */
+    padding: 10px; /* Tùy chỉnh padding theo ý muốn */
+    font-size: 30px;
+    border: #000;
+    cursor: pointer;
 }
