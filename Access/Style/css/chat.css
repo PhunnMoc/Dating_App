@@ -6,15 +6,18 @@ body {
 }
 
 .container {
-  margin: 60px auto;
   background: #fff;
   padding: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
   border-radius: 7px;
+  display: block !important;
+  margin: 0 !important;
   
 }
 
+.col-md-4
+{
+  background-color: white;
+}
 .profile-image {
   width: 50px;
   height: 50px;
@@ -47,10 +50,13 @@ body {
 .search-box {
   background: #fafafa;
   padding: 10px 13px;
+  border-radius: 0px !important;
+  display: none !important;
 }
 .search-box .input-wrapper {
   background: #fff;
-  border-radius: 40px;
+  border-radius: 20px;
+  display: flex;
 }
 .search-box .input-wrapper i {
   color: grey;
@@ -60,7 +66,7 @@ body {
 
 input {
   border: none;
-  border-radius: 30px;
+  border-radius: 20px;
   width: 80%;
 }
 input::placeholder {
@@ -73,7 +79,7 @@ input:focus {
 }
 
 .friend-drawer {
-  padding: 10px 15px;
+  padding: 20px 20px;
   display: flex;
   vertical-align: baseline;
   background: #fff;
@@ -106,61 +112,9 @@ input:focus {
   color: #2a2828 !important;
 }
 
-hr {
-  margin: 5px auto;
-  width: 60%;
-}
-
-.chat-bubble {
-  padding: 10px 14px;
-  background: #eee;
-  margin: 10px 30px;
-  border-radius: 9px;
-  position: relative;
-  animation: fadeIn 1s ease-in;
-}
-.chat-bubble:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-bottom: 0;
-  margin-top: -10px;
-}
-.chat-bubble--left:after {
-  left: 0;
-  border-right-color: #eee;
-  border-left: 0;
-  margin-left: -20px;
-}
-.chat-bubble--right:after {
-  right: 0;
-  border-left-color: #74b9ff;
-  border-right: 0;
-  margin-right: -20px;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.offset-md-9 .chat-bubble {
-  background: #74b9ff;
-  color: #fff;
-}
-
-
-
-
 /* messages */
 .messages {
-    height: 550px;
+    height: 532px;
     flex: 1 1 auto;
     position: relative;
     overflow: hidden;
@@ -322,6 +276,12 @@ hr {
   .material-icons {
     font-size: 30px;
     padding: 3px;
+  }
+  .message-box .message-input {
+    padding-right: 8px;
+    width: 416px;
+    margin-right: 20px;
+    margin-left: 10px;
   }
    .message-input {
     font-weight: 500;
