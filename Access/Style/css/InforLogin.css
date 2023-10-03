@@ -24,7 +24,7 @@ body {
   margin-right: 12px;
   margin-top: 12px;
   font-family: "Nunito Sans", sans-serif;
-  color: #3DBB3D;
+  color: rgb(238, 19, 81);
   font-weight: 900;
   font-size: 1.4em;
   letter-spacing: 1px;
@@ -38,7 +38,7 @@ body {
   margin-bottom: 90px;
   position: absolute;
   z-index: 1;
-  background: #7ED386;
+  background: var(--color-theme-2);
   font-size: 1em;
   transform: rotate(-90deg);
   transition: all 0.5s ease-in-out;
@@ -50,7 +50,7 @@ body {
   margin-left: 9px;
 }
 .CTA:hover {
-  background: #3FB6A8;
+  background: var(--color-theme-2);
   transform: scale(1.1);
 }
 
@@ -61,29 +61,30 @@ body {
   position: absolute;
   width: 15%;
   height: 110%;
-  background: #7ED386;
-  box-shadow: 3px 3px 10px rgba(119, 119, 119, 0.5);
+  background: var(--color-theme-2);
+  box-shadow: 3px 3px 10px rgba(216, 181, 181, 0.5);
 }
 
 nav a {
   list-style: none;
-  padding: 48px;
+  padding: 45px;
   color: #FFFFFF;
   font-size: 2em;
   display: block;
   transition: all 0.3s ease-in-out;
+  margin-left: 6px;
 }
 nav a:hover {
-  color: #3FB6A8;
+  color: var(--nav-bar-color);
   transform: scale(1.2);
   cursor: pointer;
 }
 nav a:first-child {
-  margin-top: -12px;
+  margin-top: -19px;
 }
 
 .active {
-  color: #3FB6A8;
+  color: var(--nav-bar-color);
 }
 
 
@@ -104,7 +105,7 @@ nav a:first-child {
 
 h1 {
   font-family: "Montserrat", sans-serif;
-  color: #7ED386;
+  color: rgb(217, 55, 101);
   font-size: 2em;
   margin-top: 40px;
   margin-bottom: 35px;
