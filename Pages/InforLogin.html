@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile Hobby</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <link rel="stylesheet" href="../Access/Style/css/InforLogin.css" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <div class="container">
+      <div id="logo">
+        <h1 class="logo">TeenTher</h1>
+        <div class="CTA">
+          <h1>Xong</h1>
+        </div>
+      </div>
+      <div class="leftbox">
+        <nav>
+          <a id="profile" class="active"><i class="fa fa-user"></i></a>
+          <a id="payment"><i class="fa fa-credit-card"></i></a>
+          <a id="subscription"><i class="fa fa-tv"></i></a>
+          <a id="privacy"><i class="fa fa-tasks"></i></a>
+          <a id="settings"><i class="fa fa-cog"></i></a>
+        </nav>
+      </div>
+      <div class="rightbox">
+        <div class="profile">
+          <h1>Thông tin cá nhân</h1>
+          <h2>Họ và tên</h2>
+          <p>
+            <input type="text" value="Hoàng Công Thiện" />
+            <button class="btn mar-lef-15">Cập nhật</button>
+          </p>
+          <h2>Ngày sinh</h2>
+          <p><input type="date" /></p>
+          <h2>Giới tính</h2>
+          <p>
+            <select name="gioi-tinh" id="gioi-tinh">
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </p>
+          <h2>Xu hướng tính dục</h2>
+          <p>
+            <select name="xu-huong" id="xu-huong">
+              <option value="Dị tính">Dị tính</option>
+              <option value="Đồng tính">Đồng tính</option>
+              <option value="Song tính">Song tính</option>
+              <option value="Vô tính">Vô tính</option>
+            </select>
+          </p>
+        </div>
+        <div class="payment noshow">
+          <h1>Thông tin chi tiết</h1>
+          <h2>Sở thích</h2>
+          <p>
+            Chơi Guitar, hát, đọc sách
+            <button class="btn" onclick="location.href='./SoThich.html'">
+              Cập nhật
+            </button>
+          </p>
+          <h2>Chiều cao</h2>
+          <p>
+            <input type="text" value="168" />
+            <label style="margin-left: -100px" for="">(cm)</label>
+            <button class="btn">Cập nhật</button>
+          </p>
+          <h2>Mục đích hẹn hò</h2>
+          <p>
+            <select name="muc-dich" id="muc-dich">
+              <option value="Người yêu">Người yêu</option>
+              <option value="Quan hệ không ràng buộc">
+                Quan hệ không ràng buộc
+              </option>
+              <option value="Bất kỳ điều gì có thể">
+                Bất kỳ điều gì có thể
+              </option>
+              <option value="Chưa xác định">Chưa xác định</option>
+            </select>
+          </p>
+          <h2>Giới thiệu</h2>
+          <textarea
+            placeholder="Đẹp trai, học giỏi, nhiều tiền"
+            name=""
+            id=""
+            cols="50"
+            rows="4"
+            locked="true"
+          ></textarea>
+        </div>
+        <div class="subscription noshow">
+          <h1>Ảnh của bạn</h1>
+          <h2>Tải ảnh lên</h2>
+          <p><button class="btn mar-lef-15">Tải ảnh</button></p>
+
+          <h2>Xem ảnh</h2>
+          <p><button class="btn mar-lef-15">Xem ảnh</button></p>
+        </div>
+
+        <div class="privacy noshow">
+          <h1>Thông tin thêm</h1>
+          <p>
+            <select name="gioi-tinh" id="gioi-tinh">
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </p>
+          <h2>Manage Privacy Settings<button class="btn">manage</button></h2>
+          <p></p>
+          <h2>View Terms of Use <button class="btn">view</button></h2>
+          <p></p>
+          <h2>Personalize Ad Experience <button class="btn">update</button></h2>
+          <p></p>
+          <h2>Protect Your Account <button class="btn">protect</button></h2>
+          <p></p>
+        </div>
+        <div class="settings noshow">
+          <h1>Cài đặt tài khoản</h1>
+          <h2>Sync Watchlist to My Stuff<button class="btn">sync</button></h2>
+          <p></p>
+          <h2>Hold Your Subscription<button class="btn">hold</button></h2>
+          <p></p>
+          <h2>Cancel Your Subscription <button class="btn">cancel</button></h2>
+          <p></p>
+          <h2>Your Devices <button class="btn">Manage Devices</button></h2>
+          <p></p>
+          <h2>Referrals <button class="btn">get $10</button></h2>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- partial -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../Access/Style/js/InforLogin.js"></script>
+  </body>
+</html>
