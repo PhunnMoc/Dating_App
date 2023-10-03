@@ -4,7 +4,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+.mess{
+  width: 1400px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 52px);
 
+}
 .container {
   background: #fff;
   padding: 0;
@@ -22,6 +28,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 40px;
+
 }
 
 .settings-tray {
@@ -73,6 +80,7 @@ input::placeholder {
   color: #e3e3e3;
   font-weight: 300;
   margin-left: 20px;
+
 }
 input:focus {
   outline: none;
@@ -82,7 +90,7 @@ input:focus {
   padding: 20px 20px;
   display: flex;
   vertical-align: baseline;
-  background: #fff;
+  /* background: #fff; */
   transition: 0.3s ease;
 }
 .friend-drawer--grey {
