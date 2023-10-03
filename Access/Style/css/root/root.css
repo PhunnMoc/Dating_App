@@ -1,16 +1,11 @@
 :root{
-<<<<<<< .merge_file_HbQRiY
     --color-theme: linear-gradient(to bottom right, lightyellow, lightpink);
     --side-bar-color:rgba(185, 185, 185, 0.493);
     --nav-bar-color: black;
     --box-ava: white;
-/* font, size, color ... */
-=======
-    
     --color-theme-1: linear-gradient(to bottom right, lightyellow, lightpink);
     --color-theme-2: linear-gradient(to right, #FF4B2B, #FF416C);
     /* font, size, color ... */
->>>>>>> .merge_file_RV3cP5
 }
 
 body{

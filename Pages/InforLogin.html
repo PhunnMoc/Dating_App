@@ -23,9 +23,9 @@
       <div class="leftbox">
         <nav>
           <a id="profile" class="active"><i class="fa fa-user"></i></a>
-          <a id="payment"><i class="fa fa-credit-card"></i></a>
-          <a id="subscription"><i class="fa fa-tv"></i></a>
-          <a id="privacy"><i class="fa fa-tasks"></i></a>
+          <a id="payment"><i class="fa fa-tasks"></i></a>
+          <a id="subscription"><i class="fas fa-images"></i></a>
+          <a id="privacy"><i class="fas fa-address-book"></i></a>
           <a id="settings"><i class="fa fa-cog"></i></a>
         </nav>
       </div>
@@ -60,7 +60,7 @@
         <div class="payment noshow">
           <h1>Thông tin chi tiết</h1>
           <h2>Sở thích</h2>
-          <p>
+          <p class="font-25">
             Chơi Guitar, hát, đọc sách
             <button class="btn" onclick="location.href='./SoThich.html'">
               Cập nhật
@@ -69,7 +69,9 @@
           <h2>Chiều cao</h2>
           <p>
             <input type="text" value="168" />
-            <label style="margin-left: -100px" for="">(cm)</label>
+            <label style="margin-left: -100px" class="font-25" for=""
+              >(cm)</label
+            >
             <button class="btn">Cập nhật</button>
           </p>
           <h2>Mục đích hẹn hò</h2>
@@ -87,6 +89,7 @@
           </p>
           <h2>Giới thiệu</h2>
           <textarea
+            class="font-25"
             placeholder="Đẹp trai, học giỏi, nhiều tiền"
             name=""
             id=""
@@ -98,10 +101,10 @@
         <div class="subscription noshow">
           <h1>Ảnh của bạn</h1>
           <h2>Tải ảnh lên</h2>
-          <p><button class="btn mar-lef-15">Tải ảnh</button></p>
+          <p><button class="btn-1 mar-lef-15">Tải ảnh</button></p>
 
           <h2>Xem ảnh</h2>
-          <p><button class="btn mar-lef-15">Xem ảnh</button></p>
+          <p><button class="btn-1 mar-lef-15">Xem ảnh</button></p>
         </div>
 
         <div class="privacy noshow">
@@ -115,25 +118,32 @@
             </select>
           </p>
           <h2>Cung hoàng đạo</h2>
-          <p>
-            Chơi Guitar, hát, đọc sách
+          <p class="font-25">
+            Nhân Mã
             <button class="btn" onclick="location.href='./CungHoangDao.html'">
               Cập nhật
             </button>
           </p>
+          <h2>Địa chỉ</h2>
+          <textarea
+            class="font-25"
+            placeholder="Quận 9, Thành phố Hồ Chí Minh"
+            name=""
+            id=""
+            cols="50"
+            rows="4"
+            locked="true"
+          ></textarea>
         </div>
         <div class="settings noshow">
           <h1>Cài đặt tài khoản</h1>
-          <h2>Sync Watchlist to My Stuff<button class="btn">sync</button></h2>
-          <p></p>
-          <h2>Hold Your Subscription<button class="btn">hold</button></h2>
-          <p></p>
-          <h2>Cancel Your Subscription <button class="btn">cancel</button></h2>
-          <p></p>
-          <h2>Your Devices <button class="btn">Manage Devices</button></h2>
-          <p></p>
-          <h2>Referrals <button class="btn">get $10</button></h2>
-          <p></p>
+          <h2>Chế độ</h2>
+          <p>
+            <select name="che-do" id="che-do">
+              <option value="Sáng">Sáng</option>
+              <option value="Tối">Tối</option>
+            </select>
+          </p>
         </div>
       </div>
     </div>

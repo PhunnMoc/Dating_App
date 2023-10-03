@@ -1,15 +1,18 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,900|Montserrat|Roboto");
 body {
-  background: linear-gradient(to right, #3FB6A8, #7ED386);
+  background: var(--color-theme-1)
 }
 
 .mar-lef-15 {
   margin-left: -15px;
 }
+.font-25 {
+  font-size: 25px !important;
+}
 .container {
   background: #FFFFFF;
-  width: 540px;
-  height: 420px;
+  width: 940px;
+  height: 620px;
   margin: 0 auto;
   position: relative;
   margin-top: 10%;
@@ -18,19 +21,19 @@ body {
 
 .logo {
   float: right;
-  margin-right: 4px;
+  margin-right: 12px;
   margin-top: 12px;
   font-family: "Nunito Sans", sans-serif;
   color: #3DBB3D;
   font-weight: 900;
-  font-size: 0.85em;
+  font-size: 1.4em;
   letter-spacing: 1px;
 }
 
 .CTA {
-  width: 80px;
-  height: 40px;
-  right: -20px;
+  width: 119px;
+  height: 62px;
+  right: -45px;
   bottom: 0;
   margin-bottom: 90px;
   position: absolute;
@@ -64,9 +67,9 @@ body {
 
 nav a {
   list-style: none;
-  padding: 31px;
+  padding: 48px;
   color: #FFFFFF;
-  font-size: 1.1em;
+  font-size: 2em;
   display: block;
   transition: all 0.3s ease-in-out;
 }
@@ -76,7 +79,7 @@ nav a:hover {
   cursor: pointer;
 }
 nav a:first-child {
-  margin-top: 7px;
+  margin-top: -12px;
 }
 
 .active {
@@ -102,7 +105,7 @@ nav a:first-child {
 h1 {
   font-family: "Montserrat", sans-serif;
   color: #7ED386;
-  font-size: 1em;
+  font-size: 2em;
   margin-top: 40px;
   margin-bottom: 35px;
 }
@@ -112,7 +115,7 @@ h2 {
   font-family: "Roboto", sans-serif;
   width: 80%;
   text-transform: uppercase;
-  font-size: 8px;
+  font-size: 15px;
   letter-spacing: 1px;
   margin-left: 2px;
 }
@@ -139,7 +142,7 @@ span {
   float: right;
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 18px;
   border: none;
   color: #3FB6A8;
 }
@@ -153,7 +156,7 @@ input, select {
   border: 0px solid #dddddd;
   width: 80%;
   font-family: "Montserrat", sans-serif;
-  font-size: 1em;
+  font-size: 1.8em;
   color: #070707;
 }
 
@@ -194,4 +197,12 @@ footer a:hover {
 }
 button {
   z-index: 100;
+}
+.btn-1 {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-size: 18px;
+  border: none;
+  color: #3FB6A8;
+  margin-left: 430px;
 }
