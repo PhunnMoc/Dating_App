@@ -1,6 +1,8 @@
 :root{
-    --color-theme: linear-gradient(to bottom right, lightyellow, lightpink);
-/* font, size, color ... */
+    
+    --color-theme-1: linear-gradient(to bottom right, lightyellow, lightpink);
+    --color-theme-2: linear-gradient(to right, #FF4B2B, #FF416C);
+    /* font, size, color ... */
 }
 
 body{
