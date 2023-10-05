@@ -22,7 +22,7 @@ nav{
     align-items: center;
     justify-content: space-between;
     background: var(--nav-bar-color);
-    padding: 5px 5%;
+    padding: 5px 2%;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -46,8 +46,9 @@ nav{
 .nav-left ul li img{
     width: 28px;
     margin: 0 15px;
-
+    cursor: pointer;
 }
+
 .nav-user-icon img{
     width: 40px;
     border-radius: 50%;
@@ -103,7 +104,8 @@ nav{
 
 }
 .left-sidebar{
-    min-width: 500px;
+    min-width: 350px;
+    max-width: 400px;
     background:var(--side-bar-color);
     height: 100%;
     flex-basis: 25%;
