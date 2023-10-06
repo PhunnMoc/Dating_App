@@ -1,0 +1,51 @@
+/* Thoại */
+* {
+    box-sizing: border-box;
+}
+.custom-img {
+    width: 100%; /* Đặt kích thước chiều rộng thành 50% */
+    height:200px; /* Giữ tỷ lệ khung hình */
+    border-radius: 5%;
+    cursor: pointer;
+}
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    font-weight: 700;
+    transform: translate(-50%, -50%);
+    background-color: transparent; /* Tạo một nền mờ trắng cho văn bản */
+    padding: 0px; /* Tùy chỉnh padding theo ý muốn */
+    font-size: 30px;
+    border: #000;
+    cursor: pointer;
+}
+.left-sidebar {
+    overflow-y: scroll ;
+
+}
+.favorite
+{   
+
+
+  
+}
+
+h4{
+    font-family: "Montserrat", sans-serif;
+    color: rgb(217, 55, 101);
+    font-size: 2em;
+    margin-top: 40px;
+    margin-bottom: 2px;
+    font-weight: 900;
+}
+dl, ol, ul {
+    margin: 0 !important;
+}
+
+.nav-left ul li i{
+    width: 28px;
+    margin: 0 15px;
+    cursor: pointer;
+}
