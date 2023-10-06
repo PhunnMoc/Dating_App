@@ -38,6 +38,7 @@ body {
 }
 .settings-tray .no-gutters {
   padding: 0;
+  margin-right:-17%
 }
 .settings-tray--right {
   float: right;
@@ -351,7 +352,19 @@ input:focus {
   .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
     background-color: rgba(0, 0, 0, 0.5) !important;
   }
-  
+  .left-sidebar {
+    overflow-y: initial !important;
+  }
+  .frame-messages {
+    min-width: 350px;
+    max-width: 400px;
+    height: 100%;
+    align-self: flex-start;
+    overflow-y: scroll;
+  }
+  .frame-messages:hover::-webkit-scrollbar-thumb {
+    background: #555; 
+  }
   /*--------------------
   Bounce
   --------------------*/
@@ -453,3 +466,5 @@ input:focus {
       transform: translateY(-10px);
     }
   }
+
+
