@@ -156,6 +156,7 @@ span {
 .btn:hover {
   text-decoration: underline;
   font-weight: 900;
+  cursor: pointer;
 }
 
 input, select {
