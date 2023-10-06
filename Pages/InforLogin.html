@@ -11,10 +11,12 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
     <link rel="stylesheet" href="../Access/Style/css/InforLogin.css" />
+
+    <link rel="stylesheet" href="../Access/Style/css/inforLoginClone.css" />
   </head>
   <body>
     <!-- partial:index.partial.html -->
-    <div>
+    <div class="mar-top-7">
       <div class="container">
         <div id="logo">
           <h1 class="logo">TeenTher</h1>
@@ -102,25 +104,15 @@
           </div>
           <div class="subscription noshow">
             <h1>Ảnh của bạn</h1>
-            <h2>Tải ảnh lên</h2>
-            <p>
-              <button
-                class="btn mar-lef-15"
-                style="margin-left: 430px; float: none"
-              >
-                Tải ảnh
-              </button>
-            </p>
-
+            <!-- <h2>Tải ảnh lên</h2>
+            <p><button class="btn-1 mar-lef-15">Tải ảnh</button></p>
+  
             <h2>Xem ảnh</h2>
-            <p>
-              <button
-                class="btn btn-1 mar-lef-15"
-                style="margin-left: 430px; float: none"
-              >
-                Xem ảnh
-              </button>
-            </p>
+            <p><button class="btn-1 mar-lef-15">Xem ảnh</button></p> -->
+            <div id="root"></div>
+            <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+            <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
           </div>
 
           <div class="privacy noshow">
