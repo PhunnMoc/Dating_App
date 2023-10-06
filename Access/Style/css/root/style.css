@@ -111,7 +111,7 @@ nav {
     position: sticky;
     top: 70px;
     align-self: flex-start;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 
 }
 .right-sidebar{
