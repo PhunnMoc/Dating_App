@@ -25,12 +25,6 @@
     overflow-y: scroll ;
 
 }
-.favorite
-{   
-
-
-  
-}
 
 h4{
     font-family: "Montserrat", sans-serif;
@@ -48,4 +42,12 @@ dl, ol, ul {
     width: 28px;
     margin: 0 15px;
     cursor: pointer;
+}
+.container-app {
+    height: calc(100% - 50px);
+}
+i {
+    color: white;
+    font-size: 29px;
+    padding: 0px 22px;
 }
