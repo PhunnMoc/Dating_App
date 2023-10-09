@@ -1,4 +1,5 @@
 /* Thoại */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 * {
     box-sizing: border-box;
 }
@@ -23,11 +24,9 @@
 }
 .left-sidebar {
     overflow-y: scroll ;
-
 }
 
 h4{
-    font-family: "Montserrat", sans-serif;
     color: rgb(217, 55, 101);
     font-size: 2em;
     margin-top: 40px;
@@ -38,11 +37,7 @@ dl, ol, ul {
     margin: 0 !important;
 }
 
-.nav-left ul li i{
-    width: 28px;
-    margin: 0 15px;
-    cursor: pointer;
-}
+
 .container-app {
     height: calc(100% - 50px);
 }
