@@ -16,7 +16,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: absolute;
   opacity: 0;
   transition: opacity 0.1s ease-in-out;
 }
@@ -45,10 +45,7 @@ body {
   margin-left: -50px;
 }
 
-.tinder_love .fa-heart {
-  opacity: 0.7;
-  transform: scale(1);
-}
+
 
 .tinder_nope .fa-remove {
   opacity: 0.7;
@@ -71,7 +68,6 @@ body {
   max-width: 400px;
   height: 70vh;
   background: #FFFFFF;
-  padding-bottom: 40px;
   border-radius: 8px;
   overflow: hidden;
   position: absolute;
@@ -90,22 +86,25 @@ body {
 }
 
 .tinder--card img {
-  /* max-width: 100%; */
-  width: 300px;
-  height: 250px;
+  position: relative;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   pointer-events: none;
+  /* box-shadow: inset 0px 0px 0px 30px rgba(0,0,0,0.5); */
+  
 }
 
 .tinder--card h3 {
-  margin-top: 32px;
   font-size: 32px;
   padding: 0 16px;
+  padding-top: 70px;
   pointer-events: none;
 }
 
 .tinder--card p {
-  margin-top: 24px;
+  position: absolute;
+  margin-top: 20px;
   font-size: 20px;
   padding: 0 16px;
   pointer-events: none;
@@ -137,9 +136,26 @@ body {
 }
 
 .fa-heart {
-  color: #FFACE4;
+  color: red;
 }
 
 .fa-remove {
-  color: #CDD6DD;
+  color: black;
+
+}
+#nope, #love{
+  cursor: pointer;
+}
+
+.fa-heart:hover, .fa-remove:hover {
+  transform: scale(1.2);
+
+}
+.content-text {
+  position: absolute;
+  color: white;
+  bottom: 0%;
+  width: 100%;
+  background-image: linear-gradient( #ffffff00,rgba(43, 43, 43, 0.813),black);
+  height: 170px;
 }
