@@ -26,7 +26,6 @@ nav {
     position: sticky;
     top: 0;
     z-index: 100;
-
 }
 .logo{
     width: 40px;
@@ -104,8 +103,7 @@ nav {
 
 }
 .left-sidebar{
-    min-width: 350px;
-    max-width: 400px;
+    width: 350px;
     background:var(--side-bar-color);
     height: 100%;
     position: sticky;

@@ -30,4 +30,6 @@ body{
   .left-sidebar:hover::-webkit-scrollbar-thumb {
     background: #555; 
   }
-  
+  dl, ol, ul {
+    margin: 0 !important;
+}
