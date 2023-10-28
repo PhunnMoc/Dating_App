@@ -63,13 +63,14 @@ body {
   justify-content: center;
   align-items: flex-end;
   z-index: 1;
+  position: relative;
 }
 
 .tinder--card {
   display: inline-block;
   width: 90vw;
   max-width: 400px;
-  height: 70vh;
+  height: 60vh;
   background: #FFFFFF;
   padding-bottom: 40px;
   border-radius: 8px;
@@ -91,28 +92,35 @@ body {
 
 .tinder--card img {
   /* max-width: 100%; */
-  width: 300px;
-  height: 250px;
+  width: 100%;
+  height: 600px;
   object-fit: cover;
   pointer-events: none;
 }
-
+.tinder--card--text{
+  
+  position: absolute;
+  bottom:0;
+  background-image: linear-gradient( #00000000,rgba(0, 0, 0, 0.589),rgba(0, 0, 0, 0.863));
+  color:white;
+  width: 100%;
+}
 .tinder--card h3 {
   margin-top: 32px;
   font-size: 32px;
-  padding: 0 16px;
+  padding: 10px 16px;
   pointer-events: none;
 }
 
 .tinder--card p {
-  margin-top: 24px;
+  margin-bottom: 24px;
   font-size: 20px;
-  padding: 0 16px;
+  padding: 0 16px 30px 16px;
   pointer-events: none;
 }
 
 .tinder--buttons {
-  flex: 0 0 100px;
+  flex: 0 0 215px;
   text-align: center;
   padding-top: 20px;
 }
