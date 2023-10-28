@@ -1,0 +1,48 @@
+/* Thoại */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+* {
+    box-sizing: border-box;
+}
+.custom-img {
+    width: 100%; /* Đặt kích thước chiều rộng thành 50% */
+    height:200px; /* Giữ tỷ lệ khung hình */
+    border-radius: 5%;
+    cursor: pointer;
+}
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    font-weight: 700;
+    transform: translate(-50%, -50%);
+    background-color: transparent; /* Tạo một nền mờ trắng cho văn bản */
+    padding: 0px; /* Tùy chỉnh padding theo ý muốn */
+    font-size: 30px;
+    border: #000;
+    cursor: pointer;
+}
+.left-sidebar {
+    overflow-y: scroll ;
+}
+
+h4{
+    color: rgb(217, 55, 101);
+    font-size: 2em;
+    margin-top: 40px;
+    margin-bottom: 2px;
+    font-weight: 900;
+}
+dl, ol, ul {
+    margin: 0 !important;
+}
+
+
+.container-app {
+    height: calc(100% - 50px);
+}
+i {
+    color: white;
+    font-size: 29px;
+    padding: 0px 22px;
+}
