@@ -626,7 +626,7 @@ nav {
     }
 
 }
-i {
+.nav-icon i {
     color: white;
     font-size: 29px;
     padding: 0px 22px;
