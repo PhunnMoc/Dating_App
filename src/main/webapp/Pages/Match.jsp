@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -35,8 +37,8 @@
           <a href="./chat.html"
             ><li><i class="fa-solid fa-message"></i></li
           ></a>
-          <a href="./chat.html"
-            ><li><i class="fa-solid fa-user-group"></i></i></li
+          <a href="./Match.html"
+            ><li><i class="fa-solid fa-user-group fa-beat " style="color:red;"></i></i></li
           ></a>
         </ul>
       </div>
@@ -55,7 +57,7 @@
             <img src="https://i.postimg.cc/cHg22LhR/profile-pic.png" />
             <div>
               <p>Huynh Hong Khanh</p>
-              <a href="./InforLogin">See your profile</a>
+              <a href="<%=request.getContextPath()%>/Profile/list">See your profile</a>
             </div>
           </div>
           <hr />
@@ -169,7 +171,7 @@
     <!-- <div class="footer">
           
         </div> -->
-    <script src="../Access/Style/js/Base.js"></script>
+  <script src="../Access/Style/js/Base.js"></script>
   </body>
   <script src="../Access/Style/js/Card.js"></script>
 </html>
