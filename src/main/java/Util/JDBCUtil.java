@@ -10,9 +10,9 @@ public class JDBCUtil
 		try
 		{
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			String url="jdbc:mysql://localhost:3306/example?useSSl=false";
-			String username="root";
-			String password="1234";
+			String url = "jdbc:mysql://localhost:3306/datingapp";
+			String username = "root";
+			String password = "trinhthuphuong";
 			
 			conn=DriverManager.getConnection(url,username,password);
 		}
@@ -38,5 +38,11 @@ public class JDBCUtil
 			//TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void main() {
+		System.out.println(" aaaa!");
+		Connection a= getConnection();
+		System.out.println(" cfcfcccf!");
+		
 	}
 }
