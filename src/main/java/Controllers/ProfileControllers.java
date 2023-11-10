@@ -53,10 +53,10 @@ public class ProfileControllers extends HttpServlet {
 		System.out.println(" aaaa!");
         try {
             switch (action) {
-                case "/Profile/insert":
+                case "/insert":
                     insertUser(request, response);
                     break;
-                case "/Profile/update":
+                case "/update":
                     updateProfile(request, response);
                     break;
 				case "/showInf": 
