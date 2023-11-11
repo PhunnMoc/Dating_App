@@ -171,7 +171,7 @@ public class ProfileControllers extends HttpServlet {
     	    throws SQLException, IOException, ParseException, ServletException {
     	        List < Hobby > listAllHobby = profileDAO.GetAllHobbies();
     	        request.setAttribute("listAllHobby", listAllHobby);
-    	        RequestDispatcher dispatcher = request.getRequestDispatcher("Pages/SoThich.jsp");
+    	        RequestDispatcher dispatcher = request.getRequestDispatcher("./Pages/SoThich.jsp");
     	        dispatcher.forward(request, response);
     	        
     	    }

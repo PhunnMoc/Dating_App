@@ -27,7 +27,7 @@
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Access/Style/css/SoThich.css" />
+	<link rel="stylesheet" type="text/css" href="../Access/Style/css/SoThich.css" />
    <script
       src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
       data-auto-replace-svg="nest"
