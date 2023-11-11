@@ -19,12 +19,12 @@ public class ProfileDAO {
 	private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, IDHobby\r\n"
 			+ "from userhobby inner join hobby \r\n"
 			+ "on userhobby.IDHobby = hobby.IDHobby\r\n"
-			+ "where userhobby.UserID = 'user2_id = ?";
+			+ "where userhobby.UserID = ?";
 	private static final String SELECT_ALL_HOBBIES = "select * from hobby";
     private static final String SELECT_IMAGES_BY_ID = "select imgID, url from Image where id = ?";
-    private static final String UPDATE_PROFILE = "update profile set name = ?, age= ?, gender = ?, birthDay= ?, \r\n"
-    		+ "relationship = ?, height = ?, zodiac = ?, address = ?, introduce = ?\r\n"
-    		+ "where id = ?";
+    private static final String UPDATE_PROFILE = "update profile set name = N?, age= ?, gender = N?, birthDay= ?, \r\n"
+    		+ "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?\r\n"
+    		+ "where Userid = ?";
 	
 	public Profile GetProfile(Account accData) throws ClassNotFoundException {
 		Profile profile= new Profile();

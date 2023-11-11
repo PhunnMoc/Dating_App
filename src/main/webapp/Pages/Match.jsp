@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- phan card -->
-    <link rel="stylesheet" href="../Access/Style/css/Card.css">
+  <link rel="stylesheet" href="../Access/Style/css/Card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <!-- phan card -->
@@ -57,7 +57,7 @@
             <img src="https://i.postimg.cc/cHg22LhR/profile-pic.png" />
             <div>
               <p>Huynh Hong Khanh</p>
-              <a href="<%=request.getContextPath()%>/Profile/list">See your profile</a>
+              <a href="<%=request.getContextPath()%>/list">See your profile</a>
             </div>
           </div>
           <hr />
