@@ -114,7 +114,7 @@ public class ProfileControllers extends HttpServlet {
         request.setAttribute("profile", profile);
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("listHobby", listHobby);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");
         dispatcher.forward(request, response);
     }
     //phương
