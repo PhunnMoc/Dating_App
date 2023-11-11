@@ -116,9 +116,10 @@
 						<img src="../Access/Media/Picture/dislike.png">
 						<div class="tinder--card--text">
 							<div style="display: flex;align-items: center;justify-content: start;">
-							<h3>${user.name}</h3>
-				<%-- 			<a href="showInf?id=<c:out value='${user.userId}' />"><i class="fa-solid fa-circle-info fa-2xl" style="color: #ffffff;"></i></a>
- --%>							</div>
+							<h3 >${user.name}</h3>
+						<i class="fa-solid fa-circle-info fa-2xl" style="color: #ffffff;"></i>
+						
+						</div>
 							 <h4>${user.age} </h4>
 							<p>${user.introduce}</p>
 						</div></div>

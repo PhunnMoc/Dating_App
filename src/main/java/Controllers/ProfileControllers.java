@@ -59,8 +59,9 @@ public class ProfileControllers extends HttpServlet {
                 case "/update":
                     updateProfile(request, response);
                     break;
-				case "/showInf": 
-					ShowInf(request, response); break;
+				/*
+				 * case "/showInf": ShowInf(request, response); break;
+				 */
                 default:
                 	ListProfile(request, response);
                     break;
@@ -131,7 +132,7 @@ public class ProfileControllers extends HttpServlet {
     	    throws SQLException, IOException, ClassNotFoundException {
 		System.out.println(" aaaa!");
     	        Profile a = profileDAO.GetInfor(request.getParameter("id"));
-    	        request.setAttribute("user", a);
+    	        request.setAttribute("profile_match", a);
     	    }
     //phương
 	
