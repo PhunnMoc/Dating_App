@@ -40,7 +40,7 @@
 				<a href="./favourite.html"><li><i
 						class="fa-solid fa-heart-circle-check"></i></i></li></a>
 				<a href="./chat.html"><li><i class="fa-solid fa-message"></i></li></a>
-				<a href="<%=request.getContextPath()%>/listpro"><li><i
+				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i
 						class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
 			</ul>
 		</div>

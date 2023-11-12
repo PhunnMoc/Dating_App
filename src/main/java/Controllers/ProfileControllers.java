@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 /**
  * Servlet implementation class ProfileControllers
  */
-@WebServlet("/")
+@WebServlet("/pro")
 public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
@@ -49,8 +49,8 @@ public class ProfileControllers extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getServletPath();
-		System.out.println(" aaaa!");
+		String action = request.getPathInfo();
+		
         try {
             switch (action) {
                 case "/insert":
@@ -62,8 +62,12 @@ public class ProfileControllers extends HttpServlet {
 				/*
 				 * case "/showInf": ShowInf(request, response); break;
 				 */
-                default:
+                case "/showCard":
+                	System.out.println(" aaaa!");
                 	ListProfile(request, response);
+                	break;
+                default:
+                	//ListProfile(request, response);
                     break;
             }
         } catch (SQLException ex) {

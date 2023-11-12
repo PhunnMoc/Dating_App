@@ -9,4 +9,13 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+   <servlet>
+        <servlet-name>ProfileControllers</servlet-name>
+        <servlet-class>Controllers.ProfileControllers</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProfileControllers</servlet-name>
+        <url-pattern>/pro/*</url-pattern>
+    </servlet-mapping>
 </web-app>
