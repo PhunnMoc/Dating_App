@@ -27,9 +27,7 @@
 		<p>
 			Username:
 			<%=account.getUsername()%></p>
-		<p>
-			Role:
-			<%=account.getRole()%></p>
+		
 		<%
 		}
 		%>

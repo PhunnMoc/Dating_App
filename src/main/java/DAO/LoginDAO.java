@@ -27,7 +27,7 @@ public class LoginDAO {
 			while (rs.next())
 			{
 				account.setUsername(rs.getString(1));
-				account.setRole(rs.getString(3));
+				account.setUserID(rs.getString(2));
 			}
 			
 			conn.close();

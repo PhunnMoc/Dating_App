@@ -1,5 +1,6 @@
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Message {
@@ -7,10 +8,10 @@ public class Message {
 	private String idmessage ;
 	private String id_Reciver;
 	private String id_Sender;
-	private LocalTime time ;
+	private LocalDate time ;
 	private String content;
 	
-	public Message(String idmessage, String id_reciver, String id_sender, LocalTime time, String content)
+	public Message(String idmessage, String id_reciver, String id_sender, LocalDate time, String content)
 	{
 		this.idmessage = idmessage;
 		this.id_Reciver = id_reciver;
@@ -18,7 +19,11 @@ public class Message {
 		this.time = time;
 		this.content = content;
 	}
-	
+	public Message(LocalDate time, String content)
+	{
+		this.content=content;
+		this.time = time;
+	}
 	public String getIdmessage()
 	{
 		return idmessage;
@@ -49,12 +54,12 @@ public class Message {
 		this.id_Sender = id_sender;
 	}
 	
-	public LocalTime getTime()
+	public LocalDate getTime()
 	{
 		return time;
 	}
 	
-	public void setTime(LocalTime time)
+	public void setTime(LocalDate time)
 	{
 		this.time = time;
 	}

@@ -13,7 +13,7 @@
 		String errMsg = (String) request.getAttribute("errMsg");
 		Account account = (Account) session.getAttribute("user");
 		%>
-hihihih
+
 		<%
 		if (account != null) {
 		%>

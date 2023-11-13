@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -154,137 +157,32 @@
 
         <!-- Những người đã nhắn  -->
         <div class="frame-messages">
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Robo Cop</h6>
-              <p class="text-muted"></p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Robo Cop</h6>
-              <p class="text-muted">Hey, you're arrested!</p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Robo Cop</h6>
-              <p class="text-muted">Hey, you're arrested!</p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Optimus</h6>
-              <p class="text-muted">Wanna grab a beer?</p>
-            </div>
-            <span class="time text-muted small">00:32</span>
-          </div>
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Optimus</h6>
-              <p class="text-muted">Wanna grab a beer?</p>
-            </div>
-            <span class="time text-muted small">00:32</span>
-          </div>
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Optimus</h6>
-              <p class="text-muted">Wanna grab a beer?</p>
-            </div>
-            <span class="time text-muted small">00:32</span>
-          </div>
-
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
-              alt=""
-            />
-            <div class="text">
-              <h6>Skynet</h6>
-              <p class="text-muted">Seen that canned piece of s?</p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
-
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/termy.jpg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Termy</h6>
-              <p class="text-muted">Im studying spanish...</p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
-
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/rick.jpg"
-              alt=""
-            />
-            <div class="text">
-              <h6>Richard</h6>
-              <p class="text-muted">I'm not sure...</p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
-
-          <div class="friend-drawer friend-drawer--onhover">
-            <img
-              class="profile-image"
-              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/rachel.jpeg"
-              alt=""
-            />
-            <div class="text">
-              <h6>XXXXX</h6>
-              <p class="text-muted">Hi, wanna see something?</p>
-            </div>
-            <span class="time text-muted small">13:21</span>
-          </div>
+	        <c:forEach var="profile" items="${list_other_user}">
+	        
+	        	<div class="friend-drawer friend-drawer--onhover">
+	        		<input type="hidden" name="otherUserID" value="<c:out value='${profile.userID}' />" />
+		            <img
+		              class="profile-image"
+		              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+		              alt=""
+		            />
+		            <div class="text">
+		              <h6><c:out value="${otherUserID.name}" /> </h6>
+		              
+		              <p class="text-muted">${last_Message.content}</p>
+		            </div>
+		            <span class="time text-muted small">${last_Message.time}</span>
+		          </div>
+		          
+	        </c:forEach>
+	             
         </div>
-      </div>
-      <!----------------Main Sidebar----------------------->
-      <!-- Mục nhắn tin  -->
+      </div> 
+     <!--  --------------Main Sidebar---------------------
+      Mục nhắn tin  -->
       <div class="mess">
-        <!-- Thông tin của người đang nhắn  -->
-        <div class="settings-tray">
+<!--         Thông tin của người đang nhắn 
+ -->        <div class="settings-tray">
           <div class="friend-drawer no-gutters friend-drawer--grey">
             <img
               class="profile-image"
@@ -302,7 +200,7 @@
               <i class="material-icons">message</i>
               <i class="material-icons">menu</i>
             </span>
-          </div>
+          </div> -->
         </div>
         <!-- End thông tin của người đang nhắn  -->
 

@@ -4,7 +4,7 @@ public class Account {
 
 	private String username;
 	private String password;
-	private String role;
+	private String userID;
 
 	public Account() {
 		super();
@@ -16,11 +16,11 @@ public class Account {
 		this.password = password;
 	}
 
-	public Account(String username, String password, String role) {
+	public Account(String username, String password, String userId) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.role = role;
+		this.userID = userId;
 	}
 
 	public String getUsername() {
@@ -39,12 +39,12 @@ public class Account {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public String getUserID() {
+		return this.userID;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 
 }
