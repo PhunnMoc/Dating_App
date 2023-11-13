@@ -2,33 +2,19 @@ package Models;
 
 public class Account {
 
-	private String username;
+	private String email;
 	private String password;
-	private String role;
+	private String UserID;
 
 	public Account() {
 		super();
 	}
 
-	public Account(String username, String password) {
+	public Account(String email, String password, String userID) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.password = password;
-	}
-
-	public Account(String username, String password, String role) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.role = role;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+		this.UserID = userID;
 	}
 
 	public String getPassword() {
@@ -39,12 +25,20 @@ public class Account {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
+	public String getUserID() {
+		return UserID;
+	}
+
+	public void setUserID(String userID) {
+		UserID = userID;
+	}
+	
 }

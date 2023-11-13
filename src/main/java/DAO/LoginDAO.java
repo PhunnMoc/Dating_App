@@ -6,36 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Models.Account;
-import Util.HandleExeption;
 import Util.JDBCUtil;
 
 public class LoginDAO {
-	public Account onLogin(Account loginData) throws ClassNotFoundException {
-		Account account= new Account();
+	public boolean validate(Account account) throws ClassNotFoundException {
+        boolean status = false;
 
-		try {
-			// Bước 1: Mở kết nối đến MySQL
-			Connection conn = JDBCUtil.getConnection();
-			
-			// Bước 2: Khởi tạo Prepare Statement
-			PreparedStatement preparedStatement = conn
-					.prepareStatement("select * from account where username = ? and password = ? ");
-			preparedStatement.setString(1, loginData.getUsername());
-			preparedStatement.setString(2, loginData.getPassword());
+        try (Connection connection = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = connection
+            .prepareStatement("select * from account where email = ? and password = ? ")) {
+            preparedStatement.setString(1, account.getEmail());
+            preparedStatement.setString(2, account.getPassword());
 
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next())
-			{
-				account.setUsername(rs.getString(1));
-				account.setRole(rs.getString(3));
-			}
-			
-			conn.close();
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            status = rs.next();
 
-		} catch (SQLException e) {
-			// process sql exception
-			HandleExeption.printSQLException(e);
-		}
-		return account;
-	}
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+        return status;
+    }
 }
