@@ -38,17 +38,15 @@
     />
   </head>
   <body>
-<%--   <%
+<%
     //Account account = (Account) session.getAttribute("acc");
     	    ////List < Image > listImage =  (List<Image>) request.getAttribute("listImage");
-    	   List < Hobby > listAllHobby = (List<Hobby>) request.getAttribute("listAllHobby");
     %>
  	 <% /* if (account != null) {
 	  response.sendRedirect("Login.html"); */
  // }
-  %> --%>
+  %>
     <!-- partial:index.partial.html -->
-
     <fieldset class="checkbox-group">
       <div class="row">
         <div class="col-1">
@@ -60,10 +58,19 @@
           <legend class="checkbox-group-legend">Chọn sở thích của bạn</legend>
         </div>
       </div>
+      <form action="<%=request.getContextPath() %>/pro/updateHobby" method="post" accept-charset="UTF-8" class="checkbox-group" >
       <c:forEach var="hobby" items="${listAllHobby}">
+     
       <div class="checkbox">
         <label class="checkbox-wrapper">
-          <input type="checkbox" class="checkbox-input" />
+          <input type="checkbox" class="checkbox-input" name = "listHobby" 
+          value = <c:out value= "${hobby.iDhobby}" />
+			<c:forEach var="userHobby" items="${listHobby}">
+            <c:if test="${userHobby.hobbyName eq hobby.hobbyName}">
+            checked
+        	</c:if>
+           </c:forEach> 
+			/>       
           <span class="checkbox-tile">
             <span class="checkbox-icon">
 			<i class="fa-solid fa-x"></i>         
@@ -73,7 +80,9 @@
         </label>
       </div>
 		</c:forEach>
-      <button onclick="Back()">Done Editing</button>
+		
+      <button type ="submit">Done Editing</button>
+      </form>
     </fieldset>
     <!-- partial -->
     <script>

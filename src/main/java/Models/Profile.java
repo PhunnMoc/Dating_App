@@ -13,6 +13,24 @@ public class Profile {
 	private String zodiac;
 	private String address;
 	private String introduce;
+	private byte[] imageData;
+	
+	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
+			String zodiac, String address, String introduce, byte[] imageData) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.birthDay = birthDay;
+		this.relationship = relationship;
+		this.height = height;
+		this.zodiac = zodiac;
+		this.address = address;
+		this.introduce = introduce;
+		this.imageData = imageData;
+	}
+	
 	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
 			String zodiac, String address, String introduce) {
 		super();
@@ -27,8 +45,16 @@ public class Profile {
 		this.address = address;
 		this.introduce = introduce;
 	}
+
 	public Profile() {
 		super();
+	}
+
+	public byte[] getImageData() {
+		return imageData;
+	}
+	public void setImageData(byte[] imageData) {
+		this.imageData = imageData;
 	}
 	public String getUserID() {
 		return userID;

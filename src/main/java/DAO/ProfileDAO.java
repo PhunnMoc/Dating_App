@@ -11,21 +11,24 @@ import Models.Account;
 import Models.Hobby;
 import Models.Profile;
 import Models.UserHobby;
-import Models.Image;
 import Util.HandleExeption;
 import Util.JDBCUtil;
 
 public class ProfileDAO {
-	private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, IDHobby\r\n"
+	private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, hobby.IDHobby\r\n"
 			+ "from userhobby inner join hobby \r\n"
 			+ "on userhobby.IDHobby = hobby.IDHobby\r\n"
 			+ "where userhobby.UserID = ?";
 	private static final String SELECT_ALL_HOBBIES = "select * from hobby";
-    private static final String SELECT_IMAGES_BY_ID = "select imgID, url from Image where id = ?";
+    private static final String UPDATE_PROFILE_IMAGE = "update profile set name = N?, age= ?, gender = N?, birthDay= ?, \r\n"
+    		+ "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?, imageData =?\r\n"
+    		+ "where Userid = ?";
     private static final String UPDATE_PROFILE = "update profile set name = N?, age= ?, gender = N?, birthDay= ?, \r\n"
     		+ "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?\r\n"
     		+ "where Userid = ?";
-	
+    private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
+    private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
+    
 	public Profile GetProfile(Account accData) throws ClassNotFoundException {
 		Profile profile= new Profile();
 
@@ -51,6 +54,7 @@ public class ProfileDAO {
 				profile.setZodiac(rs.getString(8));
 				profile.setAddress(rs.getString(9));
 				profile.setIntroduce(rs.getString(10));
+				profile.setImageData(rs.getBytes(11));
 
 			}		
 			conn.close();
@@ -111,29 +115,6 @@ public class ProfileDAO {
         return hobbies;
     }
 	
-	public List < Image > GetImage(Account accData) {
-        // using try-with-resources to avoid closing resources (boiler plate code)
-        List < Image > images = new ArrayList < > ();
-        // Step 1: Establishing a Connection
-        try (Connection conn = JDBCUtil.getConnection();
-
-            // Step 2:Create a statement using connection object
-            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_IMAGES_BY_ID);) {
-            // Step 3: Execute the query or update query
-        	preparedStatement.setString(1, accData.getUserid());
-            ResultSet rs = preparedStatement.executeQuery();
-
-            // Step 4: Process the ResultSet object.
-            while (rs.next()) {
-                String imgID = rs.getString(1);
-                String url = rs.getString(2);
-                images.add(new Image(imgID, url));
-            }
-        } catch (SQLException e) {
-        	HandleExeption.printSQLException(e);
-        }
-        return images;
-    }
 	
 	public boolean updateProfile(Profile profile) throws SQLException {
         boolean rowUpdated;
@@ -149,6 +130,46 @@ public class ProfileDAO {
             statement.setString(8, profile.getAddress());
             statement.setString(9, profile.getIntroduce());
             statement.setString(10, profile.getUserID());
+            
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+	public boolean updateProfileImage(Profile profile) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+        	PreparedStatement statement = conn.prepareStatement(UPDATE_PROFILE_IMAGE);) {
+            statement.setString(1, profile.getName());
+            statement.setInt(2, profile.getAge());
+            statement.setString(3, profile.getGender());
+            statement.setDate(4, profile.getBirthDay());
+            statement.setString(5, profile.getRelationship());
+            statement.setInt(6, profile.getHeight());
+            statement.setString(7, profile.getZodiac());
+            statement.setString(8, profile.getAddress());
+            statement.setString(9, profile.getIntroduce());
+            statement.setBytes(10, profile.getImageData());
+            statement.setString(11, profile.getUserID());
+                       
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+	public boolean DeleteUserHobby(Account acc) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+        	PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_ID);) {
+            statement.setString(1, acc.getUserid());           
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+	public boolean UpdateUserHobby(String iDhobby, Account acc) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+        	PreparedStatement statement = conn.prepareStatement(INSERT_USERHOBBY_BY_ID);) {
+        	statement.setString(1, iDhobby);
+        	statement.setString(2, acc.getUserid());
             
             rowUpdated = statement.executeUpdate() > 0;
         }

@@ -57,7 +57,7 @@
             <img src="https://i.postimg.cc/cHg22LhR/profile-pic.png" />
             <div>
               <p>Huynh Hong Khanh</p>
-              <a href="<%=request.getContextPath()%>/list">See your profile</a>
+              <a href="<%=request.getContextPath()%>/pro/list">See your profile</a>
             </div>
           </div>
           <hr />
