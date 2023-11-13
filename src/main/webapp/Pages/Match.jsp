@@ -28,9 +28,9 @@
 	data-auto-replace-svg="nest"></script>
 </head>
 <body>
-<% 
-	Account username= (Account) session.getAttribute("user");
-%>
+	<%
+	Account username = (Account) session.getAttribute("user");
+	%>
 	<nav>
 		<div class="nav-left">
 			<a href="./Match.html"> <img
@@ -110,36 +110,38 @@
 			<div class="tinder--cards">
 
 				<!--        Phương -->
-				<%-- <c:forEach var="count" begin="1" end="10" > --%>
-				<c:forEach var="user" items="${ListProfile}" >	
-					<div class="tinder--card">
-						<img src="../Access/Media/Picture/dislike.png">
-						<div class="tinder--card--text">
-							<div style="display: flex;align-items: center;justify-content: start;">
-							<h3 >${user.name}</h3>
-						<i class="fa-solid fa-circle-info fa-2xl" style="color: #ffffff;"></i>
-						
+				<c:forEach var="count" begin="1" end="10">
+					<c:forEach var="user" items="${ListProfile}">
+						<div class="tinder--card">
+							<img src="../Access/Media/Picture/dislike.png">
+							<div class="tinder--card--text">
+								<div
+									style="display: flex; align-items: center; justify-content: start;">
+									<h3>${user.name}</h3>
+									<i class="fa-solid fa-circle-info fa-2xl"
+										style="color: #ffffff;"></i>
+								</div>
+								<h4>${user.age}</h4>
+								<p>${user.introduce}</p>
+							</div>
 						</div>
-							 <h4>${user.age} </h4>
-							<p>${user.introduce}</p>
-						</div></div>
-<%-- 								<td><a href="edit?id=<c:out value='${user.id}' />">Edit</a>
+						<%-- 								<td><a href="edit?id=<c:out value='${user.id}' />">Edit</a>
 								&nbsp;&nbsp;&nbsp;&nbsp;</td>  --%>
+					</c:forEach>
 				</c:forEach>
-<%-- </c:forEach> --%>
 				<!--        Phương -->
 			</div>
 
-		<div class="tinder--buttons">
-			<button id="nope">
-				<i class="fa-solid fa-x fa-beat " style="color: #160303;"></i>
-			</button>
-			<button id="love">
-				<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
-			</button>
+			<div class="tinder--buttons">
+				<button id="nope">
+					<i class="fa-solid fa-x fa-beat " style="color: #160303;"></i>
+				</button>
+				<button id="love">
+					<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
+				</button>
+			</div>
 		</div>
-	</div>
-	<!----------------Right Sidebar----------------------->
+		<!----------------Right Sidebar----------------------->
 	</div>
 	<!-- <div class="footer">
           

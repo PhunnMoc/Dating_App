@@ -73,7 +73,7 @@ public class ProfileControllers extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         } catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch blockS
 			e.printStackTrace();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -126,7 +126,7 @@ public class ProfileControllers extends HttpServlet {
     throws SQLException, IOException, ServletException, ClassNotFoundException {
 
     //	HttpSession session = request.getSession();
-    	List < Profile > ListProfile = profileDAO.GeListProfile();
+    	List < Profile > ListProfile = profileDAO.GeListProfile("user1_id");
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("ListProfile", ListProfile);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");

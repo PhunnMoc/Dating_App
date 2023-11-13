@@ -22,7 +22,13 @@ public class ProfileDAO {
 			+ "on userhobby.IDHobby = hobby.IDHobby\r\n"
 			+ "where userhobby.UserID = 'user2_id = ?";
 	private static final String SELECT_ALL_HOBBIES = "select * from hobby";
-	private static final String SELECT_ALL_PROFILE = "SELECT * FROM profile;";
+//	private static final String CHECK_MATCH = "SELECT * FROM datingapp.match WHERE (userID1= ? AND userID2= ?) OR (userID2= ? AND userID1= ?)";
+	private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
+			+ "where  profile.UserId <> ? \r\n"
+			+ "AND profile.UserId NOT IN (select  B.userID2 as NO\r\n"
+			+ "							from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ? \r\n"
+			+ "                            where  B.matchID IS NOT NULL)\r\n"
+			+ "";
     private static final String SELECT_IMAGES_BY_ID = "select imgID, url from Image where id = ?";
     private static final String UPDATE_PROFILE = "update profile set name = ?, age= ?, gender = ?, birthDay= ?, \r\n"
     		+ "relationship = ?, height = ?, zodiac = ?, address = ?, introduce = ?\r\n"
@@ -114,14 +120,14 @@ public class ProfileDAO {
     }
 	
 	//phương
-	public List < Profile > GeListProfile() {
-        // using try-with-resources to avoid closing resources (boiler plate code)
+	public List < Profile > GeListProfile(String userID) {
         List < Profile > listPr = new ArrayList < > ();
         // Step 1: Establishing a Connection
-        try (Connection conn = JDBCUtil.getConnection();
-
-            // Step 2:Create a statement using connection object
-            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL_PROFILE);) {
+        try  {
+        	Connection conn = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_CARD_PROFILE);
+            preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, userID);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -186,6 +192,7 @@ public class ProfileDAO {
 		}
 		return profile;
 	}
+
 	//phương
 	
 	
