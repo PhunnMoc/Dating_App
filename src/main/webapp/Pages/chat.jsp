@@ -167,7 +167,7 @@
 		              alt=""
 		            />
 		            <div class="text">
-		              <h6><c:out value="${otherUserID.name}" /> </h6>
+		              <h6><c:out value="${profile.name}" /> </h6>
 		              
 		              <p class="text-muted">${last_Message.content}</p>
 		            </div>
