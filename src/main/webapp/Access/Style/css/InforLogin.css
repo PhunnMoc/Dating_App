@@ -228,6 +228,8 @@ button {
   }
    */
    .app-wrap {
+	width: 600px;
+    height: 450px;
     background: var(--color-theme-5);
   }
   
@@ -296,7 +298,6 @@ button {
     list-style: none;
     margin: 0;
     overflow-y: scroll;
-    max-height: 300px;    
     padding: 5px;
   }
   @media (min-width: 640px) {
