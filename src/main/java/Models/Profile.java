@@ -29,6 +29,12 @@ public class Profile {
 		this.introduce = introduce;
 		this.url_image=url_image;
 	}
+	public Profile(String userID, String name, String url_image)
+	{
+		this.userID = userID;
+		this.name =name;
+		this.url_image = url_image;
+	}
 	
 	public Profile() {
 		super();
