@@ -1,30 +1,11 @@
 $( '.friend-drawer--onhover' ).on( 'click',  function() {
-
-
-
-
-    $( '.chat-bubble' ).hide('slow').show('slow');
-  
-  
-  
-  
+    $( '.chat-bubble' ).hide('slow').show('slow'); 
   });
-  
-  
-  
-  
-  
-  
-  
-  var $messages = $('.messages-content'),
-  
-      d, h, m,
-  
+
+  var $messages = $('.messages-content'), 
+      d, h, m, 
       i = 0;
-  
-  
-  
-  
+ 
   $(window).load(function() {
   
     $messages.mCustomScrollbar();
@@ -116,10 +97,8 @@ $( '.friend-drawer--onhover' ).on( 'click',  function() {
   
       insertMessage();
   
-      return false;
-  
+      return false; 
     }
-  
   })
   
   

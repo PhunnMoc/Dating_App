@@ -26,7 +26,7 @@ $('nav a').click(function(e) {
       $('.settings').removeClass('noshow');
       $('.rightbox').children().not('.settings').addClass('noshow');
     }
-  });
+  }); 
  
     document.getElementById("cunghoangdao").value = "<%=profile.getZodiac() %>";
     document.getElementById("relationship").value = "<%=profile.getRelationship() %>";
