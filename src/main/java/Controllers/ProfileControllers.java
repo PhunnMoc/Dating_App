@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-
+import DAO.AccountDAO;
+import DAO.LoginDAO;
 import DAO.ProfileDAO;
+import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
 import Models.Profile;
@@ -37,6 +39,7 @@ import java.time.LocalDate;
 public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
+	private LoginDAO loginDao;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,6 +55,7 @@ public class ProfileControllers extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
+		loginDao = new LoginDAO();
 	}
 
 	/**
@@ -64,9 +68,6 @@ public class ProfileControllers extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		try {
 			switch (action) {
-			case "/insert":
-				insertUser(request, response);
-				break;
 			case "/update":
 				updateProfile(request, response);
 				break;
@@ -77,6 +78,18 @@ public class ProfileControllers extends HttpServlet {
 				System.out.println("hehe" );
 				ShowProfile(request, response);
 				break;
+			case "/Login":
+				System.out.println("hehe" );
+				authenticate(request, response);
+				break;
+			case "/Logout":
+				System.out.println("hehe" );
+				HandleLogout(request, response);
+				break;
+			case "/Register":
+				System.out.println("hehe" );
+				HandleRegister(request, response);
+				break;
 			default:
 				System.out.println("df" );
 				break;
@@ -86,7 +99,10 @@ public class ProfileControllers extends HttpServlet {
 		  } catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 
 	/**
@@ -96,67 +112,29 @@ public class ProfileControllers extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
-
-		// HttpSession session = request.getSession();
-//		Account account = (Account) session.getAttribute("acc");
-//		Profile profile = new Profile();
-//		Image image = new Image();
-//		Hobby hobby = new Hobby();
-//        try {
-//        	profile = profileDAO.GetProfile(account);
-//        	image = profileDAO.GetImage(account);
-//        	
-//            if (profile != null) {
-//                session.setAttribute("profile", profile);
-//                response.sendRedirect("Match.jsp");
-//            } else {
-//            	request.setAttribute("errMsg", "Have to Login to view your Profile");
-//                RequestDispatcher dispartcher = request.getRequestDispatcher("Login.jsp");
-//                dispartcher.forward(request, response);
-//            }
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
 	}
 
 	private void ShowProfile(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
 		HttpSession session = request.getSession();
-		// Account account = (Account) session.getAttribute("acc");
-		Account account = new Account("user2", "password2", "user2_id");
+		Account account = (Account) session.getAttribute("account");
 		Profile profile = new Profile();
-		try {
-			profile = profileDAO.GetProfile(account);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		profile = profileDAO.GetProfile(account);
 		List<UserHobby> listHobby = profileDAO.GetHobby(account);
 		request.setAttribute("profile", profile);
-		request.setAttribute("listHobby", listHobby);
-		
+		request.setAttribute("listHobby", listHobby);		
 		String image = ImageHandle.byteArrayToImage(profile.getImageData());
 		request.setAttribute("image", image);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/InforLogin.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	private void insertUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-//        String name = request.getParameter("name");
-//        String email = request.getParameter("email");
-//        String country = request.getParameter("country");
-//        User newUser = new User(name, email, country);
-//        userDAO.insertUser(newUser);
-//        response.sendRedirect("list");
-	}
 
 	private void updateProfile(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ParseException, ServletException {
 		HttpSession session = request.getSession();
-		// Account account = (Account) session.getAttribute("acc");
-		Account account = new Account("user2", "password2", "user2_id");
-		
-		String userID = account.getUserid();
+		Account account = (Account) session.getAttribute("account");	
+		String userID = account.getUserID();
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
 		String birthday = request.getParameter("birthday");
@@ -208,11 +186,10 @@ public class ProfileControllers extends HttpServlet {
 	}
 
 	private void updateHobby(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ParseException, ServletException {
+			throws SQLException, IOException, ParseException, ServletException, ClassNotFoundException {
 		String[] selectedHobbies = request.getParameterValues("listHobby");
 		HttpSession session = request.getSession();
-		// Account account = (Account) session.getAttribute("acc");
-		Account account = new Account("user2", "password2", "user2_id");
+		Account account = (Account) session.getAttribute("account");
 		profileDAO.DeleteUserHobby(account);
         if (selectedHobbies != null && selectedHobbies.length > 0) {
             for (String hobby : selectedHobbies) {
@@ -221,11 +198,81 @@ public class ProfileControllers extends HttpServlet {
         } else {
             System.out.println("Không có hobby nào được chọn");
         }
+        Profile profile = new Profile();
+		profile = profileDAO.GetProfile(account);
+		List<UserHobby> listHobby = profileDAO.GetHobby(account);
+		request.setAttribute("profile", profile);
+		request.setAttribute("listHobby", listHobby);		
+		String image = ImageHandle.byteArrayToImage(profile.getImageData());
+		request.setAttribute("image", image);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
 		dispatcher.forward(request, response);
-
 	}
+	
+	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        Account account = new Account();
+        account = loginDao.validate(email, password);
+        String url = "";
+        if (account != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("account", account);
+			url = "/Pages/Match.jsp";
+			Profile profile = new Profile();
+			profile = profileDAO.GetProfile(account);
+			List<UserHobby> listHobby = profileDAO.GetHobby(account);
+			request.setAttribute("profile", profile);
+			request.setAttribute("listHobby", listHobby);		
+			String image = ImageHandle.byteArrayToImage(profile.getImageData());
+			request.setAttribute("image", image);
+		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");
+		    
+		} else {
+			request.setAttribute("error_login", "Email hoặc password không chính xác");
+			url = "/Pages/Login.jsp";
+		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Pages/Login.jsp");
+		    //dispatcher.forward(request, response);
+		}
+        
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.forward(request, response);
+	}
+	
+	protected void HandleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String fullname = request.getParameter("fullname");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		request.setCharacterEncoding("UTF-8");
 
+		RegisterDAO registerAccount = new RegisterDAO();
+		if (registerAccount.checkEmailExists(email)) {
+			request.setAttribute("error_register", "Email đã được sử dụng. Vui lòng chọn email khác.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
+            dispatcher.forward(request, response);
+		} else {
+			String UserID = registerAccount.generateUserID();
+			System.out.print("ID moi duoc tao");
+			Profile profile = new Profile(UserID, fullname);
+			ProfileDAO profileDAO = new ProfileDAO();
+			profileDAO.insertProfile(profile);			
+			Account account = new Account(email, password, UserID);
+			AccountDAO accountDAO = new AccountDAO();
+			accountDAO.insertAccount(account);
+			HttpSession session = request.getSession();
+        	session.setAttribute("account", account);
+			String url ="/pro/list";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+		}		
+	}
+	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.invalidate();		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
+		dispatcher.forward(request, response);
+	}
 	private int getYearFromDate(String date) {
 		if (date == null)
 			return 1;

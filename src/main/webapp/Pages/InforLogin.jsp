@@ -19,14 +19,20 @@
 
 <body>
 	<%
-	//Account account = (Account) session.getAttribute("acc");
+	
+	Account account = (Account) session.getAttribute("account");
 	Profile profile = (Profile) request.getAttribute("profile");
 	String imageData = (String) request.getAttribute("image");
 	%>
 	<%
-	/* if (account != null) {
-	  response.sendRedirect("Login.html"); */
-	// }
+	if (account == null) {
+	  response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp");
+	}
+	else
+	{
+		//response.sendRedirect(request.getContextPath() + "/pro/list");
+		//response.sendRedirect("/pro/list");
+	}
 	%>
 	<!-- partial:index.partial.html -->
 	<div class="mar-top-7">
@@ -180,6 +186,10 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../Access/Style/js/InforLogin.js"></script>
+	<script>
+	    document.getElementById("cunghoangdao").value = "<%=profile.getZodiac() %>";
+	    document.getElementById("relationship").value = "<%=profile.getRelationship() %>";
+	</script>
 
 </body>
 </html>

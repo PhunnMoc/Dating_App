@@ -28,5 +28,3 @@ $('nav a').click(function(e) {
     }
   }); 
  
-    document.getElementById("cunghoangdao").value = "<%=profile.getZodiac() %>";
-    document.getElementById("relationship").value = "<%=profile.getRelationship() %>";
