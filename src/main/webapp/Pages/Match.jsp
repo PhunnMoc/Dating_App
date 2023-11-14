@@ -64,12 +64,9 @@
       </div>
       <!----------------Settings Menu"----------------------->
       <div class="settings-menu">
-        <div id="dark-btn">
-          <span></span>
-        </div>
         <div class="settings-menu-inner">
           <div class="user-profile">
-            <div class="nav-user-icon online">
+            <div class="nav-user-icon">
           <img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
         </div>
             <div>
@@ -80,7 +77,7 @@
           <hr />
             <img
               src="https://i.postimg.cc/PJC9GrMb/logout.png"
-              class="settings-icon"
+              class="settings-icon logout_icon "
             />
             <a href="<%=request.getContextPath() %>/pro/Logout"
               >Logout
