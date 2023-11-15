@@ -3,7 +3,6 @@ package Controllers;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,51 +13,66 @@ import javax.servlet.http.HttpSession;
 import DAO.LoginDAO;
 import Models.Account;
 
-@WebServlet("/login")
+/**
+ * Servlet implementation class LoginController
+ */
+@WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private LoginDAO loginDAO;
+	private LoginDAO loginDao;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	public LoginController() {
-		super();
-
+    public void init() {
+    	loginDao = new LoginDAO();
+    }
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	public void init(ServletConfig config) throws ServletException {
-		loginDAO = new LoginDAO();
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		authenticate(request, response);
 	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		Account account = new Account();
-		account.setUsername(username);
-		account.setPassword(password);
-
-		try {
-			Account acc =new Account();
-			acc =loginDAO.onLogin(account);
-			 HttpSession session = request.getSession();
-			if (acc!=null) {
-
-				 session.setAttribute("user",acc);
-				response.sendRedirect("loginsuccess.jsp");
-			} else {
-				 session.setAttribute("errMsg", "Thông tin đăng nhập không chính xác");
-				 RequestDispatcher dispatcher= request.getRequestDispatcher("login.jsp");
-//				 response.sendRedirect("login.jsp");
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
+	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        Account account = new Account();
+        account.setEmail(email);
+        account.setPassword(password);
+        
+        String url = "";
+        try {
+            if (loginDao.validate(account)) {
+            	HttpSession session = request.getSession();
+            	session.setAttribute("account", account);
+            	url = "/Pages/Match.jsp";
+                //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");
+                
+            } else {
+            	request.setAttribute("error_login", "Email hoặc password không chính xác");
+            	url = "/Pages/Login.jsp";
+                //RequestDispatcher dispatcher = request.getRequestDispatcher("Pages/Login.jsp");
+                //dispatcher.forward(request, response);
+            }
+            RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
+            rd.forward(request, response);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 	}
 
 }
