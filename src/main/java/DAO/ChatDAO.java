@@ -21,7 +21,7 @@ public class ChatDAO {
 	private static final String INSERT_MESSAGE_SQL = "INSERT INTO message" +
 	        "  (IDMessage, ID_Receiver, ID_Sender, Time,  Content) VALUES " + " (?, ?, ?, ?, ?);";
 
-	    private static final String SELECT_USER_MESSAGE_BY_USERID = "SELECT DISTINCT p.userid,p.Name , p.url_image "
+	    private static final String SELECT_USER_MESSAGE_BY_USERID = "SELECT DISTINCT p.userid,p.Name , p.ImageData "
 	    		+ " FROM Profile p "
 	    		+ " JOIN Message m ON p.UserID = m.Id_Sender OR p.UserID = m.Id_Receiver "
 	    		+ " WHERE (m.Id_Sender = ? OR m.Id_Receiver = ?) AND p.UserID <> ? ;";
@@ -57,7 +57,7 @@ public class ChatDAO {
             while (rs.next()) {
                 String UserID = rs.getString("userid");
                 String Name = rs.getString("Name");
-                String url_image = rs.getString("url_image");
+                String url_image = rs.getString("ImageData");
                 profile.add(new Profile(UserID, Name, url_image));
             }
         } catch (SQLException exception) {

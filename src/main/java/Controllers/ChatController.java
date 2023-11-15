@@ -43,15 +43,15 @@ public class ChatController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getServletPath();
-System.out.print("aaaaaaa");
+		String action = request.getPathInfo();
+
 		try {
 			switch (action) {
 			case "/last_Message":
 				last_message(request, response);
 				break;
-			case "/list":
-				
+			case "/list_chat":
+				System.out.print("aaaaaaa");
 				list_other_user(request, response);
 				break;
 			default:
@@ -60,7 +60,7 @@ System.out.print("aaaaaaa");
 				 * RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 				 * dispatcher.forward(request, response);
 				 */
-				list_other_user(request, response);
+				//list_other_user(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -80,7 +80,7 @@ System.out.print("aaaaaaa");
 
 	private void list_other_user(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
-		System.out.print("aaaaaaa");
+
 		Account acc = new Account();
 		HttpSession session = request.getSession();
 		acc = (Account) session.getAttribute("Acc");

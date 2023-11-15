@@ -23,13 +23,18 @@ public class ProfileDAO {
 			+ "where userhobby.UserID = 'user2_id = ?";
 	private static final String SELECT_ALL_HOBBIES = "select * from hobby";
 //	private static final String CHECK_MATCH = "SELECT * FROM datingapp.match WHERE (userID1= ? AND userID2= ?) OR (userID2= ? AND userID1= ?)";
-	private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
-			+ "where  profile.UserId <> ? \r\n"
-			+ "AND profile.UserId NOT IN (select  B.userID2 as NO\r\n"
-			+ "							from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ? \r\n"
-			+ "                            where  B.matchID IS NOT NULL)\r\n"
-			+ "";
-    private static final String SELECT_IMAGES_BY_ID = "select imgID, url from Image where id = ?";
+	private static final String SELECT_CARD_PROFILE = "select *from profile \r\n"
+			+ "where profile.UserId <> ?\r\n"
+			+ "					AND profile.UserId NOT IN (select  B.userID2 as NO\r\n"
+			+ "				from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
+			+ "					where  B.matchID IS NOT NULL)\r\n"
+			+ "			    ";
+	private static final String SELECT_MATCH_PROFILE= "select *from profile \r\n"
+			+ "		where  profile.UserId <> ?\r\n"
+			+ "			AND profile.UserId IN (select  B.userID2 as NO\r\n"
+			+ "								from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
+			+ "									where  B.matchID IS NOT NULL)";
+ //   private static final String SELECT_IMAGES_BY_ID = "select imgID, url from Image where id = ?";
     private static final String UPDATE_PROFILE = "update profile set name = ?, age= ?, gender = ?, birthDay= ?, \r\n"
     		+ "relationship = ?, height = ?, zodiac = ?, address = ?, introduce = ?\r\n"
     		+ "where id = ?";
@@ -145,7 +150,43 @@ public class ProfileDAO {
 					String Zodiac = rs.getString(8);
 					String Address = rs.getString(9);
 					String Introduce = rs.getString(10);
-					String Url_image = rs.getString(11);
+					byte[] Url_image = rs.getBytes(11);
+
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce,Url_image));
+                }
+                
+            }
+        } catch (SQLException e) {
+        	HandleExeption.printSQLException(e);
+        }
+        return listPr;
+    }
+	public List < Profile > GeListProfileMatch(String userID) {
+        List < Profile > listPr = new ArrayList < > ();
+        // Step 1: Establishing a Connection
+        try  {
+        	Connection conn = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_MATCH_PROFILE);
+            preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, userID);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String UserID=rs.getString(1);
+//                if(UserID.equals(main.getUserID()))
+                {
+                	String Name=rs.getString(2);
+					int Age = rs.getInt(3);
+					String Gender = rs.getString(4);
+					Date BirthDay = rs.getDate(5);
+					String Relationship = rs.getString(6);
+					int Height = rs.getInt(7);
+					String Zodiac = rs.getString(8);
+					String Address = rs.getString(9);
+					String Introduce = rs.getString(10);
+					byte[] Url_image = rs.getBytes(11);
 
 					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce,Url_image));
                 }
@@ -182,7 +223,7 @@ public class ProfileDAO {
 				profile.setZodiac(rs.getString(8));
 				profile.setAddress(rs.getString(9));
 				profile.setIntroduce(rs.getString(10));
-				profile.setUrl_image(rs.getString(11));
+				byte[] Url_image = rs.getBytes(11);
 			}		
 			conn.close();
 

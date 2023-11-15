@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="Models.Profile"%>
 <%@ page import="Models.Account"%>
-<%@ page import="java.util.Base64"%>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -12,7 +11,6 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- phan card -->
-<link rel="stylesheet" href="../Access/Style/css/Card.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script
@@ -25,6 +23,8 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<link rel="stylesheet" href="../Access/Style/css/ListFriend.css">
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 	data-auto-replace-svg="nest"></script>
 </head>
@@ -41,10 +41,8 @@
 				<a href="./favourite.html"><li><i
 						class="fa-solid fa-heart-circle-check"></i></i></li></a>
 				<a href="<%=request.getContextPath()%>/chat/list_chat"><li><i class="fa-solid fa-message"></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
-			<a href="<%=request.getContextPath()%>/pro/listMatch"><li><i class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
-			
-			
+				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i
+						class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
 			</ul>
 		</div>
 		<div class="nav-right">
@@ -101,76 +99,29 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container-app">
-		<!----------------Left Sidebar----------------------->
-		<div class="left-sidebar"></div>
-		<!----------------Main Sidebar----------------------->
-		<div class="tinder">
-			<div class="tinder--status">
-				<i class="fa fa-remove"></i> <i class="fa fa-heart"></i>
-			</div>
+	
+<section class="hero-section">
+  <div class="card-grid">
+    <c:forEach var="user" items="${ListProfileMatch}">
+				 <a class="card bd" href="#">
+      <div class="card__background" >
+      <img src="data:image/jpeg;base64,${user.imageData}">
+      </div>
 
-			<div class="tinder--cards">
-
-				<!--        Phương -->
-				<c:forEach var="count" begin="1" end="10">
-					<c:forEach var="user" items="${ListProfile}">
-						<div class="tinder--card " id="myCard">
-							<img src="data:image/jpeg;base64,${user.imageData}">
-							<div class="infor-hide">
-								<div class="main-infor">
-									<h3>${user.name}</h3>
-									Độ tuổi: <h4>${user.age}</h4>
-									<div> Cung hoàng đạo: <h4>${user.zodiac}</h4>  Sinh nhật:<h4>${user.birthDay}</h4></div>
-									Giới tính: <h4>${user.gender}</h4>
-									Tình trạng mối quan hệ: <h4>${user.relationship}</h4>
-									Chiều cao: <h4>${user.height}</h4>
-									 <h5>${user.introduce}</h5>
-									
-								</div>
-							</div>
-							<div class="tinder--card--text">
-								<div style="display: flex; align-items: center; justify-content: start;">
-									<h3>${user.name}</h3>
-									<i class="fa-solid fa-circle-info fa-2xl showInf"
-										style="color: #ffffff;"></i>
-								</div>
-								<h4>${user.age}</h4>
-								<p>${user.introduce}</p>
-							</div>
-						</div>
-		
+      <div class="card__content"> 
+      <p id="getID" style="display: none;">${user.name}</p>   
+        <h3 class="card__heading">${user.name}</h3>
+        <h4 class="card__category">${user.introduce}</h4>
+        <button class="custom-btn btn-15 hello" value="${user.userID}">GỬI LỜI CHÀO</button>
+        <button class="custom-btn btn-15 nono" value="${user.userID}">HỦY TƯƠNG TÁC</button>
+      </div>
+    </a>
 					</c:forEach>
-				</c:forEach>
-				<!--        Phương -->
-			</div>
-
-			<div class="tinder--buttons">
-				<button id="nope">
-					<i class="fa-solid fa-x fa-beat " style="color: #160303;"></i>
-				</button>
-				<button id="love">
-					<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
-				</button>
-			</div>
-		</div>
-		<!----------------Right Sidebar----------------------->
-          
-        </div> -->
+  <div>
+  
+</section>
+	
 	<script src="../Access/Style/js/Base.js"></script>
-	<script>
-	 document.addEventListener("DOMContentLoaded", function () {
-	      var showInfButtons = document.querySelectorAll('.showInf');
-
-	      showInfButtons.forEach(function(button) {
-	        button.addEventListener('click', function () {
-	          var cardText = button.closest('.tinder--card').querySelector('.tinder--card--text');
-	          cardText.style.display = 'none';
-	          button.closest('.tinder--card').style.overflow = 'scroll';
-	        });
-	      });
-	    });
-	</script>
+	
 </body>
-<script src="../Access/Style/js/Card.js"></script>
 </html>

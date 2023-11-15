@@ -198,7 +198,7 @@
               <i class="material-icons">message</i>
               <i class="material-icons">menu</i>
             </span>
-          </div> -->
+          </div> 
         </div>
         <!-- End thông tin của người đang nhắn  -->
 
@@ -228,6 +228,18 @@
         <!-- End mục nhập tin nhắn và gửi  -->
       </div>
       <!----------------Right Sidebar----------------------->
+      <div>
+      <div class="main-infor">
+									<h3>{user.name}</h3>
+									Độ tuổi: <h4>{user.age}</h4>
+									<div> Cung hoàng đạo: <h4>{user.zodiac}</h4>  Sinh nhật:<h4>{user.birthDay}</h4></div>
+									Giới tính: <h4>{user.gender}</h4>
+									Tình trạng mối quan hệ: <h4>{user.relationship}</h4>
+									Chiều cao: <h4>{user.height}</h4>
+									 <h5>{user.introduce}</h5>
+									
+								</div>
+      </div>
     </div>
     <!-- <div class="footer">
           

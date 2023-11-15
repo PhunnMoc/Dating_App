@@ -62,6 +62,9 @@ public class ProfileControllers extends HttpServlet {
 				/*
 				 * case "/showInf": ShowInf(request, response); break;
 				 */
+                case "/listMatch":
+                	ListProfileMatch(request, response);
+                	break;
                 case "/showCard":
                 	System.out.println(" aaaa!");
                 	ListProfile(request, response);
@@ -132,12 +135,19 @@ public class ProfileControllers extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
         dispatcher.forward(request, response);
     }
-    private void ShowInf(HttpServletRequest request, HttpServletResponse response)
-    	    throws SQLException, IOException, ClassNotFoundException {
-		System.out.println(" aaaa!");
-    	        Profile a = profileDAO.GetInfor(request.getParameter("id"));
-    	        request.setAttribute("profile_match", a);
-    	    }
+    
+       private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException, ClassNotFoundException {
+
+    //	HttpSession session = request.getSession();
+    	List < Profile > ListProfile = profileDAO.GeListProfileMatch("user1_id");
+//        request.setAttribute("listImage", listImage);
+        request.setAttribute("ListProfileMatch", ListProfile);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
+        dispatcher.forward(request, response);
+    }
+
+   
     //phương
 	
     private void insertUser(HttpServletRequest request, HttpServletResponse response)
