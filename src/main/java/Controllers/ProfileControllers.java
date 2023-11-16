@@ -289,9 +289,10 @@ public class ProfileControllers extends HttpServlet {
 	  //phương
     private void ListProfile(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException, ClassNotFoundException {
-
-    //	HttpSession session = request.getSession();
-    	List < Profile > ListProfile = profileDAO.GeListProfile("user1_id");
+		HttpSession session = request.getSession();
+    	Account account = (Account) session.getAttribute("account");	
+		String userID = account.getUserID();
+    	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("ListProfile", ListProfile);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
@@ -300,9 +301,10 @@ public class ProfileControllers extends HttpServlet {
     
        private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException, ClassNotFoundException {
-
-    //	HttpSession session = request.getSession();
-    	List < Profile > ListProfile = profileDAO.GeListProfileMatch("user1_id");
+   		HttpSession session = request.getSession();
+    	Account account = (Account) session.getAttribute("account");	
+		String userID = account.getUserID();
+    	List < Profile > ListProfile = profileDAO.GeListProfileMatch(userID);
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("ListProfileMatch", ListProfile);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
