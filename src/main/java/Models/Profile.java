@@ -65,6 +65,7 @@ public class Profile {
 		this.imageData = imageData;
 	}
 
+
 	public byte[] getImageData() {
 		return imageData;
 	}

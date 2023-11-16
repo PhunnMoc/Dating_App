@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import Models.Account;
 import Models.Hobby;
@@ -198,7 +199,7 @@ public class ProfileDAO {
     	 e.printStackTrace();
     	 }
    }
-}
+
 	
 	//phương
 	public List < Profile > GeListProfile(String userID) {
@@ -273,4 +274,5 @@ public class ProfileDAO {
         }
         return listPr;
     }
+	}
 	
