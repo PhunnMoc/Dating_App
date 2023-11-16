@@ -39,4 +39,10 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 	}
+	public static void main() {
+		System.out.println(" aaaa!");
+		Connection a= getConnection();
+		System.out.println(" cfcfcccf!");
+		
+	}
 }

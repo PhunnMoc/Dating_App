@@ -90,6 +90,12 @@ public class ProfileControllers extends HttpServlet {
 				System.out.println("hehe" );
 				HandleRegister(request, response);
 				break;
+			 case "/listMatch":
+                ListProfileMatch(request, response);
+                break;
+                case "/showCard":
+                ListProfile(request, response);
+                	break;
 			default:
 				System.out.println("df" );
 				break;
@@ -280,6 +286,33 @@ public class ProfileControllers extends HttpServlet {
 		String firstPart = parts[0];
 		return Integer.parseInt(firstPart);
 	}
+	  //phương
+    private void ListProfile(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+    	Account account = (Account) session.getAttribute("account");	
+		String userID = account.getUserID();
+    	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
+//        request.setAttribute("listImage", listImage);
+        request.setAttribute("ListProfile", ListProfile);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+       private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException, ClassNotFoundException {
+   		HttpSession session = request.getSession();
+    	Account account = (Account) session.getAttribute("account");	
+		String userID = account.getUserID();
+    	List < Profile > ListProfile = profileDAO.GeListProfileMatch(userID);
+//        request.setAttribute("listImage", listImage);
+        request.setAttribute("ListProfileMatch", ListProfile);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
+        dispatcher.forward(request, response);
+    }
+
+   
+    //phương
 	
 
 }
