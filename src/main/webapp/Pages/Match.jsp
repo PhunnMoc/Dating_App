@@ -29,8 +29,15 @@
 	data-auto-replace-svg="nest"></script>
 </head>
 <body>
+	<%	
+		Account account = (Account) session.getAttribute("account");
+		Profile profile = (Profile) request.getAttribute("profile");
+		String imageData = (String) request.getAttribute("image");
+	%>
 	<%
-	Account username = (Account) session.getAttribute("user");
+	if (account == null) {
+	  response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp");
+	}
 	%>
 	<nav>
 		<div class="nav-left">
@@ -48,59 +55,35 @@
 			</ul>
 		</div>
 		<div class="nav-right">
-			<div class="nav-user-icon online" onclick="settingsMenuToggle()">
-				<img src="https://i.postimg.cc/44VbNwBf/avatar.png" />
-			</div>
-		</div>
-		<!----------------Settings Menu"----------------------->
-		<div class="settings-menu">
-			<div id="dark-btn">
-				<span></span>
-			</div>
-			<div class="settings-menu-inner">
-				<div class="user-profile">
-					<img src="https://i.postimg.cc/cHg22LhR/profile-pic.png" />
-					<div>
-						<p>Huynh Hong Khanh</p>
-						<a href="./InforLogin">See your profile</a>
-					</div>
-				</div>
-				<hr />
-				<div class="user-profile">
-					<img src="https://i.postimg.cc/hv3nx52s/feedback.png" />
-					<div>
-						<p>Give Feedback</p>
-						<a href="#">Help us to improve the new design</a>
-					</div>
-				</div>
-				<hr />
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/QCcPNYRV/setting.png"
-						class="settings-icon" /> <a href="#">Settings & Privacy <img
-						src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/C5tydfK6/help.png"
-						class="settings-icon" /> <a href="#">Help & Support<img
-						src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/5yt1XVSj/display.png"
-						class="settings-icon" /> <a href="#">Display & Accessibility
-						<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
-						class="settings-icon" /> <a href="#">Logout <img
-						src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-			</div>
-		</div>
-	</nav>
+        <div class="nav-user-icon online" onclick="settingsMenuToggle()">
+          <img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
+        </div>
+      </div>
+      <!----------------Settings Menu"----------------------->
+      <div class="settings-menu">
+        <div class="settings-menu-inner">
+          <div class="user-profile">
+            <div class="nav-user-icon">
+          <img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
+        </div>
+            <div>
+              <p><%=profile.getName()%></p>
+              <a href="<%=request.getContextPath()%>/pro/list">Thông tin cá nhân</a>
+            </div>
+          </div>
+          <hr />
+            <img
+              src="https://i.postimg.cc/PJC9GrMb/logout.png"
+              class="settings-icon logout_icon "
+            />
+            <a href="<%=request.getContextPath() %>/pro/Logout"
+              >Logout
+              <img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </nav>
 	<div class="container-app">
 		<!----------------Left Sidebar----------------------->
 		<div class="left-sidebar"></div>
