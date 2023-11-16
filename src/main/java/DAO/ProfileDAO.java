@@ -13,7 +13,7 @@ import Models.Profile;
 import Models.UserHobby;
 import Util.HandleExeption;
 import Util.JDBCUtil;
-
+import Handle.ImageHandle;
 public class ProfileDAO {
     private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, hobby.IDHobby\r\n"
             + "from userhobby inner join hobby \r\n"
@@ -59,7 +59,7 @@ public class ProfileDAO {
                 profile.setAge(rs.getInt(3));
                 profile.setGender(rs.getString(4));
                 profile.setBirthDay(rs.getDate(5));
-                profile.setRelationship(rs.getString(6));
+profile.setRelationship(rs.getString(6));
                 profile.setHeight(rs.getInt(7));
                 profile.setZodiac(rs.getString(8));
                 profile.setAddress(rs.getString(9));
@@ -132,7 +132,7 @@ public class ProfileDAO {
             statement.setString(1, profile.getName());
             statement.setInt(2, profile.getAge());
             statement.setString(3, profile.getGender());
-            statement.setDate(4, profile.getBirthDay());
+statement.setDate(4, profile.getBirthDay());
             statement.setString(5, profile.getRelationship());
             statement.setInt(6, profile.getHeight());
             statement.setString(7, profile.getZodiac());
@@ -204,7 +204,7 @@ public class ProfileDAO {
 	//phương
 	public List < Profile > GeListProfile(String userID) {
         List < Profile > listPr = new ArrayList < > ();
-        // Step 1: Establishing a Connection
+// Step 1: Establishing a Connection
         try  {
         	Connection conn = JDBCUtil.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(SELECT_CARD_PROFILE);
@@ -228,8 +228,9 @@ public class ProfileDAO {
 					String Address = rs.getString(9);
 					String Introduce = rs.getString(10);
 					byte[] Url_image = rs.getBytes(11);
-
-					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce,Url_image));
+					String imageURL = ImageHandle.byteArrayToImage(Url_image);
+					
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
                 }
                 
             }
@@ -264,8 +265,9 @@ public class ProfileDAO {
 					String Address = rs.getString(9);
 					String Introduce = rs.getString(10);
 					byte[] Url_image = rs.getBytes(11);
-
-					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce,Url_image));
+					String imageURL = ImageHandle.byteArrayToImage(Url_image);
+					
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
                 }
                 
             }
@@ -275,4 +277,3 @@ public class ProfileDAO {
         return listPr;
     }
 	}
-	
