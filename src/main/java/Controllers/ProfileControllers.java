@@ -19,10 +19,12 @@ import javax.servlet.http.Part;
 
 import DAO.AccountDAO;
 import DAO.LoginDAO;
+import DAO.MatchDAO;
 import DAO.ProfileDAO;
 import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
+import Models.Match;
 import Models.Profile;
 import Models.UserHobby;
 import Handle.ImageHandle;
@@ -57,6 +59,7 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
+		matchDAO=new MatchDAO();
 	}
 
 	/**
@@ -119,20 +122,21 @@ public class ProfileControllers extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		 doGet(request, response);
+		 String requestType = request.getHeader("X-Request-Type");
+		
+	    if ("HandleMatch".equals(requestType)) {
+	    	try {
+				HandleMatch(request, response);
+			} catch (ClassNotFoundException | SQLException | IOException | ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	    } else {
+	       doGet(request, response);
+	    }
+		
 
-		 //Thoại
-		String userID2 = request.getParameter("userID");
-//		System.out.print(userID2);
-		Match match=new Match(LocalDate.now(),"user1_id",userID2);
-        // Call DAO to save the user ID to the database		
-		try {
-			matchDAO.insertMatch(match);
-			matchDAO.updateMatchAll();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 	}
 
@@ -335,6 +339,23 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 
    
     //phương
-	
+       
+	     private void HandleMatch(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException, ClassNotFoundException {
+   		HttpSession session = request.getSession();
+    	Account account = (Account) session.getAttribute("account");	
+		String userID1 = account.getUserID();
+		String userID2 = request.getParameter("userID");
+//		System.out.print(userID2);
+		Match match=new Match(LocalDate.now(),userID1,userID2);
+        // Call DAO to save the user ID to the database		
+		try {
+			matchDAO.insertMatch(match);
+			matchDAO.updateMatchAll();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

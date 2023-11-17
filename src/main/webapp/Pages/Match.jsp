@@ -143,6 +143,7 @@
 								</div>
 								<h4>${user.age}</h4>
 								<p>${user.introduce}</p>
+								<p style="display:none" id="userID2">${user.userID}</p>
 							</div>
 						</div>
 

@@ -76,7 +76,11 @@ allCards.forEach(function(el) {
 					type: "POST",
 					url: "pro",
 					data: { userID: userID },
-					dataType: "json", // Sửa đổi kiểu dữ liệu mong đợi thành "json"
+					dataType: "json",
+					headers: {
+        "X-Request-Type": "HandleMatch"
+    },
+					 // Sửa đổi kiểu dữ liệu mong đợi thành "json"
 					//success: function(response) {
 					// Xử lý dữ liệu trả về ở đây
 					//	console.log(response); // In ra console để kiểm tra dữ liệu
@@ -110,7 +114,11 @@ function createButtonListener(love) {
 				type: "POST",
 				url: "pro",
 				data: { userID: userID },
-				dataType: "json", // Sửa đổi kiểu dữ liệu mong đợi thành "json"
+				dataType: "json",
+				headers: {
+        "X-Request-Type": "HandleMatch"
+    }, 
+				// Sửa đổi kiểu dữ liệu mong đợi thành "json"
 				//success: function(response) {
 				// Xử lý dữ liệu trả về ở đây
 				//	console.log(response); // In ra console để kiểm tra dữ liệu
