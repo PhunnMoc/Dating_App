@@ -111,7 +111,7 @@
       </div>
 
       <div class="card__content"> 
-      <p id="getID" style="display: none;">${user.name}</p>   
+    
         <h3 class="card__heading">${user.name}</h3>
         <h4 class="card__category">${user.introduce}</h4>
         <button class="custom-btn btn-15 hello" value="${user.userID}">GỬI LỜI CHÀO</button>

@@ -302,6 +302,11 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
     	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("ListProfile", ListProfile);
+        
+    	String userid = account.getUserID();
+    	List < Profile > ListProfileMatch = profileDAO.GeListProfileMatch(userid);
+//        request.setAttribute("listImage", listImage);
+    	request.setAttribute("ListProfileMatch", ListProfileMatch);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
         dispatcher.forward(request, response);
     }
@@ -311,9 +316,9 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
    		HttpSession session = request.getSession();
     	Account account = (Account) session.getAttribute("account");	
 		String userID = account.getUserID();
-    	List < Profile > ListProfile = profileDAO.GeListProfileMatch(userID);
+    	List < Profile > ListProfileMatch = profileDAO.GeListProfileMatch(userID);
 //        request.setAttribute("listImage", listImage);
-    	request.setAttribute("ListProfileMatch", ListProfile);
+    	request.setAttribute("ListProfileMatch", ListProfileMatch);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
         dispatcher.forward(request, response);
     }

@@ -104,6 +104,11 @@
     position: absolute;
     top: 30%;
   }
+    h3.card__category,
+   h4.card__category
+    {
+      text-shadow: 0 0 10px #000000;
+    }
   
   .card__category{
     color: var(--text-light);
@@ -117,7 +122,7 @@
     font-size: 1.9rem;
     text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
     line-height: 1.4;
-    word-spacing: 100vw;
+
   }
 
   button {
