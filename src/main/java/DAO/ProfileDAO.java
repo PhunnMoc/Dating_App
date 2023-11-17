@@ -28,17 +28,18 @@ public class ProfileDAO {
             + "where Userid = ?";
     private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
     private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
-    private static final String SELECT_CARD_PROFILE = "select *from profile \r\n"
-			+ "where profile.UserId <> ?\r\n"
-			+ "					AND profile.UserId NOT IN (select  B.userID2 as NO\r\n"
-			+ "				from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
-			+ "					where  B.matchID IS NOT NULL)\r\n"
+    private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
+    		+ "    				where  profile.UserId <> ?\r\n"
+    		+ "    					AND profile.UserId not IN (select  B.userID2 as NO\r\n"
+    		+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
+    		+ "    							where  B.matchID IS NOT NULL)"
 			+ "			    ";
-	private static final String SELECT_MATCH_PROFILE= "select *from profile \r\n"
-			+ "		where  profile.UserId <> ?\r\n"
-			+ "			AND profile.UserId IN (select  B.userID2 as NO\r\n"
-			+ "								from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
-			+ "									where  B.matchID IS NOT NULL)";
+	private static final String SELECT_MATCH_PROFILE= "select *from profile\r\n"
+			+ "    				where  profile.UserId <> ?\r\n"
+			+ "    					AND profile.UserId IN (select  B.userID2 as NO\r\n"
+			+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 =? AND B.MatchStatus='Match'\r\n"
+			+ "    							where  B.matchID IS NOT NULL)"
+			+ "";
 
     public Profile GetProfile(Account accData) throws ClassNotFoundException {
         Profile profile = new Profile();

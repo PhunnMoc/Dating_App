@@ -222,6 +222,7 @@ profileDAO.updateProfile(profile);
         
         Account account = new Account();
         account = loginDao.validate(email, password);
+        System.out.print(account);
         String url = "";
         if (account != null) {
 			HttpSession session = request.getSession();
@@ -234,8 +235,7 @@ profileDAO.updateProfile(profile);
 			request.setAttribute("listHobby", listHobby);		
 			String image = ImageHandle.byteArrayToImage(profile.getImageData());
 			request.setAttribute("image", image);
-		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");
-		    
+		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	    
 		} else {
 			request.setAttribute("error_login", "Email hoặc password không chính xác");
 			url = "/Pages/Login.jsp";
@@ -293,8 +293,13 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 		System.out.print("hahaa");
     	Account account = (Account) session.getAttribute("account");	
     	ProfileDAO profileDAO = new ProfileDAO();
+    	
     	Profile profile = profileDAO.GetProfile(account);
-    	request.setAttribute("MyOwnProfile", profile);	
+    	if(profile!= null)
+    	{
+    		request.setAttribute("MyOwnProfile", profile);	
+    	}
+    	
 		String userID = account.getUserID();
     	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
 //        request.setAttribute("listImage", listImage);

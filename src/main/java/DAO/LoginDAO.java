@@ -11,6 +11,7 @@ import Util.JDBCUtil;
 public class LoginDAO {
     public Account validate(String email, String password) throws ClassNotFoundException {
     	Account acc = new Account();
+    	//acc=null;
         
 
         try (Connection connection = JDBCUtil.getConnection();
@@ -28,6 +29,7 @@ public class LoginDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.print(acc);
         return acc;
     }
 }
