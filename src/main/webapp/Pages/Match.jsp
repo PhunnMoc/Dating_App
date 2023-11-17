@@ -32,7 +32,7 @@
 <body>
 	<%
 	Account account = (Account) session.getAttribute("account");
-	Profile profile = (Profile) request.getAttribute("profile");
+	Profile profile = (Profile) request.getAttribute("MyOwnProfile");
 	String imageData = (String) request.getAttribute("image");
 	%>
 	<%

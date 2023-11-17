@@ -105,7 +105,7 @@
     <c:forEach var="user" items="${ListProfileMatch}">
 				 <a class="card bd" href="#">
       <div class="card__background" >
-      <img src="data:image/jpeg;base64,${user.imageData}">
+      <img src="data:image/jpeg;base64,${user.getImageURL()}">
       </div>
 
       <div class="card__content"> 
