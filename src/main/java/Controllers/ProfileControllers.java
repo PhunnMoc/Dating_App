@@ -18,11 +18,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import DAO.AccountDAO;
+import DAO.ChatDAO;
 import DAO.LoginDAO;
 import DAO.ProfileDAO;
 import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
+import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
 import Handle.ImageHandle;
@@ -40,6 +42,7 @@ public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
+	private ChatDAO chatDAO;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -56,6 +59,7 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
+		chatDAO = new ChatDAO();
 	}
 
 	/**
@@ -89,6 +93,9 @@ public class ProfileControllers extends HttpServlet {
 			case "/Register":
 				System.out.println("hehe" );
 				HandleRegister(request, response);
+				break;
+			case "/message":
+				HandleMessage(request, response);
 				break;
 			default:
 				System.out.println("df" );
@@ -267,6 +274,23 @@ public class ProfileControllers extends HttpServlet {
             dispatcher.forward(request, response);
 		}		
 	}
+	private void HandleMessage(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		System.out.print("aaaaaaa");
+		Account acc = new Account();
+		HttpSession session = request.getSession();
+		acc = (Account) session.getAttribute("Acc");
+		List<Profile> list_profile = chatDAO.select_other_user_message("user1_id");
+		request.setAttribute("list_other_user", list_profile);
+			
+		
+		List<Message> message = chatDAO.select_message_last("user1_id");
+		request.setAttribute("last_Message", message);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/chat.jsp");
+		dispatcher.forward(request, response);
+	}
+	
 	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();		

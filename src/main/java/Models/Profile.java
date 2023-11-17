@@ -14,7 +14,7 @@ public class Profile {
 	private String address;
 	private String introduce;
 	private byte[] imageData;
-
+	private String imageURL;
 	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
 			String zodiac, String address, String introduce, byte[] imageData) {
 		super();
@@ -30,7 +30,28 @@ public class Profile {
 		this.introduce = introduce;
 		this.imageData = imageData;
 	}
-
+	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
+			String zodiac, String address, String introduce, String imageURL) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.birthDay = birthDay;
+		this.relationship = relationship;
+		this.height = height;
+		this.zodiac = zodiac;
+		this.address = address;
+		this.introduce = introduce;
+		this.imageURL = imageURL;
+	}
+	
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
 			String zodiac, String address, String introduce) {
 		super();
@@ -56,6 +77,15 @@ public class Profile {
 		this.userID = userID;
 		this.name = name;
 	}
+
+
+	public Profile(String userID, String name, byte[] imageData) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.imageData = imageData;
+	}
+
 
 	public byte[] getImageData() {
 		return imageData;
@@ -110,7 +140,7 @@ public class Profile {
 	}
 
 	public void setRelationship(String relationship) {
-		this.relationship = relationship;
+this.relationship = relationship;
 	}
 
 	public int getHeight() {
