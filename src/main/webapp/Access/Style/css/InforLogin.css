@@ -290,7 +290,7 @@ button {
   
   .picture-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-gap: 20px;
     max-width: 1024px;
     list-style: none;
@@ -301,12 +301,12 @@ button {
   }
   @media (min-width: 640px) {
     .picture-list {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(1, 1fr);
     }
   }
   @media (min-width: 1024px) {
     .picture-list {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(1, 1fr);
     }
   }
   .picture-list__item__wrap {
@@ -320,7 +320,7 @@ button {
     width: 100%;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    max-height: 300px;
+    max-height: 500px;
   }
   .picture-list__item__name {
     padding: 10px;

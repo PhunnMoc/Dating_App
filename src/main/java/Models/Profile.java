@@ -13,9 +13,10 @@ public class Profile {
 	private String zodiac;
 	private String address;
 	private String introduce;
-	private String url_image;
+	private byte[] imageData;
+	private String imageURL;
 	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
-			String zodiac, String address, String introduce,String url_image) {
+			String zodiac, String address, String introduce, byte[] imageData) {
 		super();
 		this.userID = userID;
 		this.name = name;
@@ -27,79 +28,151 @@ public class Profile {
 		this.zodiac = zodiac;
 		this.address = address;
 		this.introduce = introduce;
-		this.url_image=url_image;
+		this.imageData = imageData;
+	}
+	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
+			String zodiac, String address, String introduce, String imageURL) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.birthDay = birthDay;
+		this.relationship = relationship;
+		this.height = height;
+		this.zodiac = zodiac;
+		this.address = address;
+		this.introduce = introduce;
+		this.imageURL = imageURL;
 	}
 	
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	public Profile(String userID, String name, int age, String gender, Date birthDay, String relationship, int height,
+			String zodiac, String address, String introduce) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.birthDay = birthDay;
+		this.relationship = relationship;
+		this.height = height;
+		this.zodiac = zodiac;
+		this.address = address;
+		this.introduce = introduce;
+	}
+
 	public Profile() {
 		super();
 	}
-	public String getUrl_image() {
-		return url_image;
+
+
+	public Profile(String userID, String name) {
+		super();
+		this.userID = userID;
+		this.name = name;
 	}
-	public void setUrl_image(String url_image) {
-		this.url_image = url_image;
+
+
+	public Profile(String userID, String name, byte[] imageData) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.imageData = imageData;
 	}
+
+
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	public void setImageData(byte[] imageData) {
+		this.imageData = imageData;
+	}
+
 	public String getUserID() {
 		return userID;
 	}
+
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public int getAge() {
 		return age;
 	}
+
 	public void setAge(int age) {
 		this.age = age;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public Date getBirthDay() {
 		return birthDay;
 	}
+
 	public void setBirthDay(Date birthDay) {
 		this.birthDay = birthDay;
 	}
+
 	public String getRelationship() {
 		return relationship;
 	}
+
 	public void setRelationship(String relationship) {
-		this.relationship = relationship;
+this.relationship = relationship;
 	}
+
 	public int getHeight() {
 		return height;
 	}
+
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
 	public String getZodiac() {
 		return zodiac;
 	}
+
 	public void setZodiac(String zodiac) {
 		this.zodiac = zodiac;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getIntroduce() {
 		return introduce;
 	}
+
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
-	
-	
-	
+
 }

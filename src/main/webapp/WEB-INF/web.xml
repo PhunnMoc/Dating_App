@@ -18,4 +18,15 @@
         <servlet-name>ProfileControllers</servlet-name>
         <url-pattern>/pro/*</url-pattern>
     </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>ChatController</servlet-name>
+        <servlet-class>Controllers.ChatController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ChatController</servlet-name>
+        <url-pattern>/chat/*</url-pattern>
+    </servlet-mapping>
+    
 </web-app>
