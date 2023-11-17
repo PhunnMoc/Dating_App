@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet {
         
         String url = "";
         try {
-            if (loginDao.validate(account)) {
+            if (loginDao.validate(account.getEmail(),account.getPassword())!= null) {
             	HttpSession session = request.getSession();
             	session.setAttribute("account", account);
             	url = "/Pages/Match.jsp";

@@ -184,7 +184,10 @@ public class ChatDAO {
 	            	int IDMessage = rs.getInt(1);
 	                String IDReceiver = rs.getString(2);
 	                String IDSender = rs.getString(3);
-	               	LocalDate Time = rs.getDate(4).toLocalDate();
+	                java.sql.Time sqlTime = rs.getTime(4);
+	                
+	                // Convert java.sql.Time to java.time.LocalTime
+	                LocalTime Time = sqlTime.toLocalTime();
 	               	String Content = rs.getString(5);
 	               	message.add(new Message(IDMessage, IDReceiver, IDSender, Time, Content));
 	            }
