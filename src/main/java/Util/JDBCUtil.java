@@ -1,8 +1,10 @@
 package Util;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class JDBCUtil {
 
@@ -45,4 +47,7 @@ public class JDBCUtil {
 		System.out.println(" cfcfcccf!");
 		
 	}
+	public static Date getSQLDate(LocalDate date) {
+        return java.sql.Date.valueOf(date);
+    }
 }

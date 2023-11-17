@@ -28,6 +28,7 @@
 	rel="stylesheet">
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 	data-auto-replace-svg="nest"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 	<%
@@ -99,11 +100,12 @@
 		<!----------------Left Sidebar----------------------->
 		<div class="left-sidebar"></div>
 		<!----------------Main Sidebar----------------------->
-		<div class="tinder">
+			<div class="tinder">
 			<div class="tinder--status">
-				<i class="fa fa-remove"></i> <i class="fa fa-heart"></i>
+				<i class="fa-solid fa-remove " style="color: #160303;"></i>
+				<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
 			</div>
-
+			
 			<div class="tinder--cards">
 
 				<!--        Phương -->
@@ -141,6 +143,7 @@
 								</div>
 								<h4>${user.age}</h4>
 								<p>${user.introduce}</p>
+								<p style="display:none" id="userID2">${user.userID}</p>
 							</div>
 						</div>
 
