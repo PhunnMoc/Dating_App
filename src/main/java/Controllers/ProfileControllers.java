@@ -292,14 +292,12 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 		HttpSession session = request.getSession();
 		System.out.print("hahaa");
     	Account account = (Account) session.getAttribute("account");	
-    	ProfileDAO profileDAO = new ProfileDAO();
-    	
-    	Profile profile = profileDAO.GetProfile(account);
-    	if(profile!= null)
-    	{
-    		request.setAttribute("MyOwnProfile", profile);	
-    	}
-    	
+		/*
+		 * ProfileDAO profileDAO = new ProfileDAO();
+		 * 
+		 * Profile profile = profileDAO.GetProfile(account); if(profile!= null) {
+		 * request.setAttribute("MyOwnProfile", profile); }
+		 */
 		String userID = account.getUserID();
     	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
 //        request.setAttribute("listImage", listImage);
