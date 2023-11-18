@@ -19,6 +19,10 @@ public class MatchDAO {
 			+ "JOIN `datingapp`.`match`  AS b ON a.userID1 = b.userID2 AND a.userID2 = b.userID1\r\n"
 			+ "SET a.`MatchStatus` = 'Match' \r\n" + "WHERE a.`MatchStatus` = 'Chưa Match' AND a.matchID > 0;    ";
 	private static final String DELETE_MATCH = "DELETE FROM datingapp.match \r\n" + "WHERE userID1=? and  userID2=?";
+	private static final String SQL_UPDATE_ALLNoMatch ="UPDATE `datingapp`.`match` AS a\r\n"
+			+ "LEFT JOIN `datingapp`.`match` AS b ON a.userID1 = b.userID2 AND a.userID2 = b.userID1\r\n"
+			+ "SET a.`MatchStatus` = 'Chưa Match'\r\n"
+			+ "WHERE b.userID1 IS NULL ;";
 
 	public void updateMatchAll() throws SQLException {
 		try {
@@ -39,6 +43,10 @@ public class MatchDAO {
 			statement.setString(1, user1);
 			statement.setString(2, user2);
 			rowUpdated = statement.executeUpdate() > 0;
+			PreparedStatement safe = conn.prepareStatement(SQL_SAFE_UPDATES);
+			safe.executeUpdate();
+			PreparedStatement updateAllNoMatch=conn.prepareStatement(SQL_UPDATE_ALLNoMatch);
+			updateAllNoMatch.executeUpdate();
 		}
 		return rowUpdated;
 	}

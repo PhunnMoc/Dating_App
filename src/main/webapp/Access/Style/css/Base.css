@@ -99,7 +99,7 @@ nav {
     padding: 0;
     height: 100%;
     display: flex;
-    justify-content:space-between;
+/*     justify-content:space-between; */
     background: var(--color-theme);
 
 }

@@ -29,9 +29,19 @@
 	data-auto-replace-svg="nest"></script>
 </head>
 <body>
-	<%
-	Account username = (Account) session.getAttribute("user");
+		<%
+	Account account = (Account) session.getAttribute("account");
+
 	%>
+	<%
+	if (account == null) {
+	%>
+	<jsp:forward page="Login.jsp"></jsp:forward>
+	<%
+	}
+
+	%>
+
 	<nav>
 		<div class="nav-left">
 			<a href="./Match.html"> <img
@@ -121,8 +131,8 @@
        
       </div>
     </a>
-					</c:forEach>
-  <div>
+</c:forEach>
+  </div>
   
 </section>
 	
