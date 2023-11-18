@@ -5,31 +5,43 @@ import java.time.LocalTime;
 
 public class Message {
 	
-	private String idmessage ;
+	private int idmessage ;
 	private String id_Reciver;
 	private String id_Sender;
-	private LocalDate time ;
+	private LocalTime time ;
 	private String content;
 	
-	public Message(String idmessage, String id_reciver, String id_sender, LocalDate time, String content)
+	public Message(int iDMessage2, String id_reciver, String id_sender, LocalTime time2, String content)
 	{
-		this.idmessage = idmessage;
+		this.idmessage = iDMessage2;
 		this.id_Reciver = id_reciver;
 		this.id_Sender = id_sender;
-		this.time = time;
+		this.time = time2;
 		this.content = content;
 	}
-	public Message(LocalDate time, String content)
+	
+	public Message(String id_Reciver, String id_Sender, String content) {
+		super();
+		this.id_Reciver = id_Reciver;
+		this.id_Sender = id_Sender;
+		this.content = content;
+	}
+
+	public Message()
+	{
+		
+	}
+	public Message(LocalTime time, String content)
 	{
 		this.content=content;
 		this.time = time;
 	}
-	public String getIdmessage()
+	public int getIdmessage()
 	{
 		return idmessage;
 	}
 	
-	public void setIdmessage(String idmessage)
+	public void setIdmessage(int idmessage)
 	{
 		this.idmessage = idmessage;
 	}
@@ -54,12 +66,12 @@ public class Message {
 		this.id_Sender = id_sender;
 	}
 	
-	public LocalDate getTime()
+	public LocalTime getTime()
 	{
 		return time;
 	}
 	
-	public void setTime(LocalDate time)
+	public void setTime(LocalTime time)
 	{
 		this.time = time;
 	}

@@ -124,8 +124,11 @@
     
         <h3 class="card__heading">${user.name}</h3>
         <h4 class="card__category">${user.introduce}</h4>
+        <form action="<%=request.getContextPath()%>/pro/sayHello" method="POST">
+        <input value = "Hello!!" name = "content" style="diplay: none">
+        <button class="custom-btn btn-15 hello" name="sayHello" value="${user.userID}">GỬI LỜI CHÀO</button>
+        </form>
         <form action="<%=request.getContextPath()%>/pro/deleteMatch" method="POST">
-         <button class="custom-btn btn-15 hello" value="${user.userID}">GỬI LỜI CHÀO</button>
         <button class="custom-btn btn-15 nono" name="deleteMatch" value="${user.userID}">HỦY TƯƠNG TÁC</button>
         </form>
        

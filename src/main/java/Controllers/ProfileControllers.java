@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import DAO.AccountDAO;
+import DAO.ChatDAO;
 import DAO.LoginDAO;
 import DAO.MatchDAO;
 import DAO.ProfileDAO;
@@ -25,8 +26,10 @@ import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
 import Models.Match;
+import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
+import Handle.FarseToJSON;
 import Handle.ImageHandle;
 
 import java.text.ParseException;
@@ -43,6 +46,7 @@ public class ProfileControllers extends HttpServlet {
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
 	private MatchDAO matchDAO;
+	private ChatDAO chatDAO;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -60,6 +64,7 @@ public class ProfileControllers extends HttpServlet {
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
 		matchDAO=new MatchDAO();
+		chatDAO=new ChatDAO();
 	}
 
 	/**
@@ -100,9 +105,17 @@ public class ProfileControllers extends HttpServlet {
                 break;
 			 case "/deleteMatch":
 				 DeleteProfileMatch(request, response);
-               case "/showCard":
+				 break;
+			 case "/sayHello":
+				 SayHello(request, response);
+				 break; 
+				 
+            case "/showCard":
                 ListProfile(request, response);
                 	break;
+               case "/message":
+   				HandleMessage(request, response);
+   				break;
 			default:
 				System.out.println("df" );
 				break;
@@ -115,7 +128,10 @@ public class ProfileControllers extends HttpServlet {
 			} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	/**
@@ -358,7 +374,23 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 			dispatcher.forward(request, response);
 		
 	}
-   
+   private void SayHello(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		String userID1 = account.getUserID();
+		String userID2 = request.getParameter("sayHello");
+		String content = request.getParameter("content");
+		System.out.print(content);
+		if (content != null && !content.trim().isEmpty())
+		{
+			chatDAO.insertMessage(userID2, userID1, content);
+			content=null;
+		}
+				
+		response.sendRedirect(request.getContextPath() + "/pro/message");
+		
+	}
     //phương
        
 	     private void HandleMatch(HttpServletRequest request, HttpServletResponse response)
@@ -378,5 +410,34 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 			e.printStackTrace();
 		}
     }
+	     private void HandleMessage(HttpServletRequest request, HttpServletResponse response)
+	 			throws Exception {
+	 		System.out.print("aaaaaaa");
+	 		HttpSession session = request.getSession();
+	 		Account acc = new Account();		
+	 		acc = (Account) session.getAttribute("account");
+	 		List<Profile> list_profile = chatDAO.select_other_user_message(acc.getUserID());
+	 		request.setAttribute("list_other_user", list_profile);		
+	 		String listProfileJSON = FarseToJSON.listProfileToJSON(list_profile);
+	 		request.setAttribute("listProfileJSON", listProfileJSON);
+	 		
+	 		List<Message> lastmessage = chatDAO.select_message_last(acc.getUserID());
+	 		request.setAttribute("last_Message", lastmessage);
+
+	 		List<Message> listMessage = chatDAO.select_message_by_UserID(acc.getUserID());
+	 		request.setAttribute("list_Message", listMessage);
+	 		String listMessJSON = FarseToJSON.listMessageToJSON(listMessage);
+	 		request.setAttribute("listMessJSON", listMessJSON);
+	 		
+	 		Profile profile = new Profile();
+	 		profile = profileDAO.GetProfile(acc);
+	 		String image = ImageHandle.byteArrayToImage(profile.getImageData());
+	 		request.setAttribute("image", image);
+	 		request.setAttribute("profile", profile);
+	 		
+	 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/chat.jsp");
+	 		dispatcher.forward(request, response);
+	 	}
+	 	
 
 }
