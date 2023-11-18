@@ -25,11 +25,8 @@ import DAO.ProfileDAO;
 import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
-<<<<<<< HEAD
 import Models.Message;
-=======
 import Models.Match;
->>>>>>> main
 import Models.Profile;
 import Models.UserHobby;
 import Handle.ImageHandle;
@@ -48,11 +45,10 @@ public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
-<<<<<<< HEAD
+
 	private ChatDAO chatDAO;
-=======
 	private MatchDAO matchDAO;
->>>>>>> main
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -69,11 +65,8 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
-<<<<<<< HEAD
 		chatDAO = new ChatDAO();
-=======
 		matchDAO=new MatchDAO();
->>>>>>> main
 	}
 
 	/**
@@ -109,11 +102,9 @@ public class ProfileControllers extends HttpServlet {
 				System.out.println("hehe" );
 				HandleRegister(request, response);
 				break;
-<<<<<<< HEAD
 			case "/message":
 				HandleMessage(request, response);
 				break;
-=======
 			 case "/listMatch":
                 ListProfileMatch(request, response);
                 break;
@@ -122,7 +113,6 @@ public class ProfileControllers extends HttpServlet {
                case "/showCard":
                 ListProfile(request, response);
                 	break;
->>>>>>> main
 			default:
 				System.out.println("df" );
 				break;
