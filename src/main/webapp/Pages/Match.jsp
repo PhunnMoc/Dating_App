@@ -32,13 +32,15 @@
   <body>
   	<%	
 		Account account = (Account) session.getAttribute("account");
-		Profile profile = (Profile) request.getAttribute("profile");
-		String imageData = (String) request.getAttribute("image");
 	%>
 	<%
 	if (account == null) {
 	  response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp");
 	}
+	%>
+	 <%	
+		Profile profile = (Profile) request.getAttribute("profile");
+		String imageData = (String) request.getAttribute("image");
 	%>
     <nav>
       <div class="nav-left">
@@ -49,10 +51,10 @@
             <a href="./favourite.html"
             ><li><i class="fa-solid fa-heart-circle-check"></i></i></li
           ></a>
-          <a href="<%=request.getContextPath()%>/pro/chat"
+          <a href="<%=request.getContextPath()%>/pro/message"
             ><li><i class="fa-solid fa-message"></i></li
           ></a>
-          <a href="./Match.html"
+          <a href="<%=request.getContextPath()%>/pro/showCard"
             ><li><i class="fa-solid fa-user-group fa-beat " style="color:red;"></i></i></li
           ></a>
         </ul>

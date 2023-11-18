@@ -12,7 +12,7 @@ public class JDBCUtil {
 
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
-			String url = "jdbc:mysql://localhost:3306/datingapp";
+			String url = "jdbc:mysql://localhost:3306/datingapp?useSSL=false";
 			String username = "root";
 			String password = "123456";
 

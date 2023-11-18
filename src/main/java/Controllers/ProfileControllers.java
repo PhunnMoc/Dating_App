@@ -28,6 +28,7 @@ import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
 import Handle.ImageHandle;
+import Handle.FarseToJSON;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -94,6 +95,9 @@ public class ProfileControllers extends HttpServlet {
 				System.out.println("hehe" );
 				HandleRegister(request, response);
 				break;
+			case "/message":
+				HandleMessage(request, response);
+				break;
 			default:
 				System.out.println("df" );
 				break;
@@ -106,7 +110,10 @@ public class ProfileControllers extends HttpServlet {
 			} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	/**
@@ -159,7 +166,7 @@ public class ProfileControllers extends HttpServlet {
 		String introduce = request.getParameter("introduce");
 		
 		Part filePart = request.getPart("image");
-		if (filePart != null && filePart.getSize() > 0)
+		if (filePart != null)
 		{
 			InputStream fileContent = filePart.getInputStream();
 	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -169,14 +176,13 @@ public class ProfileControllers extends HttpServlet {
 	            byteArrayOutputStream.write(buffer, 0, bytesRead);
 	        }
 	        byte[] imageData = byteArrayOutputStream.toByteArray();
-	        System.out.println("ImageData không null= " + imageData);
+	        System.out.println("ImageData= " + imageData);
 	        Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce, imageData);
 	        profileDAO.updateProfileImage(profile);	        
 		}
 		else
 		{
-			System.out.println("ImageData123= " + filePart);
 			Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce);
 	        profileDAO.updateProfile(profile);
@@ -272,21 +278,35 @@ public class ProfileControllers extends HttpServlet {
             dispatcher.forward(request, response);
 		}		
 	}
-	
-	protected void ShowMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void HandleMessage(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		System.out.print("aaaaaaa");
+		HttpSession session = request.getSession();
+		Account acc = new Account();		
+		acc = (Account) session.getAttribute("account");
+		List<Profile> list_profile = chatDAO.select_other_user_message(acc.getUserID());
+		request.setAttribute("list_other_user", list_profile);		
+		String listProfileJSON = FarseToJSON.listProfileToJSON(list_profile);
+		request.setAttribute("listProfileJSON", listProfileJSON);
 		
+		List<Message> lastmessage = chatDAO.select_message_last(acc.getUserID());
+		request.setAttribute("last_Message", lastmessage);
+
+		List<Message> listMessage = chatDAO.select_message_by_UserID(acc.getUserID());
+		request.setAttribute("list_Message", listMessage);
+		String listMessJSON = FarseToJSON.listMessageToJSON(listMessage);
+		request.setAttribute("listMessJSON", listMessJSON);
 		
+		Profile profile = new Profile();
+		profile = profileDAO.GetProfile(acc);
+		String image = ImageHandle.byteArrayToImage(profile.getImageData());
+		request.setAttribute("image", image);
+		request.setAttribute("profile", profile);
 		
-		
-		String IDSender = request.getParameter("IDSender");
-		String IDReciever = request.getParameter("IDReciever");
-		
-		List< Message > listMessage = chatDAO.select_message_by_UserID(IDSender, IDReciever);
-		request.setAttribute("listMessage", listMessage);
-		RequestDispatcher rd = request.getRequestDispatcher("/Pages/");
-		rd.forward(request, response);
-		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/chat.jsp");
+		dispatcher.forward(request, response);
 	}
+	
 	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();		

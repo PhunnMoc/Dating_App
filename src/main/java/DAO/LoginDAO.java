@@ -21,13 +21,10 @@ public class LoginDAO {
 
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
-           if(rs.next()) {
+            while(rs.next()) {
             	acc.setEmail(rs.getString(1));
                 acc.setUserID(rs.getString(3));
             }
-           else {
-        	   acc = null;
-           }
         } catch (SQLException e) {
             e.printStackTrace();
         }
