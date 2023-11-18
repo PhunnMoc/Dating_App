@@ -49,7 +49,7 @@
             <a href="./favourite.html"
             ><li><i class="fa-solid fa-heart-circle-check"></i></i></li
           ></a>
-          <a href="./chat.html"
+          <a href="<%=request.getContextPath()%>/pro/chat"
             ><li><i class="fa-solid fa-message"></i></li
           ></a>
           <a href="./Match.html"

@@ -57,6 +57,14 @@ public class Profile {
 		this.name = name;
 	}
 
+
+	public Profile(String userID, String name, byte[] imageData) {
+		super();
+		this.userID = userID;
+		this.name = name;
+		this.imageData = imageData;
+	}
+
 	public byte[] getImageData() {
 		return imageData;
 	}

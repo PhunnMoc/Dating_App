@@ -18,11 +18,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import DAO.AccountDAO;
+import DAO.ChatDAO;
 import DAO.LoginDAO;
 import DAO.ProfileDAO;
 import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
+import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
 import Handle.ImageHandle;
@@ -40,6 +42,7 @@ public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
+	private ChatDAO chatDAO;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -56,6 +59,7 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
+		chatDAO = new ChatDAO();
 	}
 
 	/**
@@ -155,7 +159,7 @@ public class ProfileControllers extends HttpServlet {
 		String introduce = request.getParameter("introduce");
 		
 		Part filePart = request.getPart("image");
-		if (filePart != null)
+		if (filePart != null && filePart.getSize() > 0)
 		{
 			InputStream fileContent = filePart.getInputStream();
 	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -165,13 +169,14 @@ public class ProfileControllers extends HttpServlet {
 	            byteArrayOutputStream.write(buffer, 0, bytesRead);
 	        }
 	        byte[] imageData = byteArrayOutputStream.toByteArray();
-	        System.out.println("ImageData= " + imageData);
+	        System.out.println("ImageData không null= " + imageData);
 	        Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce, imageData);
 	        profileDAO.updateProfileImage(profile);	        
 		}
 		else
 		{
+			System.out.println("ImageData123= " + filePart);
 			Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce);
 	        profileDAO.updateProfile(profile);
@@ -266,6 +271,21 @@ public class ProfileControllers extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
 		}		
+	}
+	
+	protected void ShowMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		
+		String IDSender = request.getParameter("IDSender");
+		String IDReciever = request.getParameter("IDReciever");
+		
+		List< Message > listMessage = chatDAO.select_message_by_UserID(IDSender, IDReciever);
+		request.setAttribute("listMessage", listMessage);
+		RequestDispatcher rd = request.getRequestDispatcher("/Pages/");
+		rd.forward(request, response);
+		
 	}
 	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();

@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -188,6 +192,112 @@
 	<script src="../Access/Style/js/Base.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
-	<script src="../Access/Style/js/chat.js"></script>
+	<script>
+	$( '.friend-drawer--onhover' ).on( 'click',  function() {
+	    $( '.chat-bubble' ).hide('slow').show('slow'); 
+	  });
+	var $messages = $('.messages-content'), 
+      d, h, m, 
+      i = 0;
+ 
+	var wsUrl;
+	if (window.location.protocol === 'http:') {
+	    wsUrl = 'ws://';
+	} else {
+	    wsUrl = 'wss://';
+	}
+	 function updateScrollbar() {		  
+		    $messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {		  
+		      scrollInertia: 10,	  
+		      timeout: 0	  
+		    });	  
+		  }
+	// Thay đổi 'window.location.host' thành tên miền của bạn nếu cần thiết
+	var sender = "user1_id"; // Đặt giá trị sender tùy thuộc vào người dùng hiện tại
+	var receiver = "user2_id"; // Đặt giá trị receiver tùy thuộc vào người dùng khác
+	function setDate(){  
+	    d = new Date()	  
+	    if (m != d.getMinutes()) {	  
+	      m = d.getMinutes();	  
+	      $('<div class="timestamp">' + d.getHours() + ':' + m + '</div>').appendTo($('.message:last'));	  
+	    }	  
+	  }
+	var socket = new WebSocket(wsUrl + window.location.host + "/Dating_App/chat/" + sender + "/" + receiver);
+
+	    // Xử lý khi mở kết nối WebSocket
+	    socket.onopen = function (event) {
+	        console.log("WebSocket opened:", event);
+	    };
+
+	    // Xử lý khi nhận tin nhắn từ server WebSocket
+	    socket.onmessage = function (event) {
+	        console.log("Message received:", event.data);
+	        receiveMessage(event.data); // Hàm xử lý tin nhắn nhận được
+	    };
+
+	    // Xử lý khi đóng kết nối WebSocket
+	    socket.onclose = function (event) {
+	        console.log("WebSocket closed:", event);
+	    };
+
+	    // Hàm gửi tin nhắn
+	    function sendMessage(message) {
+	    	socket.send(message);
+	        
+	    }
+
+	    // Hàm xử lý tin nhắn nhận được
+	    function receiveMessage(message) {
+	        $('<div class="message new"><figure class="avatar"><img src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" /></figure>' + message + '</div>').appendTo($('.mCSB_container')).addClass('new');
+	        setDate();
+	        updateScrollbar();
+	    }
+
+	    // Xử lý khi nhấn nút Gửi tin nhắn
+	    $('.message-submit').click(function () {
+	        var messageInput = $('.message-input').val();
+	        if ($.trim(messageInput) !== '') {
+	            sendMessage(messageInput);
+	            insertMessage(messageInput);
+	        }
+	    });
+
+	    // Xử lý khi nhấn phím Enter
+	    $(window).on('keydown', function (e) {
+	        if (e.which === 13) {
+	            var messageInput = $('.message-input').val();
+	            if ($.trim(messageInput) !== '') {            	
+	            	sendMessage(messageInput);	
+	            	insertMessage(messageInput);
+	            }
+	            return false;
+	        }
+	    });
+
+	    // Hàm thêm tin nhắn vào giao diện
+	    function insertMessage(message) {
+	    	console.log("message:", message);
+	        $('<div class="message message-personal">' + message + '</div>').appendTo($('.mCSB_container')).addClass('new');
+	        setDate();
+	        $('.message-input').val(null);
+	        updateScrollbar();
+	    }
+	    
+
+	    // Bắt sự kiện khi click vào một người bạn
+	    $('.friend-drawer--onhover').on('click', function () {
+	        $('.chat-bubble').hide('slow').show('slow');
+	    });
+
+	    // Mở kết nối WebSocket khi trang được load
+		$(window).on('load', function () {
+		    socket.onopen();
+		    $messages.mCustomScrollbar();// Gọi sự kiện mở kết nối WebSocket
+		    // Các xử lý khác của bạn...
+		});
+
+	    // ... Các xử lý khác của bạn ...
+	
+	</script>
 </body>
 </html>
