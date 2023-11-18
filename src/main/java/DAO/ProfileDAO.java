@@ -170,7 +170,7 @@ statement.setDate(4, profile.getBirthDay());
     public boolean DeleteUserHobby(Account acc) throws SQLException {
         boolean rowUpdated;
         try (Connection conn = JDBCUtil.getConnection();
-                PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_ID);) {
+            PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_ID);) {
             statement.setString(1, acc.getUserID());
             rowUpdated = statement.executeUpdate() > 0;
         }

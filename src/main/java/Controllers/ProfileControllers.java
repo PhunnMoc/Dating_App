@@ -98,6 +98,8 @@ public class ProfileControllers extends HttpServlet {
 			 case "/listMatch":
                 ListProfileMatch(request, response);
                 break;
+			 case "/deleteMatch":
+				 DeleteProfileMatch(request, response);
                case "/showCard":
                 ListProfile(request, response);
                 	break;
@@ -330,18 +332,32 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
         dispatcher.forward(request, response);
     }
     
-       private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException, ClassNotFoundException {
-   		HttpSession session = request.getSession();
-    	Account account = (Account) session.getAttribute("account");	
+	private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
 		String userID = account.getUserID();
-    	List < Profile > ListProfileMatch = profileDAO.GeListProfileMatch(userID);
+		List<Profile> ListProfileMatch = profileDAO.GeListProfileMatch(userID);
 //        request.setAttribute("listImage", listImage);
-    	request.setAttribute("ListProfileMatch", ListProfileMatch);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
-        dispatcher.forward(request, response);
-    }
-
+		request.setAttribute("ListProfileMatch", ListProfileMatch);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
+		dispatcher.forward(request, response);
+	}
+	private void DeleteProfileMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		String userID1 = account.getUserID();
+		String userID2 = request.getParameter("deleteMatch");
+		boolean isDelete= matchDAO.deleteMatch(userID1, userID2);
+		if(isDelete)
+		{	
+			System.out.print(isDelete);
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pro/listMatch");
+			dispatcher.forward(request, response);
+		
+	}
    
     //phương
        

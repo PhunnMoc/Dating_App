@@ -1,10 +1,8 @@
 :root{
     --color-theme: linear-gradient(to bottom right, lightyellow, lightpink);
-<<<<<<< HEAD
-    --side-bar-color:inear-gradient(to bottom right, lightyellow, lightpink);
-=======
+
     --side-bar-color: linear-gradient(to bottom right, lightyellow, lightpink); 
->>>>>>> main
+
     --nav-bar-color: black;
     --box-ava: white;
     --color-theme-1: linear-gradient(to bottom right, lightyellow, lightpink);  
