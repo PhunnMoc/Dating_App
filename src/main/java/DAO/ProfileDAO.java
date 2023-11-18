@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import Models.Account;
 import Models.Hobby;
@@ -12,7 +13,7 @@ import Models.Profile;
 import Models.UserHobby;
 import Util.HandleExeption;
 import Util.JDBCUtil;
-
+import Handle.ImageHandle;
 public class ProfileDAO {
     private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, hobby.IDHobby\r\n"
             + "from userhobby inner join hobby \r\n"
@@ -27,6 +28,18 @@ public class ProfileDAO {
             + "where Userid = ?";
     private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
     private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
+    private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
+    		+ "    				where  profile.UserId <> ?\r\n"
+    		+ "    					AND profile.UserId not IN (select  B.userID2 as NO\r\n"
+    		+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
+    		+ "    							where  B.matchID IS NOT NULL)"
+			+ "			    ";
+	private static final String SELECT_MATCH_PROFILE= "select *from profile\r\n"
+			+ "    				where  profile.UserId <> ?\r\n"
+			+ "    					AND profile.UserId IN (select  B.userID2 as NO\r\n"
+			+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 =? AND B.MatchStatus='Match'\r\n"
+			+ "    							where  B.matchID IS NOT NULL)"
+			+ "";
 
     public Profile GetProfile(Account accData) throws ClassNotFoundException {
         Profile profile = new Profile();
@@ -47,7 +60,7 @@ public class ProfileDAO {
                 profile.setAge(rs.getInt(3));
                 profile.setGender(rs.getString(4));
                 profile.setBirthDay(rs.getDate(5));
-                profile.setRelationship(rs.getString(6));
+profile.setRelationship(rs.getString(6));
                 profile.setHeight(rs.getInt(7));
                 profile.setZodiac(rs.getString(8));
                 profile.setAddress(rs.getString(9));
@@ -120,7 +133,7 @@ public class ProfileDAO {
             statement.setString(1, profile.getName());
             statement.setInt(2, profile.getAge());
             statement.setString(3, profile.getGender());
-            statement.setDate(4, profile.getBirthDay());
+statement.setDate(4, profile.getBirthDay());
             statement.setString(5, profile.getRelationship());
             statement.setInt(6, profile.getHeight());
             statement.setString(7, profile.getZodiac());
@@ -157,7 +170,7 @@ public class ProfileDAO {
     public boolean DeleteUserHobby(Account acc) throws SQLException {
         boolean rowUpdated;
         try (Connection conn = JDBCUtil.getConnection();
-                PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_ID);) {
+            PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_ID);) {
             statement.setString(1, acc.getUserID());
             rowUpdated = statement.executeUpdate() > 0;
         }
@@ -187,5 +200,81 @@ public class ProfileDAO {
     	 e.printStackTrace();
     	 }
    }
-}
 
+	
+	//phương
+	public List < Profile > GeListProfile(String userID) {
+        List < Profile > listPr = new ArrayList < > ();
+// Step 1: Establishing a Connection
+        try  {
+        	Connection conn = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_CARD_PROFILE);
+            preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, userID);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String UserID=rs.getString(1);
+//                if(UserID.equals(main.getUserID()))
+                {
+                	String Name=rs.getString(2);
+					int Age = rs.getInt(3);
+					String Gender = rs.getString(4);
+					Date BirthDay = rs.getDate(5);
+					String Relationship = rs.getString(6);
+					int Height = rs.getInt(7);
+					String Zodiac = rs.getString(8);
+					String Address = rs.getString(9);
+					String Introduce = rs.getString(10);
+					byte[] Url_image = rs.getBytes(11);
+					String imageURL = ImageHandle.byteArrayToImage(Url_image);
+					
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
+                }
+                
+            }
+        } catch (SQLException e) {
+        	HandleExeption.printSQLException(e);
+        }
+        return listPr;
+    }
+	public List < Profile > GeListProfileMatch(String userID) {
+        List < Profile > listPr = new ArrayList < > ();
+        // Step 1: Establishing a Connection
+        try  {
+        	Connection conn = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_MATCH_PROFILE);
+            preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, userID);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String UserID=rs.getString(1);
+//                if(UserID.equals(main.getUserID()))
+                {
+                	String Name=rs.getString(2);
+					int Age = rs.getInt(3);
+					String Gender = rs.getString(4);
+					Date BirthDay = rs.getDate(5);
+					String Relationship = rs.getString(6);
+					int Height = rs.getInt(7);
+					String Zodiac = rs.getString(8);
+					String Address = rs.getString(9);
+					String Introduce = rs.getString(10);
+					byte[] Url_image = rs.getBytes(11);
+					String imageURL = ImageHandle.byteArrayToImage(Url_image);
+					
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
+                }
+                
+            }
+        } catch (SQLException e) {
+        	HandleExeption.printSQLException(e);
+        }
+        return listPr;
+    }
+	}

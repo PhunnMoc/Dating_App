@@ -20,11 +20,16 @@ import javax.servlet.http.Part;
 import DAO.AccountDAO;
 import DAO.ChatDAO;
 import DAO.LoginDAO;
+import DAO.MatchDAO;
 import DAO.ProfileDAO;
 import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
+<<<<<<< HEAD
 import Models.Message;
+=======
+import Models.Match;
+>>>>>>> main
 import Models.Profile;
 import Models.UserHobby;
 import Handle.ImageHandle;
@@ -43,7 +48,11 @@ public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
+<<<<<<< HEAD
 	private ChatDAO chatDAO;
+=======
+	private MatchDAO matchDAO;
+>>>>>>> main
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -60,7 +69,11 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
+<<<<<<< HEAD
 		chatDAO = new ChatDAO();
+=======
+		matchDAO=new MatchDAO();
+>>>>>>> main
 	}
 
 	/**
@@ -70,6 +83,7 @@ public class ProfileControllers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getPathInfo();
+		
 		request.setCharacterEncoding("UTF-8");
 		try {
 			switch (action) {
@@ -95,9 +109,20 @@ public class ProfileControllers extends HttpServlet {
 				System.out.println("hehe" );
 				HandleRegister(request, response);
 				break;
+<<<<<<< HEAD
 			case "/message":
 				HandleMessage(request, response);
 				break;
+=======
+			 case "/listMatch":
+                ListProfileMatch(request, response);
+                break;
+			 case "/deleteMatch":
+				 DeleteProfileMatch(request, response);
+               case "/showCard":
+                ListProfile(request, response);
+                	break;
+>>>>>>> main
 			default:
 				System.out.println("df" );
 				break;
@@ -117,12 +142,27 @@ public class ProfileControllers extends HttpServlet {
 		}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+* @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		 String requestType = request.getHeader("X-Request-Type");
+		
+	    if ("HandleMatch".equals(requestType)) {
+	    	try {
+				HandleMatch(request, response);
+			} catch (ClassNotFoundException | SQLException | IOException | ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	    } else {
+	       doGet(request, response);
+	    }
+		
+
+		
 	}
 
 	private void ShowProfile(HttpServletRequest request, HttpServletResponse response)
@@ -166,7 +206,7 @@ public class ProfileControllers extends HttpServlet {
 		String introduce = request.getParameter("introduce");
 		
 		Part filePart = request.getPart("image");
-		if (filePart != null)
+		if (filePart != null && filePart.getSize() > 0)
 		{
 			InputStream fileContent = filePart.getInputStream();
 	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -185,7 +225,7 @@ public class ProfileControllers extends HttpServlet {
 		{
 			Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce);
-	        profileDAO.updateProfile(profile);
+profileDAO.updateProfile(profile);
 		}
 		List < UserHobby > listHobby = profileDAO.GetHobby(account);
 		request.setAttribute("listHobby", listHobby);
@@ -216,7 +256,7 @@ public class ProfileControllers extends HttpServlet {
 		request.setAttribute("listHobby", listHobby);		
 		String image = ImageHandle.byteArrayToImage(profile.getImageData());
 		request.setAttribute("image", image);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pro/showCard");
 		dispatcher.forward(request, response);
 	}
 	
@@ -226,11 +266,12 @@ public class ProfileControllers extends HttpServlet {
         
         Account account = new Account();
         account = loginDao.validate(email, password);
+        System.out.print(account);
         String url = "";
         if (account != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("account", account);
-			url = "/Pages/Match.jsp";
+			url = "/pro/showCard";
 			Profile profile = new Profile();
 			profile = profileDAO.GetProfile(account);
 			List<UserHobby> listHobby = profileDAO.GetHobby(account);
@@ -238,8 +279,7 @@ public class ProfileControllers extends HttpServlet {
 			request.setAttribute("listHobby", listHobby);		
 			String image = ImageHandle.byteArrayToImage(profile.getImageData());
 			request.setAttribute("image", image);
-		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");
-		    
+		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	    
 		} else {
 			request.setAttribute("error_login", "Email hoặc password không chính xác");
 			url = "/Pages/Login.jsp";
@@ -250,8 +290,7 @@ public class ProfileControllers extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
-	
-	protected void HandleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void HandleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -320,6 +359,76 @@ public class ProfileControllers extends HttpServlet {
 		String firstPart = parts[0];
 		return Integer.parseInt(firstPart);
 	}
-	
+	  //phương
+    private void ListProfile(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		System.out.print("hahaa");
+    	Account account = (Account) session.getAttribute("account");	
+		
+		  ProfileDAO profileDAO = new ProfileDAO();
+		  
+		  Profile profile = profileDAO.GetProfile(account); if(profile!= null) {
+		  request.setAttribute("MyOwnProfile", profile); }
+		 
+		String userID = account.getUserID();
+    	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
+//        request.setAttribute("listImage", listImage);
+        request.setAttribute("ListProfile", ListProfile);
+        
+    	String userid = account.getUserID();
+    	List < Profile > ListProfileMatch = profileDAO.GeListProfileMatch(userid);
+//        request.setAttribute("listImage", listImage);
+    	request.setAttribute("ListProfileMatch", ListProfileMatch);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+	private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		String userID = account.getUserID();
+		List<Profile> ListProfileMatch = profileDAO.GeListProfileMatch(userID);
+//        request.setAttribute("listImage", listImage);
+		request.setAttribute("ListProfileMatch", ListProfileMatch);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
+		dispatcher.forward(request, response);
+	}
+	private void DeleteProfileMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		String userID1 = account.getUserID();
+		String userID2 = request.getParameter("deleteMatch");
+		boolean isDelete= matchDAO.deleteMatch(userID1, userID2);
+		if(isDelete)
+		{	
+			System.out.print(isDelete);
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pro/listMatch");
+			dispatcher.forward(request, response);
+		
+	}
+   
+    //phương
+       
+	     private void HandleMatch(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException, ClassNotFoundException {
+   		HttpSession session = request.getSession();
+    	Account account = (Account) session.getAttribute("account");	
+		String userID1 = account.getUserID();
+		String userID2 = request.getParameter("userID");
+//		System.out.print(userID2);
+		Match match=new Match(LocalDate.now(),userID1,userID2);
+        // Call DAO to save the user ID to the database		
+		try {
+			matchDAO.insertMatch(match);
+			matchDAO.updateMatchAll();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }

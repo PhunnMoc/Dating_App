@@ -1,8 +1,10 @@
 package Util;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class JDBCUtil {
 
@@ -14,7 +16,7 @@ public class JDBCUtil {
 
 			String url = "jdbc:mysql://localhost:3306/datingapp?useSSL=false";
 			String username = "root";
-			String password = "123456";
+			String password = "trinhthuphuong";
 
 			conn = DriverManager.getConnection(url, username, password);
 
@@ -39,4 +41,13 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 	}
+	public static void main() {
+		System.out.println(" aaaa!");
+		Connection a= getConnection();
+		System.out.println(" cfcfcccf!");
+		
+	}
+	public static Date getSQLDate(LocalDate date) {
+        return java.sql.Date.valueOf(date);
+    }
 }

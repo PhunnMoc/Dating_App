@@ -26,12 +26,16 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+<link rel="stylesheet"
+ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+ crossorigin="anonymous">
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 	data-auto-replace-svg="nest"></script>
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-	<%
+	<%-- 	<%
 	Account account = (Account) session.getAttribute("account");
 	Profile profile = (Profile) request.getAttribute("MyOwnProfile");
 	String imageData = (String) request.getAttribute("image");
@@ -48,7 +52,7 @@
 	<jsp:forward page="/pro/showCard"></jsp:forward>
 	<%
 	}
-	%>
+	%> --%>
 
 	<nav>
 		<div class="nav-left">
@@ -58,7 +62,7 @@
 			<ul class="nav-icon">
 				<a href="./favourite.html"><li><i
 						class="fa-solid fa-heart-circle-check"></i></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/message"><li><i
+				<a href="<%=request.getContextPath()%>/chat/list_chat"><li><i
 						class="fa-solid fa-message"></i></li></a>
 				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i
 						class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
@@ -68,7 +72,7 @@
 
 			</ul>
 		</div>
-		<div class="nav-right">
+<%-- 		<div class="nav-right">
 			<div class="nav-user-icon online" onclick="settingsMenuToggle()">
 				<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
 			</div>
@@ -89,97 +93,64 @@
 				<hr />
 				<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
 					class="settings-icon logout_icon " /> <a
-					href="<%=request.getContextPath()%>/pro/Logout">Logout
-					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
+					href="<%=request.getContextPath()%>/pro/Logout">Logout <img
+					src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
 				</a>
 			</div>
-		</div>
-		</div>
+		</div> --%>
+		
 	</nav>
 	<div class="container-app">
 		<!----------------Left Sidebar----------------------->
 		<div class="left-sidebar"></div>
 		<!----------------Main Sidebar----------------------->
-			<div class="tinder">
-			<div class="tinder--status">
-				<i class="fa-solid fa-remove " style="color: #160303;"></i>
-				<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
-			</div>
-			
-			<div class="tinder--cards">
 
-				<!--        Phương -->
-				
-					<c:forEach var="user" items="${ListProfile}">
-						<div class="tinder--card " id="myCard">
-							<img src="data:image/jpeg;base64,${user.getImageURL()}">
-							<div class="infor-hide">
-								<div class="main-infor">
-									<h3>${user.name}</h3>
-									Độ tuổi:
-									<h4>${user.age}</h4>
-									<div>
-										Cung hoàng đạo:
-										<h4>${user.zodiac}</h4>
-										Sinh nhật:
-										<h4>${user.birthDay}</h4>
-									</div>
-									Giới tính:
-									<h4>${user.gender}</h4>
-									Tình trạng mối quan hệ:
-									<h4>${user.relationship}</h4>
-									Chiều cao:
-									<h4>${user.height}</h4>
-									<h5>${user.introduce}</h5>
-
-								</div>
-							</div>
-							<div class="tinder--card--text">
-								<div
-									style="display: flex; align-items: center; justify-content: start;">
-									<h3>${user.name}</h3>
-									<i class="fa-solid fa-circle-info fa-2xl showInf"
-										style="color: #ffffff;"></i>
-								</div>
-								<h4>${user.age}</h4>
-								<p>${user.introduce}</p>
-								<p style="display:none" id="userID2">${user.userID}</p>
-							</div>
-						</div>
-
-					</c:forEach>
-						<h4>Đã hết, vui lòng reload...</h4>
-				<!--        Phương -->
-			</div>
-
-			<div class="tinder--buttons">
-				<button id="nope">
-					<i class="fa-solid fa-x fa-beat " style="color: #160303;"></i>
-				</button>
-				<button id="love">
-					<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
-				</button>
-			</div>
-		</div>
 		<!----------------Right Sidebar----------------------->
+<div class="row">
+  <!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
+  <div class="container">
+<h3>Sở thích</h3>
+   <div class="container text-left">
+
+    <a href="<%=request.getContextPath()%>/new"
+     class="btn btn-success">Add</a>
+   </div>
+   <br>
+   <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th>Tên sở thích</th>
+<!--       <th>Target Date</th>
+      <th>Todo Status</th> -->
+      <th>Actions</th>
+     </tr>
+    </thead>
+    <tbody>
+     <!--   for (Todo todo: todos) {  -->
+     <c:forEach var="todo" items="${listTodo}">
+
+      <tr>
+       <td><c:out value="${todo.title}" /></td>
+       <td><c:out value="${todo.formatDate}" /></td>   
+       <td><c:out value="${todo.status}" /></td>
+
+       <td><a href="edit?id=<c:out value='${todo.id}' />">Edit</a>
+        &nbsp;&nbsp;&nbsp;&nbsp; <a
+        href="delete?id=<c:out value='${todo.id}' />">Delete</a></td>
+
+       <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
+                 <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->
+      </tr>
+     </c:forEach>
+     <!-- } -->
+    </tbody>
+
+   </table>
+  </div>
+ </div>
 	</div>
-	-->
-	<script src="../Access/Style/js/Base.js"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var showInfButtons = document.querySelectorAll('.showInf');
 
-			showInfButtons.forEach(function(button) {
-				button.addEventListener('click', function() {
-					var cardText = button.closest('.tinder--card')
-							.querySelector('.tinder--card--text');
-					cardText.style.display = 'none';
-					button.closest('.tinder--card').style.overflow = 'scroll';
-				});
-			});
-		});
-	</script>
 </body>
 <script src="../Access/Style/js/Card.js"></script>
 </html>
