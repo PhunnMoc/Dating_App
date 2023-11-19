@@ -36,36 +36,39 @@
 	data-auto-replace-svg="nest"></script>
 </head>
 <body>
+
 	<%
 	Account account = (Account) session.getAttribute("account");
 	%>
 	<%
 	if (account == null) {
 	%>
-	<%
-	response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp");
-	%>
+	<jsp:forward page="Login.jsp"></jsp:forward>
 	<%
 	}
+
 	%>
-	<%
+		<%
 	String listMessageJSON = (String) request.getAttribute("listMessJSON");
 	String listProfileJSON = (String) request.getAttribute("listProfileJSON");
-	String imageData = (String) request.getAttribute("image");
 	Profile profile = (Profile) request.getAttribute("profile");
+	String imageData = (String) request.getAttribute("image");
 	%>
+
 	<nav>
 		<div class="nav-left">
-			<a href="./Match.html"> <img
+			<a href="<%=request.getContextPath()%>/pro/showCard"> <img
 				src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
 			</a>
 			<ul class="nav-icon">
-				<a href="./favourite.html"><li><i
+				<a href="<%=request.getContextPath()%>/pro/listFavorite"><li><i
 						class="fa-solid fa-heart-circle-check"></i></i></li></a>
 				<a href="<%=request.getContextPath()%>/pro/message"><li><i
 						class="fa-solid fa-message fa-beat" style="color: red;"></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i
-						class="fa-solid fa-user-group  "></i></i></li></a>
+				<a href="<%=request.getContextPath()%>/pro/listMatch"><li><i
+						class="fa-solid fa-user-group  " ></i></i></li></a>
+
+
 			</ul>
 		</div>
 		<div class="nav-right">
@@ -75,12 +78,9 @@
 		</div>
 		<!----------------Settings Menu"----------------------->
 		<div class="settings-menu">
-			<div id="dark-btn">
-				<span></span>
-			</div>
 			<div class="settings-menu-inner">
 				<div class="user-profile">
-					<div class="nav-user-icon online">
+					<div class="nav-user-icon">
 						<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
 					</div>
 					<div>
@@ -91,7 +91,7 @@
 				</div>
 				<hr />
 				<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
-					class="settings-icon" /> <a
+					class="settings-icon logout_icon " /> <a
 					href="<%=request.getContextPath()%>/pro/Logout">Logout
 					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
 				</a>

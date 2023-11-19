@@ -29,9 +29,10 @@
 	data-auto-replace-svg="nest"></script>
 </head>
 <body>
-		<%
+	<%
 	Account account = (Account) session.getAttribute("account");
-
+	Profile profile = (Profile) request.getAttribute("MyOwnProfile");
+	String imageData = (String) request.getAttribute("image");
 	%>
 	<%
 	if (account == null) {
@@ -40,73 +41,55 @@
 	<%
 	}
 
+	if (profile == null) {
+	%>
+	<jsp:forward page="/pro/showCard"></jsp:forward>
+	<%
+	}
 	%>
 
 	<nav>
 		<div class="nav-left">
-			<a href="./Match.html"> <img
+			<a href="<%=request.getContextPath()%>/pro/showCard"> <img
 				src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
 			</a>
 			<ul class="nav-icon">
-				<a href="./favourite.html"><li><i
+				<a href="<%=request.getContextPath()%>/pro/listFavorite"><li><i
 						class="fa-solid fa-heart-circle-check"></i></i></li></a>
-				<a href="<%=request.getContextPath()%>/chat/list_chat"><li><i class="fa-solid fa-message"></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i
+				<a href="<%=request.getContextPath()%>/pro/message"><li><i
+						class="fa-solid fa-message"></i></li></a>
+				<a href="<%=request.getContextPath()%>/pro/listMatch"><li><i
 						class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
+
+
 			</ul>
 		</div>
 		<div class="nav-right">
 			<div class="nav-user-icon online" onclick="settingsMenuToggle()">
-				<img src="https://i.postimg.cc/44VbNwBf/avatar.png" />
+				<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
 			</div>
 		</div>
 		<!----------------Settings Menu"----------------------->
 		<div class="settings-menu">
-			<div id="dark-btn">
-				<span></span>
-			</div>
 			<div class="settings-menu-inner">
 				<div class="user-profile">
-					<img src="https://i.postimg.cc/cHg22LhR/profile-pic.png" />
+					<div class="nav-user-icon">
+						<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
+					</div>
 					<div>
-						<p>Huynh Hong Khanh</p>
-						<a href="./InforLogin">See your profile</a>
+						<p><%=profile.getName()%></p>
+						<a href="<%=request.getContextPath()%>/pro/list">Thông tin cá
+							nhân</a>
 					</div>
 				</div>
 				<hr />
-				<div class="user-profile">
-					<img src="https://i.postimg.cc/hv3nx52s/feedback.png" />
-					<div>
-						<p>Give Feedback</p>
-						<a href="#">Help us to improve the new design</a>
-					</div>
-				</div>
-				<hr />
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/QCcPNYRV/setting.png"
-						class="settings-icon" /> <a href="#">Settings & Privacy <img
-						src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/C5tydfK6/help.png"
-						class="settings-icon" /> <a href="#">Help & Support<img
-						src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/5yt1XVSj/display.png"
-						class="settings-icon" /> <a href="#">Display & Accessibility
-						<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
-				<div class="settings-links">
-					<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
-						class="settings-icon" /> <a href="#">Logout <img
-						src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
-					</a>
-				</div>
+				<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
+					class="settings-icon logout_icon " /> <a
+					href="<%=request.getContextPath()%>/pro/Logout">Logout
+					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
+				</a>
 			</div>
+		</div>
 		</div>
 	</nav>
 	
@@ -124,11 +107,8 @@
     
         <h3 class="card__heading">${user.name}</h3>
         <h4 class="card__category">${user.introduce}</h4>
-        <form action="<%=request.getContextPath()%>/pro/sayHello" method="POST">
-        <input value = "Hello!!" name = "content" style="diplay: none">
-        <button class="custom-btn btn-15 hello" name="sayHello" value="${user.userID}">GỬI LỜI CHÀO</button>
-        </form>
         <form action="<%=request.getContextPath()%>/pro/deleteMatch" method="POST">
+         <button class="custom-btn btn-15 hello" value="${user.userID}">GỬI LỜI CHÀO</button>
         <button class="custom-btn btn-15 nono" name="deleteMatch" value="${user.userID}">HỦY TƯƠNG TÁC</button>
         </form>
        

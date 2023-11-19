@@ -111,6 +111,10 @@ input:focus {
 .friend-drawer .time {
   color: grey;
 }
+.friend-drawer--onhover:active {
+  background: #c5b3b6;;
+  cursor: pointer;
+}
 .friend-drawer--onhover:hover {
   background: #77b3ee;
   cursor: pointer;

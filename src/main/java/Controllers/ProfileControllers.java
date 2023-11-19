@@ -116,6 +116,9 @@ public class ProfileControllers extends HttpServlet {
                case "/message":
    				HandleMessage(request, response);
    				break;
+               case "/listFavorite":
+   				ListProfileFavorite(request, response);
+   				break;
 			default:
 				System.out.println("df" );
 				break;
@@ -339,11 +342,10 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
     	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("ListProfile", ListProfile);
-        
-    	String userid = account.getUserID();
-    	List < Profile > ListProfileMatch = profileDAO.GeListProfileMatch(userid);
-//        request.setAttribute("listImage", listImage);
-    	request.setAttribute("ListProfileMatch", ListProfileMatch);
+        Profile profile1 = new Profile();
+ 		profile1 = profileDAO.GetProfile(account);
+ 		String image = ImageHandle.byteArrayToImage(profile1.getImageData());
+ 		request.setAttribute("image", image);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
         dispatcher.forward(request, response);
     }
@@ -353,9 +355,16 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		String userID = account.getUserID();
+		  Profile profile = profileDAO.GetProfile(account);
+		  if(profile!= null) {
+		  request.setAttribute("MyOwnProfile", profile); }
 		List<Profile> ListProfileMatch = profileDAO.GeListProfileMatch(userID);
 //        request.setAttribute("listImage", listImage);
 		request.setAttribute("ListProfileMatch", ListProfileMatch);
+		Profile profile1 = new Profile();
+ 		profile1 = profileDAO.GetProfile(account);
+ 		String image = ImageHandle.byteArrayToImage(profile1.getImageData());
+ 		request.setAttribute("image", image);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -438,6 +447,34 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 	 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/chat.jsp");
 	 		dispatcher.forward(request, response);
 	 	}
+	     private void ListProfileFavorite(HttpServletRequest request, HttpServletResponse response)
+	 			throws ServletException, IOException, ClassNotFoundException {
+	 		HttpSession session = request.getSession();
+	 		System.out.print("hahaa");
+	 		Account account = (Account) session.getAttribute("account");
+
+	 		ProfileDAO profileDAO = new ProfileDAO();
+
+	 		Profile profile = profileDAO.GetProfile(account);
+	 		if (profile != null) {
+	 			request.setAttribute("MyOwnProfile", profile);
+	 		}
+	 		List<Hobby> listAllHobby = profileDAO.GetAllHobbies();
+	 		request.setAttribute("listAllHobby", listAllHobby);
+	 		
+	 		String idhobby = request.getParameter("idHobby");
+	 		System.out.println("idHobby: " + idhobby);
+	         List<Profile> ListProfile = profileDAO.GeListProfileFavorite(idhobby);
+	         request.setAttribute("ListProfileFavorite", ListProfile);
+	         Profile profile1 = new Profile();
+	  		profile1 = profileDAO.GetProfile(account);
+	  		String image = ImageHandle.byteArrayToImage(profile1.getImageData());
+	  		request.setAttribute("image", image);
+	 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListFavorite.jsp");
+	 		dispatcher.forward(request, response);
+
+	 	}
+
 	 	
 
 }

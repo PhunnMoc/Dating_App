@@ -40,8 +40,13 @@ public class ProfileDAO {
 			+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 =? AND B.MatchStatus='Match'\r\n"
 			+ "    							where  B.matchID IS NOT NULL)"
 			+ "";
+	private static final String SELECT_FAVORITE_PROFILE= "SELECT Profile.* \r\n"
+			+ "    				FROM Profile \r\n"
+			+ "    				JOIN userHobby ON Profile.UserId = userHobby.UserID\r\n"
+			+ "    				WHERE userHobby.IDHobby =?\r\n"
+			+ "";
 
-    public Profile GetProfile(Account accData) throws ClassNotFoundException {
+	public Profile GetProfile(Account accData) throws ClassNotFoundException {
         Profile profile = new Profile();
 
         try {
@@ -60,7 +65,7 @@ public class ProfileDAO {
                 profile.setAge(rs.getInt(3));
                 profile.setGender(rs.getString(4));
                 profile.setBirthDay(rs.getDate(5));
-profile.setRelationship(rs.getString(6));
+                profile.setRelationship(rs.getString(6));
                 profile.setHeight(rs.getInt(7));
                 profile.setZodiac(rs.getString(8));
                 profile.setAddress(rs.getString(9));
@@ -117,8 +122,10 @@ profile.setRelationship(rs.getString(6));
             while (rs.next()) {
                 String iDhobby = rs.getString(1);
                 String hobbyName = rs.getString(2);
+                byte[] Url_image = rs.getBytes(3);
+				String imageURL = ImageHandle.byteArrayToImage(Url_image);
 
-                hobbies.add(new Hobby(iDhobby, hobbyName));
+                hobbies.add(new Hobby(iDhobby, hobbyName,imageURL));
             }
         } catch (SQLException e) {
             HandleExeption.printSQLException(e);
@@ -276,5 +283,42 @@ statement.setDate(4, profile.getBirthDay());
         	HandleExeption.printSQLException(e);
         }
         return listPr;
+    }
+	public List < Profile > GeListProfileFavorite(String IDHobby) {
+		List < Profile > listPr = new ArrayList < > ();
+		// Step 1: Establishing a Connection
+		        try  {
+		        	Connection conn = JDBCUtil.getConnection();
+		            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_FAVORITE_PROFILE);
+		            preparedStatement.setString(1, IDHobby);
+		            // Step 3: Execute the query or update query
+		            System.out.print(preparedStatement);
+		            ResultSet rs = preparedStatement.executeQuery();
+
+		            // Step 4: Process the ResultSet object.
+		            while (rs.next()) {
+		                String UserID=rs.getString(1);
+//		                if(UserID.equals(main.getUserID()))
+		                {
+		                	String Name=rs.getString(2);
+							int Age = rs.getInt(3);
+							String Gender = rs.getString(4);
+							Date BirthDay = rs.getDate(5);
+							String Relationship = rs.getString(6);
+							int Height = rs.getInt(7);
+							String Zodiac = rs.getString(8);
+							String Address = rs.getString(9);
+							String Introduce = rs.getString(10);
+							byte[] Url_image = rs.getBytes(11);
+							String imageURL = ImageHandle.byteArrayToImage(Url_image);
+							
+							listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
+		                }
+		                
+		            }
+		        } catch (SQLException e) {
+		        	HandleExeption.printSQLException(e);
+		        }
+		        return listPr;
     }
 	}

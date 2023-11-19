@@ -52,3 +52,10 @@ body{
   dl, ol, ul {
     margin: 0 !important;
 }
+.title-left{
+    color: rgb(217, 55, 101);
+    font-size: 2em;
+    margin-top: 40px;
+    margin-bottom: 2px;
+    font-weight: 900;
+}

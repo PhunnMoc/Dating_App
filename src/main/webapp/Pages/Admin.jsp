@@ -121,23 +121,19 @@
     <thead>
      <tr>
       <th>Tên sở thích</th>
-<!--       <th>Target Date</th>
-      <th>Todo Status</th> -->
+      <th>Ảnh tượng trưng</th> 
       <th>Actions</th>
      </tr>
     </thead>
     <tbody>
-     <!--   for (Todo todo: todos) {  -->
-     <c:forEach var="todo" items="${listTodo}">
+     <c:forEach var="hobby" items="${listHobby}">
 
       <tr>
-       <td><c:out value="${todo.title}" /></td>
-       <td><c:out value="${todo.formatDate}" /></td>   
-       <td><c:out value="${todo.status}" /></td>
-
-       <td><a href="edit?id=<c:out value='${todo.id}' />">Edit</a>
+       <td><c:out value="${hobby.title}" /></td>
+       <td><c:out value="${hobby.formatDate}" /></td>   
+       <td><a href="edit?id=<c:out value='${hobby.id}' />">Edit</a>
         &nbsp;&nbsp;&nbsp;&nbsp; <a
-        href="delete?id=<c:out value='${todo.id}' />">Delete</a></td>
+        href="delete?id=<c:out value='${hobby.id}' />">Delete</a></td>
 
        <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
                  <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->

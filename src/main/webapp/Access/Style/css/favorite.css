@@ -1,11 +1,11 @@
-/* Thoại */
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 * {
     box-sizing: border-box;
 }
 .custom-img {
-    width: 100%; /* Đặt kích thước chiều rộng thành 50% */
-    height:200px; /* Giữ tỷ lệ khung hình */
+    width: 100%; /* Ä�áº·t kÃ­ch thÆ°á»›c chiá»�u rá»™ng thÃ nh 50% */
+    height:200px; /* Giá»¯ tá»· lá»‡ khung hÃ¬nh */
     border-radius: 5%;
     cursor: pointer;
 }
@@ -16,23 +16,17 @@
     color: #fff;
     font-weight: 700;
     transform: translate(-50%, -50%);
-    background-color: transparent; /* Tạo một nền mờ trắng cho văn bản */
-    padding: 0px; /* Tùy chỉnh padding theo ý muốn */
+    background-color: transparent; /* Táº¡o má»™t ná»�n má»� tráº¯ng cho vÄƒn báº£n */
+    padding: 0px; /* TÃ¹y chá»‰nh padding theo Ã½ muá»‘n */
     font-size: 30px;
     border: #000;
     cursor: pointer;
 }
 .left-sidebar {
     overflow-y: scroll ;
+    overflow-x: hidden;
 }
 
-h4{
-    color: rgb(217, 55, 101);
-    font-size: 2em;
-    margin-top: 40px;
-    margin-bottom: 2px;
-    font-weight: 900;
-}
 dl, ol, ul {
     margin: 0 !important;
 }
@@ -44,5 +38,4 @@ dl, ol, ul {
 i {
     color: white;
     font-size: 29px;
-    padding: 0px 22px;
 }
