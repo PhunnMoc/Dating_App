@@ -59,7 +59,7 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
-		matchDAO=new MatchDAO();
+		matchDAO = new MatchDAO();
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class ProfileControllers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getPathInfo();
-		
+
 		request.setCharacterEncoding("UTF-8");
 		try {
 			switch (action) {
@@ -80,64 +80,90 @@ public class ProfileControllers extends HttpServlet {
 				updateHobby(request, response);
 				break;
 			case "/list":
-				System.out.println("hehe" );
+				System.out.println("hehe");
 				ShowProfile(request, response);
 				break;
 			case "/Login":
-				System.out.println("hehe" );
+				System.out.println("hehe");
 				authenticate(request, response);
 				break;
 			case "/Logout":
-				System.out.println("hehe" );
+				System.out.println("hehe");
 				HandleLogout(request, response);
 				break;
 			case "/Register":
-				System.out.println("hehe" );
+				System.out.println("hehe");
 				HandleRegister(request, response);
 				break;
-			 case "/listMatch":
-                ListProfileMatch(request, response);
-                break;
-               case "/showCard":
-                ListProfile(request, response);
-                	break;
+			case "/listMatch":
+				ListProfileMatch(request, response);
+				break;
+			case "/showCard":
+				ListProfile(request, response);
+				break;
+			case "/listFavorite":
+				ListProfileFavorite(request, response);
+				break;
 			default:
-				System.out.println("df" );
+				System.out.println("df");
 				break;
 			}
-		  } catch (SQLException ex) {
-	            throw new ServletException(ex);
-		  } catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+		} catch (SQLException ex) {
+			throw new ServletException(ex);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void ListProfileFavorite(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		System.out.print("hahaa");
+		Account account = (Account) session.getAttribute("account");
+
+		ProfileDAO profileDAO = new ProfileDAO();
+
+		Profile profile = profileDAO.GetProfile(account);
+		if (profile != null) {
+			request.setAttribute("MyOwnProfile", profile);
 		}
+		List<Hobby> listAllHobby = profileDAO.GetAllHobbies();
+		request.setAttribute("listAllHobby", listAllHobby);
+		
+		String idhobby = request.getParameter("iDhobby");
+		System.out.println("IDHobby: " + idhobby);
+        List<Profile> ListProfile = profileDAO.GeListProfileFavorite(idhobby);
+        request.setAttribute("ListProfileFavorite", ListProfile);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListFavorite.jsp");
+		dispatcher.forward(request, response);
+
+	}
 
 	/**
-* @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		 String requestType = request.getHeader("X-Request-Type");
-		
-	    if ("HandleMatch".equals(requestType)) {
-	    	try {
+		String requestType = request.getHeader("X-Request-Type");
+
+		if ("HandleMatch".equals(requestType)) {
+			try {
 				HandleMatch(request, response);
 			} catch (ClassNotFoundException | SQLException | IOException | ServletException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-	    } else {
-	       doGet(request, response);
-	    }
-		
 
-		
+		} else {
+			doGet(request, response);
+		}
+
 	}
 
 	private void ShowProfile(HttpServletRequest request, HttpServletResponse response)
@@ -148,18 +174,17 @@ public class ProfileControllers extends HttpServlet {
 		profile = profileDAO.GetProfile(account);
 		List<UserHobby> listHobby = profileDAO.GetHobby(account);
 		request.setAttribute("profile", profile);
-		request.setAttribute("listHobby", listHobby);		
+		request.setAttribute("listHobby", listHobby);
 		String image = ImageHandle.byteArrayToImage(profile.getImageData());
 		request.setAttribute("image", image);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/InforLogin.jsp");
 		dispatcher.forward(request, response);
 	}
 
-
 	private void updateProfile(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ParseException, ServletException {
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("account");	
+		Account account = (Account) session.getAttribute("account");
 		String userID = account.getUserID();
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
@@ -179,30 +204,27 @@ public class ProfileControllers extends HttpServlet {
 		String zodiac = request.getParameter("cunghoangdao");
 		String address = request.getParameter("address");
 		String introduce = request.getParameter("introduce");
-		
+
 		Part filePart = request.getPart("image");
-		if (filePart != null && filePart.getSize() > 0)
-		{
+		if (filePart != null && filePart.getSize() > 0) {
 			InputStream fileContent = filePart.getInputStream();
-	        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-	        byte[] buffer = new byte[1024];
-	        int bytesRead;
-	        while ((bytesRead = fileContent.read(buffer)) != -1) {
-	            byteArrayOutputStream.write(buffer, 0, bytesRead);
-	        }
-	        byte[] imageData = byteArrayOutputStream.toByteArray();
-	        System.out.println("ImageData= " + imageData);
-	        Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = fileContent.read(buffer)) != -1) {
+				byteArrayOutputStream.write(buffer, 0, bytesRead);
+			}
+			byte[] imageData = byteArrayOutputStream.toByteArray();
+			System.out.println("ImageData= " + imageData);
+			Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce, imageData);
-	        profileDAO.updateProfileImage(profile);	        
-		}
-		else
-		{
+			profileDAO.updateProfileImage(profile);
+		} else {
 			Profile profile = new Profile(userID, name, age, gender, birthDay, relationship, height, zodiac, address,
 					introduce);
-profileDAO.updateProfile(profile);
+			profileDAO.updateProfile(profile);
 		}
-		List < UserHobby > listHobby = profileDAO.GetHobby(account);
+		List<UserHobby> listHobby = profileDAO.GetHobby(account);
 		request.setAttribute("listHobby", listHobby);
 		List<Hobby> listAllHobby = profileDAO.GetAllHobbies();
 		request.setAttribute("listAllHobby", listAllHobby);
@@ -217,33 +239,34 @@ profileDAO.updateProfile(profile);
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		profileDAO.DeleteUserHobby(account);
-        if (selectedHobbies != null && selectedHobbies.length > 0) {
-            for (String hobby : selectedHobbies) {
-            	profileDAO.UpdateUserHobby(hobby, account);
-            }
-        } else {
-            System.out.println("Không có hobby nào được chọn");
-        }
-        Profile profile = new Profile();
+		if (selectedHobbies != null && selectedHobbies.length > 0) {
+			for (String hobby : selectedHobbies) {
+				profileDAO.UpdateUserHobby(hobby, account);
+			}
+		} else {
+			System.out.println("Không có hobby nào được chọn");
+		}
+		Profile profile = new Profile();
 		profile = profileDAO.GetProfile(account);
 		List<UserHobby> listHobby = profileDAO.GetHobby(account);
 		request.setAttribute("profile", profile);
-		request.setAttribute("listHobby", listHobby);		
+		request.setAttribute("listHobby", listHobby);
 		String image = ImageHandle.byteArrayToImage(profile.getImageData());
 		request.setAttribute("image", image);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/pro/showCard");
 		dispatcher.forward(request, response);
 	}
-	
-	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        
-        Account account = new Account();
-        account = loginDao.validate(email, password);
-        System.out.print(account);
-        String url = "";
-        if (account != null) {
+
+	private void authenticate(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException, ClassNotFoundException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+
+		Account account = new Account();
+		account = loginDao.validate(email, password);
+		System.out.print(account);
+		String url = "";
+		if (account != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("account", account);
 			url = "/pro/showCard";
@@ -251,21 +274,24 @@ profileDAO.updateProfile(profile);
 			profile = profileDAO.GetProfile(account);
 			List<UserHobby> listHobby = profileDAO.GetHobby(account);
 			request.setAttribute("profile", profile);
-			request.setAttribute("listHobby", listHobby);		
+			request.setAttribute("listHobby", listHobby);
 			String image = ImageHandle.byteArrayToImage(profile.getImageData());
 			request.setAttribute("image", image);
-		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	    
+			// RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");
 		} else {
 			request.setAttribute("error_login", "Email hoặc password không chính xác");
 			url = "/Pages/Login.jsp";
-		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Pages/Login.jsp");
-		    //dispatcher.forward(request, response);
+			// RequestDispatcher dispatcher =
+			// request.getRequestDispatcher("Pages/Login.jsp");
+			// dispatcher.forward(request, response);
 		}
-        
+
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
-protected void HandleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void HandleRegister(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -274,30 +300,33 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 		RegisterDAO registerAccount = new RegisterDAO();
 		if (registerAccount.checkEmailExists(email)) {
 			request.setAttribute("error_register", "Email đã được sử dụng. Vui lòng chọn email khác.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
-            dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
+			dispatcher.forward(request, response);
 		} else {
 			String UserID = registerAccount.generateUserID();
 			System.out.print("ID moi duoc tao");
 			Profile profile = new Profile(UserID, fullname);
 			ProfileDAO profileDAO = new ProfileDAO();
-			profileDAO.insertProfile(profile);			
+			profileDAO.insertProfile(profile);
 			Account account = new Account(email, password, UserID);
 			AccountDAO accountDAO = new AccountDAO();
 			accountDAO.insertAccount(account);
 			HttpSession session = request.getSession();
-        	session.setAttribute("account", account);
-			String url ="/pro/list";
+			session.setAttribute("account", account);
+			String url = "/pro/list";
 			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-            dispatcher.forward(request, response);
-		}		
+			dispatcher.forward(request, response);
+		}
 	}
-	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.invalidate();		
+		session.invalidate();
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
 		dispatcher.forward(request, response);
 	}
+
 	private int getYearFromDate(String date) {
 		if (date == null)
 			return 1;
@@ -305,50 +334,52 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 		String firstPart = parts[0];
 		return Integer.parseInt(firstPart);
 	}
-	  //phương
-    private void ListProfile(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException, ClassNotFoundException {
+
+	// phương
+	private void ListProfile(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
 		HttpSession session = request.getSession();
 		System.out.print("hahaa");
-    	Account account = (Account) session.getAttribute("account");	
-		
-		  ProfileDAO profileDAO = new ProfileDAO();
-		  
-		  Profile profile = profileDAO.GetProfile(account); if(profile!= null) {
-		  request.setAttribute("MyOwnProfile", profile); }
-		 
-		String userID = account.getUserID();
-    	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
-//        request.setAttribute("listImage", listImage);
-        request.setAttribute("ListProfile", ListProfile);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
-        dispatcher.forward(request, response);
-    }
-    
-       private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException, ClassNotFoundException {
-   		HttpSession session = request.getSession();
-    	Account account = (Account) session.getAttribute("account");	
-		String userID = account.getUserID();
-    	List < Profile > ListProfile = profileDAO.GeListProfileMatch(userID);
-//        request.setAttribute("listImage", listImage);
-    	request.setAttribute("ListProfileMatch", ListProfile);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
-        dispatcher.forward(request, response);
-    }
+		Account account = (Account) session.getAttribute("account");
 
-   
-    //phương
-       
-	     private void HandleMatch(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException, ClassNotFoundException {
-   		HttpSession session = request.getSession();
-    	Account account = (Account) session.getAttribute("account");	
+		ProfileDAO profileDAO = new ProfileDAO();
+
+		Profile profile = profileDAO.GetProfile(account);
+		if (profile != null) {
+			request.setAttribute("MyOwnProfile", profile);
+		}
+
+		String userID = account.getUserID();
+		List<Profile> ListProfile = profileDAO.GeListProfile(userID);
+//        request.setAttribute("listImage", listImage);
+		request.setAttribute("ListProfile", ListProfile);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		String userID = account.getUserID();
+		List<Profile> ListProfile = profileDAO.GeListProfileMatch(userID);
+//        request.setAttribute("listImage", listImage);
+		request.setAttribute("ListProfileMatch", ListProfile);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	// phương
+
+	private void HandleMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
 		String userID1 = account.getUserID();
 		String userID2 = request.getParameter("userID");
 //		System.out.print(userID2);
-		Match match=new Match(LocalDate.now(),userID1,userID2);
-        // Call DAO to save the user ID to the database		
+		Match match = new Match(LocalDate.now(), userID1, userID2);
+		// Call DAO to save the user ID to the database
 		try {
 			matchDAO.insertMatch(match);
 			matchDAO.updateMatchAll();
@@ -356,6 +387,6 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 
 }

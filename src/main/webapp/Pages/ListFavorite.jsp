@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="Models.Profile"%>
 <%@ page import="Models.Account"%>
+<%@ page import="Models.UserHobby"%>
+<%@ page import="Models.Hobby"%>
 <%@ page import="java.util.Base64"%>
 <%@ page import="DAO.ProfileDAO"%>
 <html>
@@ -28,7 +30,13 @@
 	rel="stylesheet">
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 	data-auto-replace-svg="nest"></script>
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="../Access/Style/js/Base.js"></script>
+<script src="../Access/Style/js/favorite.js"></script>
+<link rel="stylesheet" href="../Access/Style/css/root/root.css">
+<link rel="stylesheet" href="../Access/Style/css/favorite.css">
+<link rel="stylesheet" href="../Access/Style/css/Base.css">
+
 </head>
 <body>
 	<%
@@ -49,6 +57,12 @@
 	<%
 	}
 	%>
+
+	<style>
+.imageFavorite {
+	max-width: 157px;
+}
+</style>
 
 	<nav>
 		<div class="nav-left">
@@ -89,8 +103,8 @@
 				<hr />
 				<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
 					class="settings-icon logout_icon " /> <a
-					href="<%=request.getContextPath()%>/pro/Logout">Logout
-					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
+					href="<%=request.getContextPath()%>/pro/Logout">Logout <img
+					src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
 				</a>
 			</div>
 		</div>
@@ -98,58 +112,83 @@
 	</nav>
 	<div class="container-app">
 		<!----------------Left Sidebar----------------------->
-		<div class="left-sidebar"></div>
-		<!----------------Main Sidebar----------------------->
-			<div class="tinder">
-			<div class="tinder--status">
-				<i class="fa-solid fa-remove " style="color: #160303;"></i>
-				<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
+		<div class="left-sidebar">
+			<div class="container">
+				<h4>SỞ THÍCH</h4>
+				<div class="favorite my-2">
+					<div class="favorite-cards">
+						<div class=" row row-cols-md-2 g-2 ">
+							<c:forEach var="hobby" items="${listAllHobby}">
+								<form action="<%=request.getContextPath()%>/pro/listFavorite"
+									method="POST">
+									<button class="col" name="iDhobby" value="${hobby.iDhobby}">
+										<div class="card bg-transparent border-0 ">
+											<a class="custom-img"> <img
+												src="../Access/Media/Picture/Favourite/vert_animalparents_v2.webp"
+												alt="ảnh" class="imageFavorite">
+												<div class="image-text">${hobby.hobbyName}</div>
+											</a>
+										</div>
+									</button>
+								</form>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 			</div>
-			
+		</div>
+
+		<!----------------Main Sidebar----------------------->
+		<div class="tinder">
+			<div class="tinder--status">
+				<i class="fa-solid fa-remove " style="color: #160303;"></i> <i
+					class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
+			</div>
+
 			<div class="tinder--cards">
 
-				<!--        Phương -->
-				
-					<c:forEach var="user" items="${ListProfile}">
-						<div class="tinder--card " id="myCard">
-							<img src="data:image/jpeg;base64,${user.getImageURL()}">
-							<div class="infor-hide">
-								<div class="main-infor">
-									<h3>${user.name}</h3>
-									Độ tuổi:
-									<h4>${user.age}</h4>
-									<div>
-										Cung hoàng đạo:
-										<h4>${user.zodiac}</h4>
-										Sinh nhật:
-										<h4>${user.birthDay}</h4>
-									</div>
-									Giới tính:
-									<h4>${user.gender}</h4>
-									Tình trạng mối quan hệ:
-									<h4>${user.relationship}</h4>
-									Chiều cao:
-									<h4>${user.height}</h4>
-									<h5>${user.introduce}</h5>
+				<!--        Khanh -->
 
-								</div>
-							</div>
-							<div class="tinder--card--text">
-								<div
-									style="display: flex; align-items: center; justify-content: start;">
-									<h3>${user.name}</h3>
-									<i class="fa-solid fa-circle-info fa-2xl showInf"
-										style="color: #ffffff;"></i>
-								</div>
+				<c:forEach var="user" items="${ListProfileFavorite}">
+					<div class="tinder--card " id="myCard">
+						<img src="data:image/jpeg;base64,${user.getImageURL()}">
+						<div class="infor-hide">
+							<div class="main-infor">
+								<h3>${user.name}</h3>
+								Độ tuổi:
 								<h4>${user.age}</h4>
-								<p>${user.introduce}</p>
-								<p style="display:none" id="userID2">${user.userID}</p>
+								<div>
+									Cung hoàng đạo:
+									<h4>${user.zodiac}</h4>
+									Sinh nhật:
+									<h4>${user.birthDay}</h4>
+								</div>
+								Giới tính:
+								<h4>${user.gender}</h4>
+								Tình trạng mối quan hệ:
+								<h4>${user.relationship}</h4>
+								Chiều cao:
+								<h4>${user.height}</h4>
+								<h5>${user.introduce}</h5>
+
 							</div>
 						</div>
+						<div class="tinder--card--text">
+							<div
+								style="display: flex; align-items: center; justify-content: start;">
+								<h3>${user.name}</h3>
+								<i class="fa-solid fa-circle-info fa-2xl showInf"
+									style="color: #ffffff;"></i>
+							</div>
+							<h4>${user.age}</h4>
+							<p>${user.introduce}</p>
+							<p style="display: none" id="userID2">${user.userID}</p>
+						</div>
+					</div>
 
-					</c:forEach>
-						<h4>Đã hết, vui lòng reload...</h4>
-				<!--        Phương -->
+				</c:forEach>
+				<h4>Đã hết, vui lòng reload...</h4>
+				<!--        Khanh -->
 			</div>
 
 			<div class="tinder--buttons">
@@ -161,9 +200,8 @@
 				</button>
 			</div>
 		</div>
-		<!----------------Right Sidebar----------------------->
-
 	</div>
+	<!----------------Right Sidebar----------------------->
 	-->
 	<script src="../Access/Style/js/Base.js"></script>
 	<script>
