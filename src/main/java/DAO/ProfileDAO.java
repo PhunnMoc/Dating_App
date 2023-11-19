@@ -27,6 +27,8 @@ public class ProfileDAO {
             + "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?\r\n"
             + "where Userid = ?";
     private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
+    private static final String DELETE_USERHOBBY_BY_IDHOBBY = "delete from userHobby where IDHobby = ?";
+    private static final String DELETE_HOBBY_BY_IDHOBBY = "delete from hobby where IDHobby = ?";
     private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
     private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
     		+ "    				where  profile.UserId <> ?\r\n"
@@ -183,7 +185,24 @@ statement.setDate(4, profile.getBirthDay());
         }
         return rowUpdated;
     }
-
+    public boolean DeleteUserHobby_IDhobby(String idhobby) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+            PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_IDHOBBY);) {
+            statement.setString(1, idhobby);
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    public boolean DeleteHobby_IDhobby(String idhobby) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+            PreparedStatement statement = conn.prepareStatement(DELETE_HOBBY_BY_IDHOBBY);) {
+            statement.setString(1, idhobby);
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
     public boolean UpdateUserHobby(String iDhobby, Account acc) throws SQLException {
         boolean rowUpdated;
         try (Connection conn = JDBCUtil.getConnection();

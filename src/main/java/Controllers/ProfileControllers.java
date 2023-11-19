@@ -463,7 +463,6 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 	 		request.setAttribute("listAllHobby", listAllHobby);
 	 		
 	 		String idhobby = request.getParameter("idHobby");
-	 		System.out.println("idHobby: " + idhobby);
 	         List<Profile> ListProfile = profileDAO.GeListProfileFavorite(idhobby);
 	         request.setAttribute("ListProfileFavorite", ListProfile);
 	         Profile profile1 = new Profile();

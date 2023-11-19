@@ -110,11 +110,17 @@
   <!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
   <div class="container">
-<h3>Sở thích</h3>
+<h3 class="title-left">Sở thích</h3>
    <div class="container text-left">
 
     <a href="<%=request.getContextPath()%>/new"
      class="btn btn-success">Add</a>
+     <div class="hide-box">
+      <form action="<%=request.getContextPath()%>/AdminRole/.." method="POST">
+         <button class="custom-btn btn-15 hello" value="${user.userID}">GỬI LỜI CHÀO</button>
+       	 <button class="custom-btn btn-15 nono" name="deleteMatch" value="${user.userID}">HỦY TƯƠNG TÁC</button>
+        </form>
+      </div>
    </div>
    <br>
    <table class="table table-bordered">
@@ -134,9 +140,6 @@
        <td><a href="edit?id=<c:out value='${hobby.id}' />">Edit</a>
         &nbsp;&nbsp;&nbsp;&nbsp; <a
         href="delete?id=<c:out value='${hobby.id}' />">Delete</a></td>
-
-       <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
-                 <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->
       </tr>
      </c:forEach>
      <!-- } -->
