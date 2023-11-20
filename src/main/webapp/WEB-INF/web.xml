@@ -18,6 +18,15 @@
         <servlet-name>ProfileControllers</servlet-name>
         <url-pattern>/pro/*</url-pattern>
     </servlet-mapping>
+      <servlet>
+        <servlet-name>AdminRole</servlet-name>
+        <servlet-class>Controllers.AdminRole</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminRole</servlet-name>
+        <url-pattern>/AdminRole/*</url-pattern>
+    </servlet-mapping>
     
 
     

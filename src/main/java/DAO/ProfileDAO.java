@@ -1,5 +1,6 @@
 package DAO;
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,9 @@ public class ProfileDAO {
             + "where Userid = ?";
     private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
     private static final String DELETE_USERHOBBY_BY_IDHOBBY = "delete from userHobby where IDHobby = ?";
+    private static final String INSERT_HOBBY = "INSERT INTO `datingapp`.`hobby` (`IDHobby`, `NameHobby`,`imageHobby`) VALUES (?, ?,?);";
+    private static final String UPDATE_HOBBY = "UPDATE `datingapp`.`hobby` SET `NameHobby` = ?, `imageHobby`=?  WHERE (`IDHobby` = ?)";
+    private static final String UPDATE_HOBBY_noIMG = "UPDATE `datingapp`.`hobby` SET `NameHobby` = ?  WHERE (`IDHobby` = ?)";
     private static final String DELETE_HOBBY_BY_IDHOBBY = "delete from hobby where IDHobby = ?";
     private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
     private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
@@ -134,6 +138,8 @@ public class ProfileDAO {
         }
         return hobbies;
     }
+    
+  
 
     public boolean updateProfile(Profile profile) throws SQLException {
         boolean rowUpdated;
@@ -199,6 +205,41 @@ statement.setDate(4, profile.getBirthDay());
         try (Connection conn = JDBCUtil.getConnection();
             PreparedStatement statement = conn.prepareStatement(DELETE_HOBBY_BY_IDHOBBY);) {
             statement.setString(1, idhobby);
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    public boolean InsertHobby(String iDhobby, String name,byte[] img) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(INSERT_HOBBY);) {
+            statement.setString(1, iDhobby);
+            statement.setString(2, name);
+            statement.setBytes(3, img);
+
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    } 
+    public boolean UpdateHobby(String iDhobby, String name,byte[] img) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(UPDATE_HOBBY);) {
+            statement.setString(1,name );
+            statement.setBytes(2, img);
+            statement.setString(3, iDhobby);
+
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    } 
+    public boolean UpdateHobby_noImg(String iDhobby, String name) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(UPDATE_HOBBY_noIMG);) {
+            statement.setString(1,name );
+            statement.setString(2, iDhobby);
+
             rowUpdated = statement.executeUpdate() > 0;
         }
         return rowUpdated;

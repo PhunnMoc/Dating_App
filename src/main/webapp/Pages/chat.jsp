@@ -167,7 +167,7 @@
 
 					</div>
 					<span class="settings-tray--right"> <i
-						class="material-icons" style="position: absolute; right: 10;">menu</i>
+						class="material-icons" style="position: absolute; right: 10;" onclick="handleMenuClick()">menu</i>
 					</span>
 				</div>
 			</div>
@@ -190,6 +190,26 @@
 			</div>
 			<!-- End mục nhập tin nhắn và gửi  -->
 		</div>
+		<div class="infor-hide" id="infor-hide">
+								<div class="main-infor">
+								<div class="image-contaiter">
+								<img class="hide-image" id="img-hide" src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
+								<h3 id="name-hide">thiện</h3>
+								</div>								
+								<div class="infor-user-hide">
+									<h5 id="age-hide">20</h5>									
+									<h5 id="zodiac-hide">Song Tử</h5>										
+								<!-- 	//<h5 id="birthday-hide">16/12/2003</h5> -->
+									<h5 id="gender-hide">Nam</h5>
+									<h5 id="relationship-hide">Độc thân</h5>
+									<h5 id="height-hide">165cm</h5>
+									<h5 id="introduce-hide">Đẹp trai, nhà giàu, nổi tiếng </h5>
+									<h5 id="address-hide">Quảng Lợi </h5>
+								</div>	
+									
+
+								</div>
+							</div>
 		<!----------------Right Sidebar----------------------->
 	</div>
 	<!-- <div class="footer">
@@ -334,6 +354,12 @@
 			inputElement.value = userID;
 			loadData(userID)
 		}
+		
+		function handleMenuClick () {
+			var inforHide = document.getElementById('infor-hide');
+			inforHide.classList.toggle('show-info-hide');
+		}
+		
 		function loadData(userID) {
 			reciever = userID;
 			socket = new WebSocket(wsUrl + window.location.host
@@ -345,10 +371,30 @@
 			});
 			var imageURL = "";
 			var userName = "";
+			var name = "";
+			var age = "";
+			var zodiac = "";
+			var birthday = "";
+			var gender = "";
+			var relationship = "";
+			var heght = "";
+			var introduce = "";
+			var address = "";
+			
 			listProfile.forEach(function(profile) {
 				if (profile.userID == reciever) {
 					imageURL = profile.imageURL;
 					userName = profile.name;
+					name = profile.name;
+					age = profile.age;
+					gender = profile.gender;
+					birthday = profile.birthDay;
+					relationship = profile.relationship;
+					height = profile.height;
+					zodiac = profile.zodiac;
+					introduce = profile.introduce;
+					address = profile.address;
+					//break;
 				}
 			});
 			var imgReciever = document.getElementById("imgReciever");
@@ -368,8 +414,18 @@
 					receiveMessageimage(content, imageURL);
 				}
 			});
+			document.getElementById('img-hide').src = imageURL;
+			document.getElementById('name-hide').textContent = name;
+			document.getElementById('age-hide').textContent = "Tuổi: " + age;
+			document.getElementById('gender-hide').textContent = "Giới tính: " + gender;
+			//document.getElementById('birthday-hide').textContent ="Ngày sinh: " + birthday;
+			document.getElementById('relationship-hide').textContent ="Tình trạng mối quan hệ: " + relationship;
+			document.getElementById('height-hide').textContent ="Chiều cao: " + height;
+			document.getElementById('zodiac-hide').textContent ="Cung hoàng đạo: " + zodiac;
+			document.getElementById('introduce-hide').textContent ="Giới thiệu: " + introduce;
+			document.getElementById('address-hide').textContent ="Địa chỉ: " + address;
+			
 		}
-
 		// ... Các xử lý khác của bạn ...
 	</script>
 	<script src="../Access/Style/js/Base.js"></script>

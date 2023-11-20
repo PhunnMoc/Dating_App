@@ -108,7 +108,7 @@
         <h3 class="card__heading">${user.name}</h3>
         <h4 class="card__category">${user.introduce}</h4>
 		<form action="<%=request.getContextPath()%>/pro/sayHello" method="POST">
-        <input value = "Hello!!" name = "content" style="diplay: none">
+        <input value = "Hello!!" name = "content" style="display: none">
         <button class="custom-btn btn-15 hello" name="sayHello" value="${user.userID}">GỬI LỜI CHÀO</button>
         </form>
         <form action="<%=request.getContextPath()%>/pro/deleteMatch" method="POST">
