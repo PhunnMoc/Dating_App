@@ -37,22 +37,15 @@
 </head>
 <body>
 	<%
+	Account admin = (Account) session.getAttribute("admin");
 	Account account = (Account) session.getAttribute("account");
 	//Profile profile = (Profile) request.getAttribute("MyOwnProfile");
 	//String imageData = (String) request.getAttribute("image");
 	%>
 	<%
-	if (account == null) {
+	if (account != null) {
 	%>
 	<jsp:forward page="Login.jsp"></jsp:forward>
-	<%
-	}else {
-		if (!"admin".equals(account.getRole())){
-		%>
-		<jsp:forward page="Login.jsp"></jsp:forward>
-		<%
-		}
-		%>
 	<%
 	}
 	%>

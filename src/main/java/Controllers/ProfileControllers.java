@@ -268,11 +268,13 @@ profileDAO.updateProfile(profile);
         System.out.print(account);
         String url = "";
         if (account != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("account", account);
 			if ("admin".equals(account.getRole())) {
 				url = "/Pages/Admin.jsp";
+				HttpSession session = request.getSession();
+				session.setAttribute("admin", account);
 			} else {
+				HttpSession session = request.getSession();
+				session.setAttribute("account", account);
 				url = "/pro/showCard";
 				Profile profile = new Profile();
 				profile = profileDAO.GetProfile(account);
