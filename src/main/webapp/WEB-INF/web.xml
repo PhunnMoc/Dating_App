@@ -9,6 +9,39 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+    <!-- SMTP settings -->
+    <context-param>
+        <param-name>host</param-name>
+        <param-value>smtp.gmail.com</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>port</param-name>
+        <param-value>587</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>phuongtrinhhoaian@gmail.com</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>pass</param-name>
+        <param-value>szqg vmnb ldty ckoj</param-value>
+    </context-param>
+   <servlet>
+        <servlet-name>EmailController</servlet-name>
+        <servlet-class>Controllers.EmailController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EmailController</servlet-name>
+        <url-pattern>/send-email/*</url-pattern>
+    </servlet-mapping>
+
+    
+ 
    <servlet>
         <servlet-name>ProfileControllers</servlet-name>
         <servlet-class>Controllers.ProfileControllers</servlet-class>

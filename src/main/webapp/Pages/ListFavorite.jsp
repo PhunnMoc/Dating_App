@@ -86,9 +86,15 @@
 					</div>
 				</div>
 				<hr />
+				<img src="https://media.istockphoto.com/id/936681148/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-kh%C3%B3a.jpg?s=612x612&w=0&k=20&c=U6Hw5e1K70NUaQz2MjOeal_FjERS9swHClnFI6MMVEY="
+					class="settings-icon logout_icon " /> <a
+					href="<%=request.getContextPath()%>/pro/changePassword">Đổi mật khẩu
+					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
+				</a>
+				<hr />
 				<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
 					class="settings-icon logout_icon " /> <a
-					href="<%=request.getContextPath()%>/pro/Logout">Logout
+					href="<%=request.getContextPath()%>/pro/Logout">Đăng xuất
 					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
 				</a>
 			</div>

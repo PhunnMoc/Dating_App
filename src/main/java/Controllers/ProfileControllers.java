@@ -81,6 +81,9 @@ public class ProfileControllers extends HttpServlet {
 			case "/update":
 				updateProfile(request, response);
 				break;
+			case "/changePassword":
+            	HandleChangePassword(request, response);
+				break;
 			case "/updateHobby":
 				updateHobby(request, response);
 				break;
@@ -474,7 +477,31 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 	 		dispatcher.forward(request, response);
 
 	 	}
+	     private void HandleChangePassword(HttpServletRequest request, HttpServletResponse response)
+		 			throws ServletException, IOException, ClassNotFoundException {
+		    	 String oldPass = request.getParameter("oldpass");
+		         String newPass = request.getParameter("newpass");
+		         HttpSession session = request.getSession();
+		         
+		         Account account = (Account) session.getAttribute("account");
+		         Account accountvalidate = new Account();
+		         accountvalidate = loginDao.validate(account.getEmail(), oldPass);
+		         String url ="";
+		         if (accountvalidate != null)
+		         {
+		        	 loginDao.ChangePassword(newPass, account.getEmail());
+		        	 url = "/pro/showCard";
+		         }
+		         else
+		         {
+		 			request.setAttribute("errorChangePass", "Mật khẩu cũ không đúng");
+		 			url = "/Pages/ChangePassword.jsp";
+		 		}	
+		       
+		 		RequestDispatcher rd = request.getRequestDispatcher(url);
+		 		rd.forward(request, response);
 
+		 	}
 	 	
 
 }

@@ -16,6 +16,7 @@ import Util.HandleExeption;
 import Util.JDBCUtil;
 import Handle.ImageHandle;
 public class ProfileDAO {
+	private static final String FOGETPASS = "SELECT Password FROM datingapp.account where email=?;";
     private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, hobby.IDHobby\r\n"
             + "from userhobby inner join hobby \r\n"
             + "on userhobby.IDHobby = hobby.IDHobby\r\n"
@@ -381,4 +382,27 @@ statement.setDate(4, profile.getBirthDay());
 		        }
 		        return listPr;
     }
+	public String FogerPass(String email) {
+        String pass=new String();
+		 try  {
+	        	Connection conn = JDBCUtil.getConnection();
+	            PreparedStatement preparedStatement = conn.prepareStatement(FOGETPASS);
+	            preparedStatement.setString(1, email);
+	 
+	            // Step 3: Execute the query or update query
+	            ResultSet rs = preparedStatement.executeQuery();
+
+	            // Step 4: Process the ResultSet object.
+	            while (rs.next()) {
+	                pass=rs.getString(1);
+
+	                }
+	                
+	            
+	        } catch (SQLException e) {
+	        	HandleExeption.printSQLException(e);
+	        }
+	        return pass;
+		
+	}
 	}

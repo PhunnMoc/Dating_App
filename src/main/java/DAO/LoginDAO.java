@@ -33,4 +33,20 @@ public class LoginDAO {
         }
         return acc;
     }
+    public void ChangePassword(String newPass, String email) throws ClassNotFoundException {
+
+        try (Connection connection = JDBCUtil.getConnection();
+                PreparedStatement preparedStatement = connection
+                        .prepareStatement("update account set password = ? where email = ?")) {
+            preparedStatement.setString(1, newPass);
+            preparedStatement.setString(2, email);
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

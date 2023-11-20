@@ -161,7 +161,7 @@
 								<td><img
 									src="data:image/jpeg;base64,${hobby.getImageURL()}" style="width:200px"></td>
 								<td onclick="getRowData(this); edit()">
-									<a data-id='${hobby.iDhobby}' >Edit</a>
+									<a style="text-decoration: underline; cursor: pointer;"data-id='${hobby.iDhobby}' >Edit</a>
 								</td>
 								<td><a
 									href="<%=request.getContextPath()%>/AdminRole/delete?id=<c:out value='${hobby.iDhobby}' />">Delete</a></td>
