@@ -17,7 +17,6 @@ public class JDBCUtil {
 			String url = "jdbc:mysql://localhost:3306/datingapp";
 			String username = "root";
 			String password = "trinhthuphuong";
-
 			conn = DriverManager.getConnection(url, username, password);
 
 			System.out.println("Connection Successfully");

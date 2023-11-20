@@ -24,6 +24,7 @@ public class LoginDAO {
            if(rs.next()) {
             	acc.setEmail(rs.getString(1));
                 acc.setUserID(rs.getString(3));
+                acc.setRole(rs.getString(4));
             }
            else {
         	   acc = null;

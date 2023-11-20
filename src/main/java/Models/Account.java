@@ -5,7 +5,8 @@ public class Account {
 	private String email;
 	private String password;
 	private String UserID;
-
+	private String role;
+	
 	public Account() {
 		super();
 	}
@@ -41,6 +42,12 @@ public class Account {
 		UserID = userID;
 	}
 
-	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 }

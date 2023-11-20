@@ -270,15 +270,19 @@ profileDAO.updateProfile(profile);
         if (account != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("account", account);
-			url = "/pro/showCard";
-			Profile profile = new Profile();
-			profile = profileDAO.GetProfile(account);
-			List<UserHobby> listHobby = profileDAO.GetHobby(account);
-			request.setAttribute("profile", profile);
-			request.setAttribute("listHobby", listHobby);		
-			String image = ImageHandle.byteArrayToImage(profile.getImageData());
-			request.setAttribute("image", image);
-		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	    
+			if ("admin".equals(account.getRole())) {
+				url = "/Pages/Admin.jsp";
+			} else {
+				url = "/pro/showCard";
+				Profile profile = new Profile();
+				profile = profileDAO.GetProfile(account);
+				List<UserHobby> listHobby = profileDAO.GetHobby(account);
+				request.setAttribute("profile", profile);
+				request.setAttribute("listHobby", listHobby);		
+				String image = ImageHandle.byteArrayToImage(profile.getImageData());
+				request.setAttribute("image", image);
+			    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	  
+			}			  
 		} else {
 			request.setAttribute("error_login", "Email hoặc password không chính xác");
 			url = "/Pages/Login.jsp";

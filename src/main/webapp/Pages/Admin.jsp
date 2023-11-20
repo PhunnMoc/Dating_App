@@ -36,20 +36,30 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-	<%-- 	<%
+	<%
 	Account account = (Account) session.getAttribute("account");
-	Profile profile = (Profile) request.getAttribute("MyOwnProfile");
-	String imageData = (String) request.getAttribute("image");
+	//Profile profile = (Profile) request.getAttribute("MyOwnProfile");
+	//String imageData = (String) request.getAttribute("image");
 	%>
 	<%
 	if (account == null) {
 	%>
 	<jsp:forward page="Login.jsp"></jsp:forward>
 	<%
+	}else {
+		if (!"admin".equals(account.getRole())){
+		%>
+		<jsp:forward page="Login.jsp"></jsp:forward>
+		<%
+		}
+		%>
+	<%
 	}
-
-	if (profile == null) {
 	%>
+	
+	<%-- 
+	if (profile == null) {
+	
 	<jsp:forward page="/pro/showCard"></jsp:forward>
 	<%
 	}
