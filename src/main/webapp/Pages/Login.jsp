@@ -100,6 +100,6 @@
     		return true;
     	}
     }
-
+    </script>
 	
 </html>

@@ -6,7 +6,7 @@
 }
 
 body {
-	background: var(- -color-theme-1);
+	background: var(--color-theme-1);
 	display: flex;
 	justify-content: center;
 	align-items: center;

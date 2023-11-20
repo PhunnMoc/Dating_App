@@ -58,51 +58,37 @@
 	}
 	%> --%>
 
-	<nav>
+		<nav style="display:flex;">
 		<div class="nav-left">
-			<a href="./Match.html"> <img
+			<a href="<%=request.getContextPath()%>/pro/showCard"> <img
 				src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
 			</a>
 			<ul class="nav-icon">
-				<a href="./favourite.html"><li><i
-						class="fa-solid fa-heart-circle-check"></i></i></li></a>
 				<a href="<%=request.getContextPath()%>/AdminRole/list"><li><i
-						class="fa-solid fa-message"></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/showCard"><li><i
-						class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/listMatch"><li><i
-						class="fa-solid fa-user-group fa-beat " style="color: red;"></i></i></li></a>
+						class="fa-solid fa-heart-circle-check"></i></i></li></a>
+				<a href="<%=request.getContextPath()%>/AdminRole/listUser"><li><i
+						class="fa-solid fa-user-group "></i></i></li></a>
 
 
 			</ul>
 		</div>
-		<%-- 		<div class="nav-right">
+		<div class="nav-right">
 			<div class="nav-user-icon online" onclick="settingsMenuToggle()">
-				<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
+				<img src="https://play-lh.googleusercontent.com/p9Kte5C0SltIXXYvQMdo64XCLmrhnX_E6DijP2d4-aMOjrneUI7ctx1Acz612DPa0hE" alt="Image" />
 			</div>
 		</div>
 		<!----------------Settings Menu"----------------------->
 		<div class="settings-menu">
 			<div class="settings-menu-inner">
-				<div class="user-profile">
-					<div class="nav-user-icon">
-						<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
-					</div>
-					<div>
-						<p><%=profile.getName()%></p>
-						<a href="<%=request.getContextPath()%>/pro/list">Thông tin cá
-							nhân</a>
-					</div>
-				</div>
 				<hr />
 				<img src="https://i.postimg.cc/PJC9GrMb/logout.png"
 					class="settings-icon logout_icon " /> <a
-					href="<%=request.getContextPath()%>/pro/Logout">Logout <img
-					src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
+					href="<%=request.getContextPath()%>/pro/Logout">Đăng xuất
+					<img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px" />
 				</a>
 			</div>
-		</div> --%>
-
+		</div>
+	
 	</nav>
 	<div class="container-app"
 		style="justify-content: center; overflow: scroll;">
@@ -215,7 +201,7 @@
 			toggleHideBox()
 		}
 	</script>
-
+	<script src="../Access/Style/js/Base.js"></script>
 </body>
 
 </html>

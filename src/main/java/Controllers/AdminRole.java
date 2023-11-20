@@ -65,6 +65,9 @@ public class AdminRole extends HttpServlet {
 			case "/list":
 				ListHobby(request, response);
 				break;
+			case "/listUser":
+				ListProfileMatch(request, response);
+				break;
 			case "/edit":
 				EditHobby(request, response);
 				break;
@@ -172,6 +175,15 @@ public class AdminRole extends HttpServlet {
 		profileDAO.DeleteUserHobby_IDhobby(id);
 		profileDAO.DeleteHobby_IDhobby(id);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminRole/list");
+		dispatcher.forward(request, response);
+	}
+	private void ListProfileMatch(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		
+		List<Profile> ListProfileMatch = profileDAO.GetAllProfile();
+//        request.setAttribute("listImage", listImage);
+		request.setAttribute("ListProfileMatch", ListProfileMatch);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/AdminMangerUser.jsp");
 		dispatcher.forward(request, response);
 	}
 

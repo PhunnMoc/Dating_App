@@ -269,7 +269,7 @@ profileDAO.updateProfile(profile);
         String url = "";
         if (account != null) {
 			if ("admin".equals(account.getRole())) {
-				url = "/Pages/Admin.jsp";
+				url = "/AdminRole/list";
 				HttpSession session = request.getSession();
 				session.setAttribute("admin", account);
 			} else {

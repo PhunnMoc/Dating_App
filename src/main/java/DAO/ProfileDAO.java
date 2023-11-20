@@ -52,7 +52,8 @@ public class ProfileDAO {
 			+ "    				JOIN userHobby ON Profile.UserId = userHobby.UserID\r\n"
 			+ "    				WHERE userHobby.IDHobby =?\r\n"
 			+ "";
-
+	private static final String SELECT_ALL_PROFILE= "SELECT * FROM datingapp.profile\r\n"
+			+ "WHERE UserId <>\"1\";";
 	public Profile GetProfile(Account accData) throws ClassNotFoundException {
         Profile profile = new Profile();
 
@@ -279,6 +280,41 @@ statement.setDate(4, profile.getBirthDay());
             PreparedStatement preparedStatement = conn.prepareStatement(SELECT_CARD_PROFILE);
             preparedStatement.setString(1, userID);
             preparedStatement.setString(2, userID);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String UserID=rs.getString(1);
+//                if(UserID.equals(main.getUserID()))
+                {
+                	String Name=rs.getString(2);
+					int Age = rs.getInt(3);
+					String Gender = rs.getString(4);
+					Date BirthDay = rs.getDate(5);
+					String Relationship = rs.getString(6);
+					int Height = rs.getInt(7);
+					String Zodiac = rs.getString(8);
+					String Address = rs.getString(9);
+					String Introduce = rs.getString(10);
+					byte[] Url_image = rs.getBytes(11);
+					String imageURL = ImageHandle.byteArrayToImage(Url_image);
+					
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
+                }
+                
+            }
+        } catch (SQLException e) {
+        	HandleExeption.printSQLException(e);
+        }
+        return listPr;
+    }
+	public List < Profile > GetAllProfile() {
+        List < Profile > listPr = new ArrayList < > ();
+// Step 1: Establishing a Connection
+        try  {
+        	Connection conn = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL_PROFILE);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
