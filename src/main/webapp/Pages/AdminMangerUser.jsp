@@ -30,23 +30,26 @@
 </head>
 <body style="overflow-y: scroll;">
 	<%
+	Account admin = (Account) session.getAttribute("admin");
 	Account account = (Account) session.getAttribute("account");
-	Profile profile = (Profile) request.getAttribute("MyOwnProfile");
-	String imageData = (String) request.getAttribute("image");
+	//Profile profile = (Profile) request.getAttribute("MyOwnProfile");
+	//String imageData = (String) request.getAttribute("image");
 	%>
 	<%
-	if (account == null) {
+	if (account != null) {
 	%>
 	<jsp:forward page="Login.jsp"></jsp:forward>
 	<%
 	}
-
-	if (profile == null) {
 	%>
+	
+	<%-- 
+	if (profile == null) {
+	
 	<jsp:forward page="/pro/showCard"></jsp:forward>
 	<%
 	}
-	%> 
+	%> --%>
 
 		<nav style="display:flex;">
 		<div class="nav-left">
