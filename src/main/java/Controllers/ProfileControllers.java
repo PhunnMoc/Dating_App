@@ -27,8 +27,10 @@ import Models.Account;
 import Models.Hobby;
 import Models.Message;
 import Models.Match;
+import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
+import Handle.FarseToJSON;
 import Handle.ImageHandle;
 import Handle.FarseToJSON;
 
@@ -48,6 +50,7 @@ public class ProfileControllers extends HttpServlet {
 
 	private ChatDAO chatDAO;
 	private MatchDAO matchDAO;
+	private ChatDAO chatDAO;
 
 
 	/**
@@ -67,6 +70,7 @@ public class ProfileControllers extends HttpServlet {
 		loginDao = new LoginDAO();
 		chatDAO = new ChatDAO();
 		matchDAO=new MatchDAO();
+		chatDAO=new ChatDAO();
 	}
 
 	/**
@@ -82,6 +86,9 @@ public class ProfileControllers extends HttpServlet {
 			switch (action) {
 			case "/update":
 				updateProfile(request, response);
+				break;
+			case "/changePassword":
+            	HandleChangePassword(request, response);
 				break;
 			case "/updateHobby":
 				updateHobby(request, response);
@@ -110,9 +117,20 @@ public class ProfileControllers extends HttpServlet {
                 break;
 			 case "/deleteMatch":
 				 DeleteProfileMatch(request, response);
-               case "/showCard":
+				 break;
+			 case "/sayHello":
+				 SayHello(request, response);
+				 break; 
+				 
+            case "/showCard":
                 ListProfile(request, response);
                 	break;
+               case "/message":
+   				HandleMessage(request, response);
+   				break;
+               case "/listFavorite":
+   				ListProfileFavorite(request, response);
+   				break;
 			default:
 				System.out.println("df" );
 				break;
@@ -259,17 +277,23 @@ profileDAO.updateProfile(profile);
         System.out.print(account);
         String url = "";
         if (account != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("account", account);
-			url = "/pro/showCard";
-			Profile profile = new Profile();
-			profile = profileDAO.GetProfile(account);
-			List<UserHobby> listHobby = profileDAO.GetHobby(account);
-			request.setAttribute("profile", profile);
-			request.setAttribute("listHobby", listHobby);		
-			String image = ImageHandle.byteArrayToImage(profile.getImageData());
-			request.setAttribute("image", image);
-		    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	    
+			if ("admin".equals(account.getRole())) {
+				url = "/AdminRole/list";
+				HttpSession session = request.getSession();
+				session.setAttribute("admin", account);
+			} else {
+				HttpSession session = request.getSession();
+				session.setAttribute("account", account);
+				url = "/pro/showCard";
+				Profile profile = new Profile();
+				profile = profileDAO.GetProfile(account);
+				List<UserHobby> listHobby = profileDAO.GetHobby(account);
+				request.setAttribute("profile", profile);
+				request.setAttribute("listHobby", listHobby);		
+				String image = ImageHandle.byteArrayToImage(profile.getImageData());
+				request.setAttribute("image", image);
+			    //RequestDispatcher dispatcher = request.getRequestDispatcher("Match.jsp");	  
+			}			  
 		} else {
 			request.setAttribute("error_login", "Email hoặc password không chính xác");
 			url = "/Pages/Login.jsp";
@@ -365,11 +389,10 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
     	List < Profile > ListProfile = profileDAO.GeListProfile(userID);
 //        request.setAttribute("listImage", listImage);
         request.setAttribute("ListProfile", ListProfile);
-        
-    	String userid = account.getUserID();
-    	List < Profile > ListProfileMatch = profileDAO.GeListProfileMatch(userid);
-//        request.setAttribute("listImage", listImage);
-    	request.setAttribute("ListProfileMatch", ListProfileMatch);
+        Profile profile1 = new Profile();
+ 		profile1 = profileDAO.GetProfile(account);
+ 		String image = ImageHandle.byteArrayToImage(profile1.getImageData());
+ 		request.setAttribute("image", image);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Match.jsp");
         dispatcher.forward(request, response);
     }
@@ -379,9 +402,16 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		String userID = account.getUserID();
+		  Profile profile = profileDAO.GetProfile(account);
+		  if(profile!= null) {
+		  request.setAttribute("MyOwnProfile", profile); }
 		List<Profile> ListProfileMatch = profileDAO.GeListProfileMatch(userID);
 //        request.setAttribute("listImage", listImage);
 		request.setAttribute("ListProfileMatch", ListProfileMatch);
+		Profile profile1 = new Profile();
+ 		profile1 = profileDAO.GetProfile(account);
+ 		String image = ImageHandle.byteArrayToImage(profile1.getImageData());
+ 		request.setAttribute("image", image);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListMatch.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -400,8 +430,25 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 			dispatcher.forward(request, response);
 		
 	}
-   
+   private void SayHello(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		String userID1 = account.getUserID();
+		String userID2 = request.getParameter("sayHello");
+		String content = request.getParameter("content");
+		System.out.print(content);
+		if (content != null && !content.trim().isEmpty())
+		{
+			chatDAO.insertMessage(userID2, userID1, content);
+			content=null;
+		}
+				
+		response.sendRedirect(request.getContextPath() + "/pro/message");
+		
+	}
     //phương
+   
        
 	     private void HandleMatch(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException, ClassNotFoundException {
@@ -420,5 +467,85 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
 			e.printStackTrace();
 		}
     }
+	     private void HandleMessage(HttpServletRequest request, HttpServletResponse response)
+	 			throws Exception {
+	 		System.out.print("aaaaaaa");
+	 		HttpSession session = request.getSession();
+	 		Account acc = new Account();		
+	 		acc = (Account) session.getAttribute("account");
+	 		List<Profile> list_profile = chatDAO.select_other_user_message(acc.getUserID());
+	 		request.setAttribute("list_other_user", list_profile);		
+	 		String listProfileJSON = FarseToJSON.listProfileToJSON(list_profile);
+	 		request.setAttribute("listProfileJSON", listProfileJSON);
+	 		
+	 		List<Message> lastmessage = chatDAO.select_message_last(acc.getUserID());
+	 		request.setAttribute("last_Message", lastmessage);
+
+	 		List<Message> listMessage = chatDAO.select_message_by_UserID(acc.getUserID());
+	 		request.setAttribute("list_Message", listMessage);
+	 		String listMessJSON = FarseToJSON.listMessageToJSON(listMessage);
+	 		request.setAttribute("listMessJSON", listMessJSON);
+	 		
+	 		Profile profile = new Profile();
+	 		profile = profileDAO.GetProfile(acc);
+	 		String image = ImageHandle.byteArrayToImage(profile.getImageData());
+	 		request.setAttribute("image", image);
+	 		request.setAttribute("profile", profile);
+	 		
+	 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/chat.jsp");
+	 		dispatcher.forward(request, response);
+	 	}
+	     private void ListProfileFavorite(HttpServletRequest request, HttpServletResponse response)
+	 			throws ServletException, IOException, ClassNotFoundException {
+	 		HttpSession session = request.getSession();
+	 		System.out.print("hahaa");
+	 		Account account = (Account) session.getAttribute("account");
+
+	 		ProfileDAO profileDAO = new ProfileDAO();
+
+	 		Profile profile = profileDAO.GetProfile(account);
+	 		if (profile != null) {
+	 			request.setAttribute("MyOwnProfile", profile);
+	 		}
+	 		List<Hobby> listAllHobby = profileDAO.GetAllHobbies();
+	 		request.setAttribute("listAllHobby", listAllHobby);
+	 		
+	 		String idhobby = request.getParameter("idHobby");
+	         List<Profile> ListProfile = profileDAO.GeListProfileFavorite(idhobby);
+	         request.setAttribute("ListProfileFavorite", ListProfile);
+	         Profile profile1 = new Profile();
+	  		profile1 = profileDAO.GetProfile(account);
+	  		String image = ImageHandle.byteArrayToImage(profile1.getImageData());
+	  		request.setAttribute("image", image);
+	 		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/ListFavorite.jsp");
+	 		dispatcher.forward(request, response);
+
+	 	}
+	     private void HandleChangePassword(HttpServletRequest request, HttpServletResponse response)
+		 			throws ServletException, IOException, ClassNotFoundException {
+		    	 String oldPass = request.getParameter("oldpass");
+		         String newPass = request.getParameter("newpass");
+		         HttpSession session = request.getSession();
+		         
+		         Account account = (Account) session.getAttribute("account");
+		         Account accountvalidate = new Account();
+		         accountvalidate = loginDao.validate(account.getEmail(), oldPass);
+		         String url ="";
+		         if (accountvalidate != null)
+		         {
+		        	 loginDao.ChangePassword(newPass, account.getEmail());
+		        	 url = "/pro/showCard";
+		         }
+		         else
+		         {
+		 			request.setAttribute("errorChangePass", "Mật khẩu cũ không đúng");
+		 			url = "/Pages/ChangePassword.jsp";
+		 		}	
+		       
+		 		RequestDispatcher rd = request.getRequestDispatcher(url);
+		 		rd.forward(request, response);
+
+		 	}
+	 	
 
 }

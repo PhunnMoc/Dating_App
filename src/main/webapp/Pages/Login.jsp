@@ -50,18 +50,13 @@
       <div class="form-container sign-in-container">
         <form action="<%=request.getContextPath()%>/pro/Login" method = "post" accept-charset="UTF-8">
           <h1>Đăng nhập</h1>
-<!--           <div class="social-container">
-            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <span>hoặc dùng tài khoản của bạn</span> -->
+
           <input type="email" placeholder="Email" id="email" name="email"/>
           <input type="password" placeholder="Mật khẩu" id="password" name="password" />
           <% if (err_login != null) { %>
 			  <div style="color: red"> <%=err_login %></div>
 			<% } %>
-<!--           <a href="#">Quên mật khẩu?</a> -->
+			<a style="text-decoration: underline;" href="<%=request.getContextPath()%>/Pages/FogetPass.jsp"">Quên mật khẩu?</a>
           <button type="submit">Đăng nhập</button>
         </form>
       </div>
@@ -83,12 +78,14 @@
       </div>
     </div>
 
+
     <footer>
       <p>
         Created with <i class="fa fa-heart"></i> by
         <a target="_blank" href="https://www.facebook.com/hoang.congthien.1612">TTTPKL</a>
       </p>
     </footer>
+
     <!-- partial -->
     <script src="../Access/Style/js/login.js"></script>
     <script>
@@ -104,5 +101,5 @@
     	}
     }
     </script>
-	</body>
+	
 </html>

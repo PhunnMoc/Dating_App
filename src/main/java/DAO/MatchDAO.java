@@ -68,10 +68,7 @@ public class MatchDAO {
 			preparedStatement.setDate(3, JDBCUtil.getSQLDate(match.getDaymatch()));
 			preparedStatement.setString(4, match.getUserID1());
 			preparedStatement.setString(5, match.getUserID2());
-//            System.out.println(NewID);
-//            System.out.println(match.getDaymatch());
-//            System.out.println(match.getUserID1());
-//            System.out.println(match.getUserID2());
+
 			preparedStatement.executeUpdate();
 
 			connection.close();

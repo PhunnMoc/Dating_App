@@ -1,5 +1,6 @@
 package DAO;
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import Util.HandleExeption;
 import Util.JDBCUtil;
 import Handle.ImageHandle;
 public class ProfileDAO {
+	private static final String FOGETPASS = "SELECT Password FROM datingapp.account where email=?;";
     private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, hobby.IDHobby\r\n"
             + "from userhobby inner join hobby \r\n"
             + "on userhobby.IDHobby = hobby.IDHobby\r\n"
@@ -27,6 +29,11 @@ public class ProfileDAO {
             + "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?\r\n"
             + "where Userid = ?";
     private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
+    private static final String DELETE_USERHOBBY_BY_IDHOBBY = "delete from userHobby where IDHobby = ?";
+    private static final String INSERT_HOBBY = "INSERT INTO `datingapp`.`hobby` (`IDHobby`, `NameHobby`,`imageHobby`) VALUES (?, ?,?);";
+    private static final String UPDATE_HOBBY = "UPDATE `datingapp`.`hobby` SET `NameHobby` = ?, `imageHobby`=?  WHERE (`IDHobby` = ?)";
+    private static final String UPDATE_HOBBY_noIMG = "UPDATE `datingapp`.`hobby` SET `NameHobby` = ?  WHERE (`IDHobby` = ?)";
+    private static final String DELETE_HOBBY_BY_IDHOBBY = "delete from hobby where IDHobby = ?";
     private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
     private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
     		+ "    				where  profile.UserId <> ?\r\n"
@@ -40,8 +47,14 @@ public class ProfileDAO {
 			+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 =? AND B.MatchStatus='Match'\r\n"
 			+ "    							where  B.matchID IS NOT NULL)"
 			+ "";
-
-    public Profile GetProfile(Account accData) throws ClassNotFoundException {
+	private static final String SELECT_FAVORITE_PROFILE= "SELECT Profile.* \r\n"
+			+ "    				FROM Profile \r\n"
+			+ "    				JOIN userHobby ON Profile.UserId = userHobby.UserID\r\n"
+			+ "    				WHERE userHobby.IDHobby =?\r\n"
+			+ "";
+	private static final String SELECT_ALL_PROFILE= "SELECT * FROM datingapp.profile\r\n"
+			+ "WHERE UserId <>\"1\";";
+	public Profile GetProfile(Account accData) throws ClassNotFoundException {
         Profile profile = new Profile();
 
         try {
@@ -60,7 +73,7 @@ public class ProfileDAO {
                 profile.setAge(rs.getInt(3));
                 profile.setGender(rs.getString(4));
                 profile.setBirthDay(rs.getDate(5));
-profile.setRelationship(rs.getString(6));
+                profile.setRelationship(rs.getString(6));
                 profile.setHeight(rs.getInt(7));
                 profile.setZodiac(rs.getString(8));
                 profile.setAddress(rs.getString(9));
@@ -117,14 +130,18 @@ profile.setRelationship(rs.getString(6));
             while (rs.next()) {
                 String iDhobby = rs.getString(1);
                 String hobbyName = rs.getString(2);
+                byte[] Url_image = rs.getBytes(3);
+				String imageURL = ImageHandle.byteArrayToImage(Url_image);
 
-                hobbies.add(new Hobby(iDhobby, hobbyName));
+                hobbies.add(new Hobby(iDhobby, hobbyName,imageURL));
             }
         } catch (SQLException e) {
             HandleExeption.printSQLException(e);
         }
         return hobbies;
     }
+    
+  
 
     public boolean updateProfile(Profile profile) throws SQLException {
         boolean rowUpdated;
@@ -176,7 +193,59 @@ statement.setDate(4, profile.getBirthDay());
         }
         return rowUpdated;
     }
+    public boolean DeleteUserHobby_IDhobby(String idhobby) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+            PreparedStatement statement = conn.prepareStatement(DELETE_USERHOBBY_BY_IDHOBBY);) {
+            statement.setString(1, idhobby);
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    public boolean DeleteHobby_IDhobby(String idhobby) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+            PreparedStatement statement = conn.prepareStatement(DELETE_HOBBY_BY_IDHOBBY);) {
+            statement.setString(1, idhobby);
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    public boolean InsertHobby(String iDhobby, String name,byte[] img) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(INSERT_HOBBY);) {
+            statement.setString(1, iDhobby);
+            statement.setString(2, name);
+            statement.setBytes(3, img);
 
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    } 
+    public boolean UpdateHobby(String iDhobby, String name,byte[] img) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(UPDATE_HOBBY);) {
+            statement.setString(1,name );
+            statement.setBytes(2, img);
+            statement.setString(3, iDhobby);
+
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    } 
+    public boolean UpdateHobby_noImg(String iDhobby, String name) throws SQLException {
+        boolean rowUpdated;
+        try (Connection conn = JDBCUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(UPDATE_HOBBY_noIMG);) {
+            statement.setString(1,name );
+            statement.setString(2, iDhobby);
+
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
     public boolean UpdateUserHobby(String iDhobby, Account acc) throws SQLException {
         boolean rowUpdated;
         try (Connection conn = JDBCUtil.getConnection();
@@ -211,6 +280,41 @@ statement.setDate(4, profile.getBirthDay());
             PreparedStatement preparedStatement = conn.prepareStatement(SELECT_CARD_PROFILE);
             preparedStatement.setString(1, userID);
             preparedStatement.setString(2, userID);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String UserID=rs.getString(1);
+//                if(UserID.equals(main.getUserID()))
+                {
+                	String Name=rs.getString(2);
+					int Age = rs.getInt(3);
+					String Gender = rs.getString(4);
+					Date BirthDay = rs.getDate(5);
+					String Relationship = rs.getString(6);
+					int Height = rs.getInt(7);
+					String Zodiac = rs.getString(8);
+					String Address = rs.getString(9);
+					String Introduce = rs.getString(10);
+					byte[] Url_image = rs.getBytes(11);
+					String imageURL = ImageHandle.byteArrayToImage(Url_image);
+					
+					listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
+                }
+                
+            }
+        } catch (SQLException e) {
+        	HandleExeption.printSQLException(e);
+        }
+        return listPr;
+    }
+	public List < Profile > GetAllProfile() {
+        List < Profile > listPr = new ArrayList < > ();
+// Step 1: Establishing a Connection
+        try  {
+        	Connection conn = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_ALL_PROFILE);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -277,4 +381,64 @@ statement.setDate(4, profile.getBirthDay());
         }
         return listPr;
     }
+	public List < Profile > GeListProfileFavorite(String IDHobby) {
+		List < Profile > listPr = new ArrayList < > ();
+		// Step 1: Establishing a Connection
+		        try  {
+		        	Connection conn = JDBCUtil.getConnection();
+		            PreparedStatement preparedStatement = conn.prepareStatement(SELECT_FAVORITE_PROFILE);
+		            preparedStatement.setString(1, IDHobby);
+		            // Step 3: Execute the query or update query
+		            System.out.print(preparedStatement);
+		            ResultSet rs = preparedStatement.executeQuery();
+
+		            // Step 4: Process the ResultSet object.
+		            while (rs.next()) {
+		                String UserID=rs.getString(1);
+//		                if(UserID.equals(main.getUserID()))
+		                {
+		                	String Name=rs.getString(2);
+							int Age = rs.getInt(3);
+							String Gender = rs.getString(4);
+							Date BirthDay = rs.getDate(5);
+							String Relationship = rs.getString(6);
+							int Height = rs.getInt(7);
+							String Zodiac = rs.getString(8);
+							String Address = rs.getString(9);
+							String Introduce = rs.getString(10);
+							byte[] Url_image = rs.getBytes(11);
+							String imageURL = ImageHandle.byteArrayToImage(Url_image);
+							
+							listPr.add(new Profile(UserID, Name,Age,Gender,BirthDay,Relationship,Height,Zodiac,Address,Introduce, imageURL));
+		                }
+		                
+		            }
+		        } catch (SQLException e) {
+		        	HandleExeption.printSQLException(e);
+		        }
+		        return listPr;
+    }
+	public String FogerPass(String email) {
+        String pass=new String();
+		 try  {
+	        	Connection conn = JDBCUtil.getConnection();
+	            PreparedStatement preparedStatement = conn.prepareStatement(FOGETPASS);
+	            preparedStatement.setString(1, email);
+	 
+	            // Step 3: Execute the query or update query
+	            ResultSet rs = preparedStatement.executeQuery();
+
+	            // Step 4: Process the ResultSet object.
+	            while (rs.next()) {
+	                pass=rs.getString(1);
+
+	                }
+	                
+	            
+	        } catch (SQLException e) {
+	        	HandleExeption.printSQLException(e);
+	        }
+	        return pass;
+		
+	}
 	}

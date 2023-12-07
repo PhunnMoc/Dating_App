@@ -28,4 +28,8 @@ public class FarseToJSON {
         System.out.println(json);
         return json;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
