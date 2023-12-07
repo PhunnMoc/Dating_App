@@ -12,7 +12,8 @@
     />
     <link rel="stylesheet" href="../Access/Style/css/Login.css" />
     <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
-    
+    <link rel="stylesheet" href="Access/Style/css/Login.css" />
+    <link rel="stylesheet" href="Access/Style/css/root/root.css" />
 	<body>
 	<%
 		String err_register = (String) request.getAttribute("error_register");
@@ -88,6 +89,7 @@
 
     <!-- partial -->
     <script src="../Access/Style/js/login.js"></script>
+     <script src="Access/Style/js/login.js"></script>
     <script>
     function checkPassword(){
     	password = document.getElementById("password").value;
