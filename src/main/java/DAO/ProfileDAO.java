@@ -36,7 +36,7 @@ public class ProfileDAO {
     private static final String DELETE_HOBBY_BY_IDHOBBY = "delete from hobby where IDHobby = ?";
     private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
     private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
-    		+ "    				where  profile.UserId <> ?\r\n"
+    		+ "    				where profile.UserId<>\"1\" and profile.UserId <> ?\r\n"
     		+ "    					AND profile.UserId not IN (select  B.userID2 as NO\r\n"
     		+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
     		+ "    							where  B.matchID IS NOT NULL)"

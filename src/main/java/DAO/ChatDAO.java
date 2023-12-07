@@ -26,8 +26,8 @@ public class ChatDAO {
 	        " (ID_Receiver, ID_Sender, Time,  Content) VALUES " + " (?, ?, ?, N?);";
 
 	    private static final String SELECT_USER_MESSAGE_BY_USERID = "SELECT p.userid, p.Name, p.Age,p.Gender,p.Birthday,p.Relationship,p.Height,p.Zodiac,p.Address,p.Introduce,p.ImageData, MAX(m.Time) AS LastMessageTime\r\n"
-	    		+ "FROM Profile p\r\n"
-	    		+ "LEFT JOIN Message m ON p.UserID = m.Id_Sender OR p.UserID = m.Id_Receiver\r\n"
+	    		+ "FROM profile p\r\n"
+	    		+ "LEFT JOIN message m ON p.UserID = m.Id_Sender OR p.UserID = m.Id_Receiver\r\n"
 	    		+ "WHERE (m.Id_Sender = ? OR m.Id_Receiver = ? ) and p.userid <> ? \r\n"
 	    		+ "GROUP BY p.userid, p.Name, p.Age,p.Gender,p.Birthday,p.Relationship,p.Height,p.Zodiac,p.Address,p.Introduce,p.ImageData\r\n"
 	    		+ "ORDER BY LastMessageTime DESC";
