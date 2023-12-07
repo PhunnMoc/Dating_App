@@ -1,9 +1,5 @@
 eclipse.preferences.version=1
-<<<<<<< HEAD
-encoding//src/main/java/Controllers/LoginController.java=UTF-8
-=======
 encoding//src/main/java/Controllers/ChatController.java=UTF-8
->>>>>>> main
 encoding//src/main/java/Controllers/ProfileControllers.java=UTF-8
 encoding//src/main/java/Controllers/RegisterController.java=UTF-8
 encoding//src/main/java/DAO/AccountDAO.java=UTF-8
@@ -15,4 +11,3 @@ encoding//src/main/webapp/Access/Style/css/Login.css=UTF-8
 encoding//src/main/webapp/Access/Style/css/favorite.css=UTF-8
 encoding//src/main/webapp/Pages/FogetPass.jsp=UTF-8
 encoding//src/main/webapp/Pages/Match.jsp=UTF-8
-encoding//src/main/java/Handle/FarseToJSON.java=UTF-8

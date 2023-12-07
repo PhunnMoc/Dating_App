@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -9,13 +5,8 @@
 <%@ page import="Models.Account"%>
 <%@ page import="Models.Profile"%>
 <%@ page import="java.util.List"%>
-<<<<<<< HEAD
-<%@ page buffer="8192kb" autoFlush="true" %>
-<%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
-=======
 <%@ page buffer="8192kb" autoFlush="true"%>
 <%@ page import="org.apache.commons.lang3.StringEscapeUtils"%>
->>>>>>> main
 <html>
 <head>
 <meta charset="utf-8" />
@@ -45,118 +36,6 @@
 	data-auto-replace-svg="nest"></script>
 </head>
 <body>
-<<<<<<< HEAD
-	<%
-		Account account = (Account) session.getAttribute("account");
-	%>
-	<%if (account == null) {%>
-		<%response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp"); %>
-	<%} %> 
-	<%
-		String listMessageJSON = (String) request.getAttribute("listMessJSON");
-		String listProfileJSON = (String) request.getAttribute("listProfileJSON"); 
-		String imageData = (String) request.getAttribute("image"); 
-		Profile profile = (Profile) request.getAttribute("profile");
-	%>
-   <nav>
-      <div class="nav-left">
-        <a href="./Match.html">
-          <img src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
-        </a>
-        <ul class="nav-icon">
-            <a href="./favourite.html"
-            ><li><i class="fa-solid fa-heart-circle-check"></i></i></li
-          ></a>
-          <a href="<%=request.getContextPath()%>/pro/message"
-            ><li><i class="fa-solid fa-message fa-beat" style="color:red;"></i></li
-          ></a>
-          <a href="<%=request.getContextPath()%>/pro/showCard"
-            ><li><i class="fa-solid fa-user-group  " ></i></i></li
-          ></a>
-        </ul>
-      </div>
-      <div class="nav-right">
-        <div class="nav-user-icon online" onclick="settingsMenuToggle()">
-          <img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
-        </div>
-      </div>
-      <!----------------Settings Menu"----------------------->
-      <div class="settings-menu">
-        <div id="dark-btn">
-          <span></span>
-        </div>
-        <div class="settings-menu-inner">
-          <div class="user-profile">
-            <div class="nav-user-icon online">
-          <img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
-        </div>
-            <div>
-              <p><%=profile.getName()%></p>
-              <a href="<%=request.getContextPath()%>/pro/list">Thông tin cá nhân</a>
-            </div>
-          </div>
-          <hr />
-            <img
-              src="https://i.postimg.cc/PJC9GrMb/logout.png"
-              class="settings-icon"
-            />
-            <a href="<%=request.getContextPath() %>/pro/Logout"
-              >Logout
-              <img src="https://i.postimg.cc/RF1dBMWr/arrow.png" width="10px"
-            /></a>
-          </div>
-        </div>
-      </div>
-    </nav>
-	<div class="container-app">
-		<!----------------Left Sidebar----------------------->
-		<div class="left-sidebar border-right">
-			<div class="settings-tray">
-				<img class="profile-image" src="data:image/jpeg;base64, <%=imageData%>"/> <span class="settings-tray--right">
-				</span>
-			</div>
-			<c:if test="${not empty list_other_user}">
-		    <!-- Lấy giá trị đầu tiên từ danh sách -->
-		    <c:set var="firstPerson" value="${list_other_user[0]}" />
-		
-		    <!-- Gán giá trị cho thẻ input -->
-		    <input name = "currentPeople" id = "currentPeople" value = "${firstPerson.getUserID()}" style = "display: none">
-			</c:if>
-			<!-- Ô tìm kiếm người nhắn  -->
-			<div class="search-box">
-				<div class="input-wrapper">
-					<i class="material-icons">search</i> <input
-						placeholder="Search here" type="text" />
-				</div>
-			</div>
-			<!-- Kết thúc tìm kiếm  -->
-
-			<!-- Những người đã nhắn  -->
-			<div class="frame-messages">
-				<c:forEach var="i" begin="0" end="${list_other_user.size() - 1}" step="1">
-
-							<div class="friend-drawer friend-drawer--onhover" onclick="handleFriendClick(this)">
-								<img class="profile-image"
-									src="data:image/jpeg;base64, <c:out value="${list_other_user[i].getImageURL()}" />" alt="Image" />
-								<div class="text">
-									<h6>
-										<c:out value="${list_other_user[i].name}" />
-									</h6>		
-									<input name = "userID" value = <c:out value="${list_other_user[i].getUserID()}" /> style = "display: none">																
-									<p class="text-muted">
-										<c:out value="${last_Message[i].content}" />
-									</p>
-								</div>
-								<span class="time text-muted small"><c:out
-										value="${last_Message[i].time}" /> </span>
-							</div>
-
-
-				</c:forEach>
-
-			</div>
-		</div>
-=======
 
 	<%
 	Account account = (Account) session.getAttribute("account");
@@ -282,22 +161,11 @@
 				</c:if>
 			</div>
 		</div>
->>>>>>> main
 		<!--  --------------Main Sidebar--------------------- Mục nhắn tin  -->
 		<div class="mess">
 			<!--         Thông tin của người đang nhắn -->
 			<div class="settings-tray" type="hidden">
 				<div class="friend-drawer no-gutters friend-drawer--grey">
-<<<<<<< HEAD
-					<img class="profile-image" id = "imgReciever"
-						src="data:image/jpeg;base64, <%=imageData%>" alt="Image"/>
-					<div class="text">
-						<h6 id = "RecieverName"></h6>
-
-					</div>
-					<span class="settings-tray--right">
-						<i class="material-icons" style = "position: absolute; right: 10;">menu</i>
-=======
 					<img class="profile-image" id="imgReciever"
 						src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
 					<div class="text">
@@ -306,7 +174,6 @@
 					</div>
 					<span class="settings-tray--right"> <i
 						class="material-icons" style="position: absolute; right: 10;" onclick="handleMenuClick()">menu</i>
->>>>>>> main
 					</span>
 				</div>
 			</div>
@@ -329,8 +196,6 @@
 			</div>
 			<!-- End mục nhập tin nhắn và gửi  -->
 		</div>
-<<<<<<< HEAD
-=======
 		<div class="infor-hide" id="infor-hide">
 								<div class="main-infor">
 								<div class="image-contaiter">
@@ -351,33 +216,11 @@
 
 								</div>
 							</div>
->>>>>>> main
 		<!----------------Right Sidebar----------------------->
 	</div>
 	<!-- <div class="footer">
           
         </div> -->
-<<<<<<< HEAD
-	
-	<script
-		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<script>
-	<% 
-		String escapedListProfileJSON = StringEscapeUtils.escapeEcmaScript(listProfileJSON); 
-	    String escapedListMessageJSON = StringEscapeUtils.escapeEcmaScript(listMessageJSON); 
-	%>
-	var $messages = $('.messages-content'), d, h, m, i = 0;
-	var inputElement = document.getElementById("currentPeople");
-	var sender = "<%=account.getUserID()%>";
-	var reciever = inputElement.value;
-	var listMessage = JSON.parse('<%= escapedListMessageJSON %>');
-	var listProfile = JSON.parse('<%= escapedListProfileJSON %>');
-/*  	var listMessage = JSON.parse(listMessageJSON);
-	var listProfile = JSON.parse(listProfileJSON);  */
-=======
 
 	<script
 		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -398,7 +241,6 @@
 
 		/*  	var listMessage = JSON.parse(listMessageJSON);
 			var listProfile = JSON.parse(listProfileJSON);  */
->>>>>>> main
 		$(window).on('load', function() {
 			socket.onopen();
 			$messages.mCustomScrollbar();
@@ -407,10 +249,6 @@
 		$('.friend-drawer--onhover').on('click', function() {
 			$('.chat-bubble').hide('slow').show('slow');
 		});
-<<<<<<< HEAD
-		
-=======
->>>>>>> main
 
 		var wsUrl;
 		if (window.location.protocol === 'http:') {
@@ -422,12 +260,8 @@
 			$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo',
 					'bottom', {
 						scrollInertia : 10,
-<<<<<<< HEAD
-						timeout : 0 });
-=======
 						timeout : 0
 					});
->>>>>>> main
 		}
 		// Thay đổi 'window.location.host' thành tên miền của bạn nếu cần thiết
 
@@ -521,47 +355,6 @@
 		// Mở kết nối WebSocket khi trang được load
 
 		function handleFriendClick(element) {
-<<<<<<< HEAD
-		    // Lấy giá trị userID từ thẻ input bên trong
-		    var userID = element.querySelector('input[name="userID"]').value;
-		    inputElement.value = userID;
-		    loadData(userID)
-		  }
-		function loadData(userID) {
-		    reciever = userID;
-		    var messages = document.querySelectorAll('.message');
-		    messages.forEach(function(message) {
-		    	message.remove();
-		    });
-		    var imageURL = "";
-		    var userName = ""; 
-		    listProfile.forEach(function(profile) {
-		    	if (profile.userID == reciever)
-		    	{
-		    		imageURL = profile.imageURL;
-		    		userName = profile.name;
-		    	}
-		    });
-		    var imgReciever =  document.getElementById("imgReciever");
-		    var recieverName =  document.getElementById("RecieverName");
-		    recieverName.innerText  = userName;
-		    imageURL = "data:image/jpeg;base64," + imageURL;
-		    imgReciever.src = imageURL;
-		    listMessage.forEach(function(message) {
-		        var idReceiver = message.id_Reciver;
-		        var idSender = message.id_Sender;	       
-		        var content = message.content;
-
-		        if (sender == idSender && reciever == idReceiver)
-		        	insertMessage(content);
- 		        else if (sender == idReceiver && reciever == idSender)
-		        {
- 		        	
- 		        	receiveMessageimage(content, imageURL); 
-		        }
-		    });		    
-		  }
-=======
 			// Lấy giá trị userID từ thẻ input bên trong
 			var userID = element.querySelector('input[name="userID"]').value;
 			inputElement.value = userID;
@@ -639,7 +432,6 @@
 			document.getElementById('address-hide').textContent ="Địa chỉ: " + address;
 			
 		}
->>>>>>> main
 		// ... Các xử lý khác của bạn ...
 	</script>
 	<script src="../Access/Style/js/Base.js"></script>

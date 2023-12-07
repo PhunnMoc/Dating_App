@@ -25,14 +25,12 @@ import DAO.ProfileDAO;
 import DAO.RegisterDAO;
 import Models.Account;
 import Models.Hobby;
-import Models.Message;
 import Models.Match;
 import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
 import Handle.FarseToJSON;
 import Handle.ImageHandle;
-import Handle.FarseToJSON;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,11 +45,8 @@ public class ProfileControllers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
-
-	private ChatDAO chatDAO;
 	private MatchDAO matchDAO;
 	private ChatDAO chatDAO;
-
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -68,7 +63,6 @@ public class ProfileControllers extends HttpServlet {
 		// TODO Auto-generated method stub
 		profileDAO = new ProfileDAO();
 		loginDao = new LoginDAO();
-		chatDAO = new ChatDAO();
 		matchDAO=new MatchDAO();
 		chatDAO=new ChatDAO();
 	}
@@ -108,9 +102,6 @@ public class ProfileControllers extends HttpServlet {
 			case "/Register":
 				System.out.println("hehe" );
 				HandleRegister(request, response);
-				break;
-			case "/message":
-				HandleMessage(request, response);
 				break;
 			 case "/listMatch":
                 ListProfileMatch(request, response);
@@ -331,35 +322,6 @@ protected void HandleRegister(HttpServletRequest request, HttpServletResponse re
             dispatcher.forward(request, response);
 		}		
 	}
-	private void HandleMessage(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		System.out.print("aaaaaaa");
-		HttpSession session = request.getSession();
-		Account acc = new Account();		
-		acc = (Account) session.getAttribute("account");
-		List<Profile> list_profile = chatDAO.select_other_user_message(acc.getUserID());
-		request.setAttribute("list_other_user", list_profile);		
-		String listProfileJSON = FarseToJSON.listProfileToJSON(list_profile);
-		request.setAttribute("listProfileJSON", listProfileJSON);
-		
-		List<Message> lastmessage = chatDAO.select_message_last(acc.getUserID());
-		request.setAttribute("last_Message", lastmessage);
-
-		List<Message> listMessage = chatDAO.select_message_by_UserID(acc.getUserID());
-		request.setAttribute("list_Message", listMessage);
-		String listMessJSON = FarseToJSON.listMessageToJSON(listMessage);
-		request.setAttribute("listMessJSON", listMessJSON);
-		
-		Profile profile = new Profile();
-		profile = profileDAO.GetProfile(acc);
-		String image = ImageHandle.byteArrayToImage(profile.getImageData());
-		request.setAttribute("image", image);
-		request.setAttribute("profile", profile);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/chat.jsp");
-		dispatcher.forward(request, response);
-	}
-	
 	protected void HandleLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();		
