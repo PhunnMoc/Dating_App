@@ -16,27 +16,27 @@ import Util.HandleExeption;
 import Util.JDBCUtil;
 import Handle.ImageHandle;
 public class ProfileDAO {
-	private static final String FOGETPASS = "SELECT Password FROM datingapp.account where email=?;";
+	private static final String FOGETPASS = "SELECT Password FROM datingapp.account where Email=?;";
     private static final String SELECT_HOBBIES_BY_ID = "select UserID, NameHobby, hobby.IDHobby\r\n"
             + "from userhobby inner join hobby \r\n"
             + "on userhobby.IDHobby = hobby.IDHobby\r\n"
             + "where userhobby.UserID = ?";
     private static final String SELECT_ALL_HOBBIES = "select * from hobby";
-    private static final String UPDATE_PROFILE_IMAGE = "update profile set name = N?, age= ?, gender = N?, birthDay= ?, \r\n"
-            + "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?, imageData =?\r\n"
-            + "where Userid = ?";
-    private static final String UPDATE_PROFILE = "update profile set name = N?, age= ?, gender = N?, birthDay= ?, \r\n"
-            + "relationship = N?, height = ?, zodiac = N?, address = N?, introduce = N?\r\n"
-            + "where Userid = ?";
-    private static final String DELETE_USERHOBBY_BY_ID = "delete from userHobby where userid = ?";
-    private static final String DELETE_USERHOBBY_BY_IDHOBBY = "delete from userHobby where IDHobby = ?";
+    private static final String UPDATE_PROFILE_IMAGE = "update profile set Name = N?, Age= ?, Gender = N?, BirthDay= ?, \r\n"
+            + "Relationship = N?, Height = ?, Zodiac = N?, Address = N?, Introduce = N?, ImageData =?\r\n"
+            + "where UserId = ?";
+    private static final String UPDATE_PROFILE = "update profile set Name = N?, Age= ?, Gender = N?, BirthDay= ?, \r\n"
+            + "Relationship = N?, Height = ?, Zodiac = N?, Address = N?, Introduce = N?\r\n"
+            + "where UserId = ?";
+    private static final String DELETE_USERHOBBY_BY_ID = "delete from userhobby where UserID = ?";
+    private static final String DELETE_USERHOBBY_BY_IDHOBBY = "delete from userhobby where IDHobby = ?";
     private static final String INSERT_HOBBY = "INSERT INTO `datingapp`.`hobby` (`IDHobby`, `NameHobby`,`imageHobby`) VALUES (?, ?,?);";
     private static final String UPDATE_HOBBY = "UPDATE `datingapp`.`hobby` SET `NameHobby` = ?, `imageHobby`=?  WHERE (`IDHobby` = ?)";
     private static final String UPDATE_HOBBY_noIMG = "UPDATE `datingapp`.`hobby` SET `NameHobby` = ?  WHERE (`IDHobby` = ?)";
     private static final String DELETE_HOBBY_BY_IDHOBBY = "delete from hobby where IDHobby = ?";
-    private static final String INSERT_USERHOBBY_BY_ID = "insert into userHobby (`IDHobby`, `UserID`) VALUES (?, ?)";
+    private static final String INSERT_USERHOBBY_BY_ID = "insert into userhobby (`IDHobby`, `UserID`) VALUES (?, ?)";
     private static final String SELECT_CARD_PROFILE = "select *from profile\r\n"
-    		+ "    				where  profile.UserId <> ?\r\n"
+    		+ "    				where profile.UserId<>\"1\" and profile.UserId <> ?\r\n"
     		+ "    					AND profile.UserId not IN (select  B.userID2 as NO\r\n"
     		+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 = ?\r\n"
     		+ "    							where  B.matchID IS NOT NULL)"
@@ -47,10 +47,10 @@ public class ProfileDAO {
 			+ "    									from  profile A LEFT JOIN datingapp.match B ON A.UserId = B.userID1 AND B.userID1 =? AND B.MatchStatus='Match'\r\n"
 			+ "    							where  B.matchID IS NOT NULL)"
 			+ "";
-	private static final String SELECT_FAVORITE_PROFILE= "SELECT Profile.* \r\n"
-			+ "    				FROM Profile \r\n"
-			+ "    				JOIN userHobby ON Profile.UserId = userHobby.UserID\r\n"
-			+ "    				WHERE userHobby.IDHobby =?\r\n"
+	private static final String SELECT_FAVORITE_PROFILE= "SELECT profile.* \r\n"
+			+ "    				FROM profile \r\n"
+			+ "    				JOIN userhobby ON profile.UserId = userhobby.UserID\r\n"
+			+ "    				WHERE userhobby.IDHobby =?\r\n"
 			+ "";
 	private static final String SELECT_ALL_PROFILE= "SELECT * FROM datingapp.profile\r\n"
 			+ "WHERE UserId <>\"1\";";
@@ -252,7 +252,7 @@ statement.setDate(4, profile.getBirthDay());
                 PreparedStatement statement = conn.prepareStatement(INSERT_USERHOBBY_BY_ID);) {
             statement.setString(1, iDhobby);
             statement.setString(2, acc.getUserID());
-
+            System.out.print(statement);
             rowUpdated = statement.executeUpdate() > 0;
         }
         return rowUpdated;
@@ -260,7 +260,7 @@ statement.setDate(4, profile.getBirthDay());
     public void insertProfile(Profile profile) {
     	 try (Connection conn = JDBCUtil.getConnection();
     	 PreparedStatement preparedStatement = conn
-    	 .prepareStatement("INSERT INTO Profile (UserId, Name) VALUES (?, N?)")) {
+    	 .prepareStatement("INSERT INTO profile (UserId, Name) VALUES (?, N?)")) {
     	 preparedStatement.setString(1, profile.getUserID());
     	 preparedStatement.setString(2, profile.getName());
     	 System.out.println(preparedStatement);

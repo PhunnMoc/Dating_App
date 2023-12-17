@@ -34,6 +34,7 @@ public class ChatController {
 
 	        // Lưu thông tin phiên theo từng người dùng vào map chính
 	        userSessions.put(senderSessionId, userSessionMap);
+	        userSessions.put(receiverSessionId, userSessionMap);
 	        System.out.println("userSession2  " + userSessions);
 	        System.out.println("WebSocket opened: " + session.getId() + " - Sender: " + sender + ", Receiver: " + receiver);
 	        
