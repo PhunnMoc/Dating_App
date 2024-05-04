@@ -1,6 +1,8 @@
 :root{
     --color-theme: linear-gradient(to bottom right, lightyellow, lightpink);
+
     --side-bar-color: linear-gradient(to bottom right, lightyellow, lightpink); 
+
     --nav-bar-color: black;
     --box-ava: white;
     --color-theme-1: linear-gradient(to bottom right, lightyellow, lightpink);  
@@ -49,4 +51,11 @@ body{
   }
   dl, ol, ul {
     margin: 0 !important;
+}
+.title-left{
+    color: rgb(217, 55, 101);
+    font-size: 2em;
+    margin-top: 40px;
+    margin-bottom: 2px;
+    font-weight: 900;
 }

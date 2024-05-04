@@ -104,6 +104,11 @@
     position: absolute;
     top: 30%;
   }
+    h3.card__category,
+   h4.card__category
+    {
+      text-shadow: 0 0 10px #000000;
+    }
   
   .card__category{
     color: var(--text-light);
