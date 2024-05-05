@@ -1,66 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>Dating_App</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-  </welcome-file-list>
-  
-    <!-- SMTP settings -->
-    <context-param>
-        <param-name>host</param-name>
-        <param-value>smtp.gmail.com</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>port</param-name>
-        <param-value>587</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>user</param-name>
-        <param-value>phuongtrinhhoaian@gmail.com</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>pass</param-name>
-        <param-value>szqg vmnb ldty ckoj</param-value>
-    </context-param>
-   <servlet>
-        <servlet-name>EmailController</servlet-name>
-        <servlet-class>Controllers.EmailController</servlet-class>
-    </servlet>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>Dating_App</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
 
-    <servlet-mapping>
-        <servlet-name>EmailController</servlet-name>
-        <url-pattern>/send-email/*</url-pattern>
-    </servlet-mapping>
+	<!-- SMTP settings -->
+	<context-param>
+		<param-name>host</param-name>
+		<param-value>smtp.gmail.com</param-value>
+	</context-param>
 
-    
- 
-   <servlet>
-        <servlet-name>ProfileControllers</servlet-name>
-        <servlet-class>Controllers.ProfileControllers</servlet-class>
-    </servlet>
+	<context-param>
+		<param-name>port</param-name>
+		<param-value>587</param-value>
+	</context-param>
 
-    <servlet-mapping>
-        <servlet-name>ProfileControllers</servlet-name>
-        <url-pattern>/pro/*</url-pattern>
-    </servlet-mapping>
-      <servlet>
-        <servlet-name>AdminRole</servlet-name>
-        <servlet-class>Controllers.AdminRole</servlet-class>
-    </servlet>
+	<context-param>
+		<param-name>user</param-name>
+		<param-value>phuongtrinhhoaian@gmail.com</param-value>
+	</context-param>
 
-    <servlet-mapping>
-        <servlet-name>AdminRole</servlet-name>
-        <url-pattern>/AdminRole/*</url-pattern>
-    </servlet-mapping>
-    
+	<context-param>
+		<param-name>pass</param-name>
+		<param-value>szqg vmnb ldty ckoj</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>EmailController</servlet-name>
+		<servlet-class>Controllers.EmailController</servlet-class>
+	</servlet>
 
-    
+	<servlet-mapping>
+		<servlet-name>EmailController</servlet-name>
+		<url-pattern>/send-email/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>ProfileControllers</servlet-name>
+		<servlet-class>Controllers.ProfileControllers</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProfileControllers</servlet-name>
+		<url-pattern>/pro/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AdminRole</servlet-name>
+		<servlet-class>Controllers.AdminRole</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AdminRole</servlet-name>
+		<url-pattern>/AdminRole/*</url-pattern>
+	</servlet-mapping>
+
+
+	<!--Thoai Bao Mat web -->
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>Controllers.CorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/CorsFilter/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>ClickJackingFilter</filter-name>
+		<filter-class>Controllers.ClickJackingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ClickJackingFilter</filter-name>
+		<url-pattern>/ClickJackingFilter/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CookieSameSite</filter-name>
+		<filter-class>Controllers.CookieSameSite</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CookieSameSite</filter-name>
+		<url-pattern>/CookieSameSite/*</url-pattern>
+	</filter-mapping>
+
+
 </web-app>

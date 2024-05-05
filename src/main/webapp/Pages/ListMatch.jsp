@@ -25,8 +25,8 @@
 	rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 <link rel="stylesheet" href="../Access/Style/css/ListFriend.css">
-<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-	data-auto-replace-svg="nest"></script>
+<!-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	data-auto-replace-svg="nest"></script> -->
 </head>
 <body>
 	<%

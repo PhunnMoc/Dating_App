@@ -120,6 +120,7 @@ input {
 
 </style>
 <body>
+ <% response.setHeader("X-Frame-Options", "SAMEORIGIN"); %>
     <form action="<%=request.getContextPath()%>/send-email" method = "post" accept-charset="UTF-8">
           <h1>Quên mật khẩu</h1>
 

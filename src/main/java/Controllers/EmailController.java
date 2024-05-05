@@ -40,10 +40,14 @@ public class EmailController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+//		//Thoai ClickJacking
+//		response.setHeader("X-Frame-Options", "DENY");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		//Thoai ClickJacking
+//				response.setHeader("X-Frame-Options", "DENY");
 		  String recipient = request.getParameter("recipient");
 	       String content = profileDAO.FogerPass(recipient);
 	 

@@ -146,7 +146,7 @@ public class ProfileControllers extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		 String requestType = request.getHeader("X-Request-Type");
+		String requestType = request.getHeader("X-Request-Type");
 		
 	    if ("HandleMatch".equals(requestType)) {
 	    	try {
@@ -260,7 +260,8 @@ profileDAO.updateProfile(profile);
 	}
 	
 	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
-        String email = request.getParameter("email");
+		
+		String email = request.getParameter("email");
         String password = request.getParameter("password");
         
         Account account = new Account();

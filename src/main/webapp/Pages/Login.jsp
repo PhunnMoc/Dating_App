@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
  <%@page import="Models.Account"%>
+
+ 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,6 +16,7 @@
     <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
     
 	<body>
+	<% response.setHeader("X-Frame-Options", "SAMEORIGIN"); %> 
 	<%
 		String err_register = (String) request.getAttribute("error_register");
 		String err_login = (String) request.getAttribute("error_login");
@@ -48,6 +51,7 @@
         </form>
       </div>
       <div class="form-container sign-in-container">
+      
         <form action="<%=request.getContextPath()%>/pro/Login" method = "post" accept-charset="UTF-8">
           <h1>Đăng nhập</h1>
 

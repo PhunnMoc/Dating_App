@@ -58,7 +58,8 @@ public class AdminRole extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getPathInfo();
-
+		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+		 response.addHeader("Set-Cookie", "JSESSIONID=" + request.getSession().getId() + "; HttpOnly; Secure; SameSite=Strict");
 		request.setCharacterEncoding("UTF-8");
 		try {
 			switch (action) {
@@ -97,6 +98,7 @@ public class AdminRole extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
