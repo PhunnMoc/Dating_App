@@ -57,6 +57,7 @@ public class AdminRole extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String action = request.getPathInfo();
 
 		request.setCharacterEncoding("UTF-8");
@@ -103,6 +104,7 @@ public class AdminRole extends HttpServlet {
 
 	private void ListHobby(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		    
 		List<Hobby> listHobby = profileDAO.GetAllHobbies();
 		request.setAttribute("list", listHobby);
 		String name = request.getParameter("namehobby");
@@ -140,6 +142,20 @@ public class AdminRole extends HttpServlet {
 
 	private void AddHobby(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		
+		HttpSession session = request.getSession();
+    	String csrfToken = (String) session.getAttribute("csrf_token");
+        String csrfTokenFromForm = request.getParameter("csrf_token");
+        if (csrfTokenFromForm == null || !csrfTokenFromForm.equals(csrfToken)) {
+            String errorMessage = "CSRF Token khong khop.";
+            session.invalidate();
+            System.out.print("Ma CSRF sai, quay ve Login \n");
+            request.setAttribute("Message", errorMessage);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
+            dispatcher.forward(request, response);
+            return; 
+        }
+		
 		RegisterDAO registerAccount = new RegisterDAO();
 		String id = registerAccount.generateUserID();
 		String name = request.getParameter("namehobby");
@@ -171,6 +187,8 @@ public class AdminRole extends HttpServlet {
 
 	private void DeleteHobby(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		
+		
 		String id = request.getParameter("id");
 		profileDAO.DeleteUserHobby_IDhobby(id);
 		profileDAO.DeleteHobby_IDhobby(id);

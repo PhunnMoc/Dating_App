@@ -13,8 +13,10 @@
 <!-- phan card -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<!-- <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha256-ABCDEF123456" crossorigin="anonymous"></script>
+	
 <!-- phan card -->
 <link rel="stylesheet" href="../Access/Style/css/Base.css" />
 <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
@@ -25,7 +27,9 @@
 	rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 <link rel="stylesheet" href="../Access/Style/css/ListFriend.css">
-<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+<!-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" -->
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha256-ABCDEF123456" data-auto-replace-svg="nest" crossorigin="anonymous"></script>
+
 	data-auto-replace-svg="nest"></script>
 </head>
 <body style="overflow-y: scroll;">

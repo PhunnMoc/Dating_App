@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="../Access/Style/css/Card.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+<!-- <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script> -->
 <!-- phan card -->
 <link rel="stylesheet" href="../Access/Style/css/Base.css" />
 <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
@@ -31,9 +32,17 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+<!-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 	data-auto-replace-svg="nest"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha256-gSqw5G+Gss6YqyQlqyIkuQ0IRZUqGsDVq9c0tiF+mL8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha256-eVNjHw5UeU0jUqPPpZHAkU1z4U+QFBBY488WvueTm88=" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
 	<%
@@ -43,7 +52,7 @@
 	//String imageData = (String) request.getAttribute("image");
 	%>
 	<%
-	if (account != null) {
+	if (admin == null) {
 	%>
 	<jsp:forward page="Login.jsp"></jsp:forward>
 	<%
@@ -60,7 +69,7 @@
 
 		<nav style="display:flex;">
 		<div class="nav-left">
-			<a href="<%=request.getContextPath()%>/pro/showCard"> <img
+			<a href="<%=request.getContextPath()%>/AdminRole/list"> <img
 				src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
 			</a>
 			<ul class="nav-icon">
@@ -109,6 +118,7 @@
 						<form id="form" enctype="multipart/form-data"
 							action="<%=request.getContextPath()%>/AdminRole/add"
 							method="POST" accept-charset="UTF-8">
+							<input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
 							<label>Tên Sở thích: </label> <input id="namehobby"
 								name="namehobby" value="Nhap so thich moi"> <input id="idhobby"
 								name="idhobby" value="" style="display: none;"> 

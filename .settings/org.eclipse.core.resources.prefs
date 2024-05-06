@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/Controllers/ChatController.java=UTF-8
+encoding//src/main/java/Controllers/EmailController.java=UTF-8
 encoding//src/main/java/Controllers/ProfileControllers.java=UTF-8
 encoding//src/main/java/Controllers/RegisterController.java=UTF-8
 encoding//src/main/java/DAO/AccountDAO.java=UTF-8

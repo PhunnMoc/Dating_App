@@ -12,8 +12,7 @@
     />
     <link rel="stylesheet" href="../Access/Style/css/Login.css" />
     <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
-    <link rel="stylesheet" href="Access/Style/css/Login.css" />
-    <link rel="stylesheet" href="Access/Style/css/root/root.css" />
+    
 	<body>
 	<%
 		String err_register = (String) request.getAttribute("error_register");
@@ -21,10 +20,11 @@
 	%>
 	<%
 		Account account = (Account) session.getAttribute("account");
-	%>
-	<%if (account != null) {%>
+	%>	
+	
+<%-- 	<%if (account != null) {%>
 		<%response.sendRedirect(request.getContextPath() + "/Pages/Match.jsp"); %>
-	<%} %>
+	<%} %> --%>
 	<!-- partial:index.partial.html -->
     <h2>Chào mừng đến với TeenTher</h2>
     <div class="container" id="container">
@@ -37,6 +37,7 @@
             <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
           </div> -->
 <!--           <span>hoặc đăng ký bằng email</span> -->
+			<input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
           <input type="text" placeholder="Họ và tên" id="fullname" name="fullname" required="required"/>
           <input type="email" placeholder="Email" id="email" name="email" required="required"/>
           <% if (err_register != null) { %>
@@ -51,13 +52,13 @@
       <div class="form-container sign-in-container">
         <form action="<%=request.getContextPath()%>/pro/Login" method = "post" accept-charset="UTF-8">
           <h1>Đăng nhập</h1>
-
+			<input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
           <input type="email" placeholder="Email" id="email" name="email"/>
           <input type="password" placeholder="Mật khẩu" id="password" name="password" />
           <% if (err_login != null) { %>
 			  <div style="color: red"> <%=err_login %></div>
 			<% } %>
-			<a style="text-decoration: underline;" href="<%=request.getContextPath()%>/Pages/FogetPass.jsp"">Quên mật khẩu?</a>
+			<a style="text-decoration: underline;" href="<%=request.getContextPath()%>/send-email/createCSRF"">Quên mật khẩu?</a>
           <button type="submit">Đăng nhập</button>
         </form>
       </div>
@@ -89,7 +90,6 @@
 
     <!-- partial -->
     <script src="../Access/Style/js/login.js"></script>
-     <script src="Access/Style/js/login.js"></script>
     <script>
     function checkPassword(){
     	password = document.getElementById("password").value;
@@ -102,6 +102,19 @@
     		return true;
     	}
     }
+    //////////////////
+    /// Thiện Thêm hàm tạo CSRF ToKen khi chạy file Login.jsp
+    function getCSRFToken() {
+        fetch('<%=request.getContextPath()%>/send-email/createCSRF')
+        .then(response => response.text())
+        .then(csrfToken => {
+            // Set CSRF token cho input ẩn trong form
+            document.querySelector('input[name="csrf_token"]').value = csrfToken;
+        });
+    }
+    window.onload = getCSRFToken;
+   
+    /////////////////
     </script>
 	
 </html>
