@@ -6,36 +6,48 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Models.Account;
-import Util.HandleExeption;
 import Util.JDBCUtil;
 
 public class LoginDAO {
-	public Account onLogin(Account loginData) throws ClassNotFoundException {
-		Account account= new Account();
+    public Account validate(String email, String password) throws ClassNotFoundException {
+    	Account acc = new Account();
+        
 
-		try {
-			// Bước 1: Mở kết nối đến MySQL
-			Connection conn = JDBCUtil.getConnection();
-			
-			// Bước 2: Khởi tạo Prepare Statement
-			PreparedStatement preparedStatement = conn
-					.prepareStatement("select * from account where username = ? and password = ? ");
-			preparedStatement.setString(1, loginData.getUsername());
-			preparedStatement.setString(2, loginData.getPassword());
+        try (Connection connection = JDBCUtil.getConnection();
+                PreparedStatement preparedStatement = connection
+                        .prepareStatement("select * from account where email = ? and password = ? ")) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
 
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next())
-			{
-				account.setUsername(rs.getString(1));
-				account.setUserID(rs.getString(2));
-			}
-			
-			conn.close();
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+           if(rs.next()) {
+            	acc.setEmail(rs.getString(1));
+                acc.setUserID(rs.getString(3));
+                acc.setRole(rs.getString(4));
+            }
+           else {
+        	   acc = null;
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return acc;
+    }
+    public void ChangePassword(String newPass, String email) throws ClassNotFoundException {
 
-		} catch (SQLException e) {
-			// process sql exception
-			HandleExeption.printSQLException(e);
-		}
-		return account;
-	}
+        try (Connection connection = JDBCUtil.getConnection();
+                PreparedStatement preparedStatement = connection
+                        .prepareStatement("update account set password = ? where email = ?")) {
+            preparedStatement.setString(1, newPass);
+            preparedStatement.setString(2, email);
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

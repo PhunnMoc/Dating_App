@@ -4,7 +4,9 @@
 
     box-sizing: border-box;
 }
-
+.logout_icon{
+	width:40px;
+}
 .dark-theme{
     --body-color:#0a0a0a;
     --nav-color: #000;
@@ -49,14 +51,13 @@ nav {
 }
 
 .nav-user-icon img{
-    width: 40px;
+	width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
 }
-.nav-user-icon {
-    margin-left: 30px;
 
-}
 .search-box{
     background: #efefef;
     width: 350px;
@@ -98,7 +99,7 @@ nav {
     padding: 0;
     height: 100%;
     display: flex;
-    justify-content:space-between;
+/*     justify-content:space-between; */
     background: var(--color-theme);
 
 }
@@ -309,10 +310,10 @@ nav {
 .user-profile{
     display: flex;
     align-items: center;
-
+	line-height:2;
 }
 .user-profile img{
-    width: 45px;
+    width: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -447,14 +448,14 @@ nav {
 }
 .settings-menu{
     position: absolute;
-    width: 90%;
+    width: 30%;
     max-width: 350px;
     background: var(--box-ava);
     box-shadow: 0 0 10px rgba(0,0,0, 0.4);
     border-radius: 4px;
     overflow: hidden;
     top: 108%;
-    right: 5%;
+    right: 1%;
     max-height: 0;
     transition: max-height 0.3s;
 
@@ -552,10 +553,7 @@ nav {
         margin: 0 8px;
 
     }
-    .nav-user-icon img{
-        width: 30px;
 
-    }
     .nav-user-icon{
         margin-left: 0;
 

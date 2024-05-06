@@ -1,86 +1,75 @@
 package Controllers;
 import java.io.IOException;
-import Models.Account;
-import Models.Message;
-
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.PathParam;
+import javax.websocket.server.ServerEndpoint;
 
 import DAO.ChatDAO;
-import Models.Profile;
-
-
+@ServerEndpoint("/chat/{sender}/{receiver}")
 public class ChatController {
+  
+	   //private static final Map<String, Session> userSessions = Collections.synchronizedMap(new HashMap<>());
+	   private static final Map<String, Map<String, Session>> userSessions = Collections.synchronizedMap(new HashMap<>());
+	    @OnOpen
+	    public void onOpen(Session session, @PathParam("sender") String sender, @PathParam("receiver") String receiver) {
+	        
+	    	String senderSessionId = sender; // Tạo một ID duy nhất cho người gửi
+	        String receiverSessionId = receiver;
+	    	// Lưu thông tin phiên của người gửi và người nhận
+	        Map<String, Session> userSessionMap = new HashMap<>();
+	        userSessionMap.put(sender, session);
+	        userSessionMap.put(receiver, session);
 
-	private static final long serialVersionUID = 1 ;
-    private ChatDAO chatDAO;
+	        // Lưu thông tin phiên theo từng người dùng vào map chính
+	        userSessions.put(senderSessionId, userSessionMap);
+	        System.out.println("userSession2  " + userSessions);
+	        System.out.println("WebSocket opened: " + session.getId() + " - Sender: " + sender + ", Receiver: " + receiver);
+	        
+	    }
 
-    public void init() {
-        chatDAO = new ChatDAO();
-    }
+	    @OnMessage
+	    public void onMessage(String message, Session session, @PathParam("sender") String sender, @PathParam("receiver") String receiver) throws SQLException {
+	        // Gửi tin nhắn chỉ cho người nhận
+	        sendMessageToUser(receiver, message);
+	        ChatDAO messageDAO = new ChatDAO();
+	        try {
+	            messageDAO.insertMessage(receiver, sender, message);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        doGet(request, response);
-    }
+	    @OnClose
+	    public void onClose(Session session, @PathParam("sender") String sender, @PathParam("receiver") String receiver) {
+	        // Xóa thông tin phiên khi kết nối bị đóng
+	        userSessions.remove(sender);
+	        userSessions.remove(receiver);
+	        System.out.println("WebSocket closed: " + session.getId() + " - Sender: " + sender + ", Receiver: " + receiver);
+	    }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        String action = request.getServletPath();
-
-        try {
-	        switch (action) {        
-	        	case "/last_Message":
-	        		last_message(request, response);
-                break;
-                case "/list_other_user_message":
-                    list_other_user(request, response);
-                    break;
-                default:
-                	HttpSession session = request.getSession();
-                	session.invalidate();
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-                    dispatcher.forward(request, response);
-                    break;
-            }
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
-        }
-    }
-
-    private void list_other_user(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException {
-    	Account acc= new Account();
-    	HttpSession session = request.getSession();
-    	acc= (Account) session.getAttribute("Acc");
-        List < Profile > list_profile = chatDAO.select_other_user_message("user1_id");
-        request.setAttribute("list_other_user", list_profile);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("chat.jsp");
-        dispatcher.forward(request, response);
-    }
-    
-    private void last_message (HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, ServletException, IOException {
-    	Account acc= new Account();
-    	HttpSession session = request.getSession();
-    	acc= (Account) session.getAttribute("Acc");
-    	String otherUserID =request.getParameter("otherUserID");
-
-        Message last_Message = chatDAO.select_message_last("user1_id", "otherUserID");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("chat.jsp");
-        request.setAttribute("last_Message", last_Message);
-        dispatcher.forward(request, response);
-    }
-    
-    
-
+	    private void sendMessageToUser(String userId, String message) {
+	        Session userSession = (Session) userSessions.get(userId);
+	        System.out.println("Message  " + message);
+	        if (userSession != null && userSession.isOpen()) {
+	            try {
+	                userSession.getBasicRemote().sendText(message);
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+  
 }
