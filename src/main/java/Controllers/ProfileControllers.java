@@ -47,7 +47,6 @@ public class ProfileControllers extends HttpServlet {
 	private LoginDAO loginDao;
 	private MatchDAO matchDAO;
 	private ChatDAO chatDAO;
-	private ChatDAO chatDAO;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -148,10 +147,6 @@ public class ProfileControllers extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String requestType = request.getHeader("X-Request-Type");
-
-		if ("HandleMatch".equals(requestType)) {
-			try {
 		String requestType = request.getHeader("X-Request-Type");
 		
 	    if ("HandleMatch".equals(requestType)) {

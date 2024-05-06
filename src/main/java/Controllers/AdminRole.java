@@ -57,9 +57,10 @@ public class AdminRole extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String action = request.getPathInfo();
 
+		String action = request.getPathInfo();
+		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+		 response.addHeader("Set-Cookie", "JSESSIONID=" + request.getSession().getId() + "; HttpOnly; Secure; SameSite=Strict");
 		request.setCharacterEncoding("UTF-8");
 		try {
 			switch (action) {
@@ -98,13 +99,13 @@ public class AdminRole extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
 	private void ListHobby(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
-		    
 		List<Hobby> listHobby = profileDAO.GetAllHobbies();
 		request.setAttribute("list", listHobby);
 		String name = request.getParameter("namehobby");
@@ -142,7 +143,6 @@ public class AdminRole extends HttpServlet {
 
 	private void AddHobby(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
-		
 		HttpSession session = request.getSession();
     	String csrfToken = (String) session.getAttribute("csrf_token");
         String csrfTokenFromForm = request.getParameter("csrf_token");
@@ -155,7 +155,7 @@ public class AdminRole extends HttpServlet {
             dispatcher.forward(request, response);
             return; 
         }
-		
+
 		RegisterDAO registerAccount = new RegisterDAO();
 		String id = registerAccount.generateUserID();
 		String name = request.getParameter("namehobby");
@@ -187,8 +187,6 @@ public class AdminRole extends HttpServlet {
 
 	private void DeleteHobby(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
-		
-		
 		String id = request.getParameter("id");
 		profileDAO.DeleteUserHobby_IDhobby(id);
 		profileDAO.DeleteHobby_IDhobby(id);
