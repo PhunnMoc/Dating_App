@@ -91,14 +91,18 @@
 		<url-pattern>/CookieSameSite/*</url-pattern>
 	</filter-mapping>
 
-    <filter>
-    <filter-name>HeaderFilters</filter-name>
-    <filter-class>HeaderFilter.HeaderFilters</filter-class>
-    <init-param>
-        <param-name>mode</param-name><param-value>DENY</param-value></init-param>
+	<filter>
+		<filter-name>HeaderFilters</filter-name>
+		<filter-class>HeaderFilter.HeaderFilters</filter-class>
+		<init-param>
+			<param-name>mode</param-name>
+			<param-value>DENY</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
-        <filter-name>HeaderFilters</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+		<filter-name>HeaderFilters</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
 </web-app>

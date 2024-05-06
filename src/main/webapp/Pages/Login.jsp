@@ -124,5 +124,20 @@
     		return true;
     	}
     }
+    
+	//////////////////
+    /// Thiện Thêm hàm tạo CSRF ToKen khi chạy file Login.jsp
+    function getCSRFToken() {
+        fetch('<%=request.getContextPath()%>/send-email/createCSRF')
+        .then(response => response.text())
+        .then(csrfToken => {
+            // Set CSRF token cho input ẩn trong form
+            document.querySelector('input[name="csrf_token"]').value = csrfToken;
+        });
+    }
+    window.onload = getCSRFToken;
+   
+    /////////////////
+    
     </script>
 </html>
