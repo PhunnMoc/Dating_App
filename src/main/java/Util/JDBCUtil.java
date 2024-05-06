@@ -1,9 +1,19 @@
 package Util;
 
+
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
+
+public class JDBCUtil {
+
+	public static Connection getConnection() {
+		Connection conn = null;
+		try {
+
 import java.time.LocalDate;
 
 public class JDBCUtil {
@@ -31,15 +41,23 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 
+
 		return conn;
 	}
+
+	public static void closeConnection(Connection conn) {
 
 	public static void closeConnection(Connection conn) {
 		try {
 			if (conn != null) {
 				System.out.println("Connection close");
 				conn.close();
+			if (conn != null) {
+				System.out.println("Connection close");
+				conn.close();
 			}
+
+		} catch (SQLException e) {
 
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -9,9 +9,30 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
 <title>TeenTher</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+	.dpflex{
+		display: flex; align-items: center; justify-content: start;
+	}
+	.dpnone{
+		display: none;
+	}
+	.pdl{
+		padding-left: 10px;
+	}
+	.red{
+		color: red;
+	}
+	.black{
+		color: black;
+	}
+	.white{
+		color: white;
+	}
+</style>
 <!-- phan card -->
 <link rel="stylesheet" href="../Access/Style/css/Card.css">
 <link rel="stylesheet"
@@ -26,9 +47,16 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<!-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-	data-auto-replace-svg="nest"></script> -->
+
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	data-auto-replace-svg="nest"></script>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' ; 
+        script-src  'self' 'nonce-ABC123' https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js https://use.fontawesome.com/releases/v5.15.4/js/all.js; 
+        style-src 'self'  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css;
+        font-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css;
+        connect-src 'self';
+        img-src 'self' data: https://media.istockphoto.com/id/936681148/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-kh%C3%B3a.jpg?s=612x612&w=0&k=20&c=U6Hw5e1K70NUaQz2MjOeal_FjERS9swHClnFI6MMVEY= https://i.postimg.cc https://play-lh.googleusercontent.com;">
 </head>
 <body>
 	<%
@@ -56,18 +84,13 @@
 				src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
 			</a>
 			<ul class="nav-icon">
-				<a href="<%=request.getContextPath()%>/pro/listFavorite"><li><i
-						class="fa-solid fa-heart-circle-check"></i></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/message"><li><i
-						class="fa-solid fa-message"></i></li></a>
-				<a href="<%=request.getContextPath()%>/pro/listMatch"><li><i
-						class="fa-solid fa-user-group "></i></i></li></a>
-
-
+			    <li><a href="<%=request.getContextPath()%>/pro/listFavorite"><i class="fa-solid fa-heart-circle-check"></i></a></li>
+			    <li><a href="<%=request.getContextPath()%>/pro/message"><i class="fa-solid fa-message"></i></a></li>
+			    <li><a href="<%=request.getContextPath()%>/pro/listMatch"><i class="fa-solid fa-user-group fa-beat red"></i></a></li>
 			</ul>
 		</div>
 		<div class="nav-right">
-			<div class="nav-user-icon online" onclick="settingsMenuToggle()">
+			<div class="nav-user-icon online" id="settingsMenuToggle">
 				<img src="data:image/jpeg;base64, <%=imageData%>" alt="Image" />
 			</div>
 		</div>
@@ -103,13 +126,13 @@
 	<div class="container-app">
 		<!----------------Left Sidebar----------------------->
 		<div class="left-sidebar">
-		<h4 style="padding-left: 10px;" class="title-left">KHÁM PHÁ</h4>
+		<h4 class="title-left pdl">KHÁM PHÁ</h4>
 		</div>
 		<!----------------Main Sidebar----------------------->
 			<div class="tinder">
 			<div class="tinder--status">
-				<i class="fa-solid fa-remove " style="color: #160303;"></i>
-				<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
+				<i class="fa-solid fa-remove black" ></i>
+				<i class="fa-solid fa-heart fa-beat red" ></i>
 			</div>
 			
 			<div class="tinder--cards">
@@ -142,14 +165,14 @@
 							</div>
 							<div class="tinder--card--text">
 								<div
-									style="display: flex; align-items: center; justify-content: start;">
+									class="dpflex">
 									<h3>${user.name}</h3>
-									<i class="fa-solid fa-circle-info fa-2xl showInf"
-										style="color: #ffffff;"></i>
+									<i class="fa-solid fa-circle-info fa-2xl showInf white"
+										></i>
 								</div>
 								<h4>${user.age}</h4>
 								<p>${user.introduce}</p>
-								<p style="display:none" id="userID2">${user.userID}</p>
+								<p class="dpnone" id="userID2">${user.userID}</p>
 							</div>
 						</div>
 
@@ -160,10 +183,10 @@
 
 			<div class="tinder--buttons">
 				<button id="nope">
-					<i class="fa-solid fa-x fa-beat " style="color: #160303;"></i>
+					<i class="fa-solid fa-x fa-beat black" ></i>
 				</button>
 				<button id="love">
-					<i class="fa-solid fa-heart fa-beat " style="color: #d21e1e;"></i>
+					<i class="fa-solid fa-heart fa-beat red" ></i>
 				</button>
 			</div>
 		</div>
@@ -171,8 +194,8 @@
 
 	</div>
 	-->
-	<script src="../Access/Style/js/Base.js"></script>
-	<script>
+	<script nonce= "ABC123"  src="../Access/Style/js/Base.js"></script>
+	<script nonce= "ABC123" >
 		document.addEventListener("DOMContentLoaded", function() {
 			var showInfButtons = document.querySelectorAll('.showInf');
 
@@ -185,7 +208,11 @@
 				});
 			});
 		});
+		
+		document.getElementById("settingsMenuToggle").addEventListener("click", function() {
+			settingsMenuToggle();
+		});
 	</script>
 </body>
-<script src="../Access/Style/js/Card.js"></script>
+<script nonce= "ABC123"  src="../Access/Style/js/Card.js"></script>
 </html>

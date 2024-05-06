@@ -13,8 +13,20 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" />
 <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
-
+<style>
+	.mgl-100{
+		margin-left: -100px;
+	}
+	.text{
+		text-decoration: none;
+	}
+</style>
 <link rel="stylesheet" href="../Access/Style/css/InforLogin.css" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' ; 
+        script-src  'self' 'nonce-ABC123' https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js; 
+        style-src 'self'  https://use.fontawesome.com/releases/v5.0.10/css/all.css ;
+        font-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css;
+        connect-src 'self'; img-src 'self' data: https://i.postimg.cc;  form-action 'self' ;">
 </head>
 
 <body>
@@ -88,7 +100,7 @@
 						<h2>Chiều cao</h2>
 						<p>
 							<input type="text" name="height" value="<%=profile.getHeight()%>" />
-							<label style="margin-left: -100px" class="font-25" for="">(cm)</label>
+							<label  class="font-25 mgl-100" for="">(cm)</label>
 						</p>
 						<h2>Cung hoàng đạo</h2>
 						<p>
@@ -173,7 +185,7 @@
 				</div>
 				<div>
 					<button type="submit">
-						<a class="CTA" style="text-decoration: none"><h1>Xong</h1></a>
+						<a class="CTA text" ><h1>Xong</h1></a>
 					</button>
 
 				</div>
@@ -183,10 +195,10 @@
 	<!-- partial -->
 
 
-	<script
+	<script nonce= "ABC123"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="../Access/Style/js/InforLogin.js"></script>
-	<script>
+	<script nonce= "ABC123" src="../Access/Style/js/InforLogin.js"></script>
+	<script nonce= "ABC123">
 	    document.getElementById("cunghoangdao").value = "<%=profile.getZodiac() %>";
 	    document.getElementById("relationship").value = "<%=profile.getRelationship() %>";
 	</script>

@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.UUID"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
- <link rel="stylesheet" href="../Access/Style/css/Login.css" />
-</head>
+<title>ForgetPass</title>
 <style>
 @import
 	url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -119,16 +116,22 @@ input {
 	transition: all 0.6s ease-in-out;
 }
 
+.text{
+	text-decoration: underline;
+}
+
 </style>
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self' ; font-src  https://fonts.gstatic.com/s/montserrat/v26/ ; form-action 'self' ;">
+</head>
+
 <body>
 	<% response.setHeader("X-Frame-Options", "SAMEORIGIN"); %>
-  <form action="<%=request.getContextPath()%>/send-email/send" method="post" accept-charset="UTF-8">
-            <h1>Quên mật khẩu</h1>
-            <input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
-            <input type="email" placeholder="Nhập email của bạn" id="email" name="recipient"/>
-            <p><%=request.getAttribute("Message")%></p>
-            <a style="text-decoration: underline;" href="<%=request.getContextPath()%>/Pages/Login.jsp">Đăng nhập</a>
-            <button type="submit">Xác thực</button>
+    <form action="<%=request.getContextPath()%>/send-email" method = "post" accept-charset="UTF-8">
+          <h1>Quên mật khẩu</h1>
+		  <input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
+          <input type="email" placeholder="Nhập email của bạn" id="email" name="recipient"/>   
+			<p><%=request.getAttribute("Message")%></p>
+			<a  class="text" href="<%=request.getContextPath()%>/Pages/Login.jsp">Đăng nhập</a>
+          <button type="submit">Xác thực</button>
         </form>
-      </div>
 </html>

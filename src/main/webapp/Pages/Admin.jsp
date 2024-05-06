@@ -41,7 +41,41 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha256-gSqw5G+Gss6YqyQlqyIkuQ0IRZUqGsDVq9c0tiF+mL8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha256-eVNjHw5UeU0jUqPPpZHAkU1z4U+QFBBY488WvueTm88=" crossorigin="anonymous"></script>
-
+<style type="text/css">
+	#hide-box{
+		display: none;
+	}
+	.contain{
+		justify-content: center; 
+		overflow: scroll;
+	}
+	.dpflex{
+		display:flex;
+	}
+	.w200px{
+		width:200px;
+	}
+	.w700px{
+		width:700px
+	}
+	.w10px {
+		width:10px;
+	}
+	.edit{
+		text-decoration: underline; 
+		cursor: pointer;
+	}
+	.dpnone{
+		display: none;
+	}
+</style>
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' ; 
+			script-src  'self' 'nonce-ABC123' https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js https://use.fontawesome.com/releases/v5.15.4/js/all.js https://code.jquery.com/jquery-3.6.4.min.js; 
+			style-src 'self'  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css;
+			font-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://fonts.gstatic.com/s/montserrat/v26/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css;
+			connect-src 'self';
+			img-src 'self' data: https://i.postimg.cc https://play-lh.googleusercontent.com favicon.ico ;
+			 form-action 'self' ;">
 
 </head>
 <body>
@@ -68,7 +102,7 @@
 	}
 	%> --%>
 
-		<nav style="display:flex;">
+		<nav class="dpflex">
 		<div class="nav-left">
 			<a href="<%=request.getContextPath()%>/AdminRole/list"> <img
 				src="https://i.postimg.cc/Pq3ZM5hW/logo.png" class="logo" />
@@ -83,7 +117,7 @@
 			</ul>
 		</div>
 		<div class="nav-right">
-			<div class="nav-user-icon online" onclick="settingsMenuToggle()">
+			<div class="nav-user-icon online" id="settingsMenuToggle">
 				<img src="https://play-lh.googleusercontent.com/p9Kte5C0SltIXXYvQMdo64XCLmrhnX_E6DijP2d4-aMOjrneUI7ctx1Acz612DPa0hE" alt="Image" />
 			</div>
 		</div>
@@ -100,8 +134,7 @@
 		</div>
 	
 	</nav>
-	<div class="container-app"
-		style="justify-content: center; overflow: scroll;">
+	<div class="container-app contain">
 		<!----------------Left Sidebar----------------------->
 		<!-- 		<div class="left-sidebar"></div> -->
 		<!----------------Main Sidebar----------------------->
@@ -113,16 +146,16 @@
 			<div class="container">
 				<h3 class="title-left">Quản lí các sở thích</h3>
 				<div class="container text-left">
-					<button class="btn btn-success" onclick="toggleHideBox();add()">+</button>
+					<button class="btn btn-success" id="toggleHideBox">+</button>
 
-					<div id="hide-box" style="display: none;">
+					<div id="hide-box" >
 						<form id="form" enctype="multipart/form-data"
 							action="<%=request.getContextPath()%>/AdminRole/add"
 							method="POST" accept-charset="UTF-8">
 							<input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
 							<label>Tên Sở thích: </label> <input id="namehobby"
 								name="namehobby" value="Nhap so thich moi"> <input id="idhobby"
-								name="idhobby" value="" style="display: none;"> 
+								name="idhobby" value="" class="dpnone"> 
 
 							<div class="subscription noshow">
 
@@ -148,7 +181,7 @@
 					<thead>
 						<tr>
 							<th>Tên sở thích</th>
-							<th style="width: 700px;">Ảnh tượng trưng</th>
+							<th class="w700px">Ảnh tượng trưng</th>
 							<th>Actions</th>
 							<th>Actions</th>
 						</tr>
@@ -158,10 +191,9 @@
 
 							<tr>
 								<td><c:out value="${hobby.hobbyName}" /></td>
-								<td><img
-									src="data:image/jpeg;base64,${hobby.getImageURL()}" style="width:200px"></td>
-								<td onclick="getRowData(this); edit()">
-									<a style="text-decoration: underline; cursor: pointer;"data-id='${hobby.iDhobby}' >Edit</a>
+								<td><img src="data:image/jpeg;base64,${hobby.getImageURL()}" class="w200px"></td>
+								<td id="getRowData">
+									<a class="edit" data-id='${hobby.iDhobby}' >Edit</a>
 								</td>
 								<td><a
 									href="<%=request.getContextPath()%>/AdminRole/delete?id=<c:out value='${hobby.iDhobby}' />">Delete</a></td>
@@ -176,7 +208,17 @@
 		</div>
 	</div>
 
-	<script>
+	<script nonce ="ABC123">
+		document.getElementById("settingsMenuToggle").addEventListener("click", function() {
+			settingsMenuToggle();
+		});
+		document.getElementById("toggleHideBox").addEventListener("click", function() {
+			toggleHideBox();add();
+		});
+		document.getElementById("getRowData").addEventListener("click", function() {
+			getRowData(this);
+			edit();
+		});
 		function toggleHideBox() {
 			var box = document.getElementById("hide-box");
 			if (box.style.display == "none") {
