@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -297,7 +299,13 @@ public class ProfileControllers extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
-
+	// Phương thức để kiểm tra tính hợp lệ của email
+    private boolean isValidEmail(String email) {
+        String regex = " ^[^\";|\\\\/,-<>\s]*@(?!.*?(sa|db-owner)).*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 	protected void HandleRegister(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -311,11 +319,16 @@ public class ProfileControllers extends HttpServlet {
 			dispatcher.forward(request, response);
 			return;
 		}
-
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		request.setCharacterEncoding("UTF-8");
+		if (!isValidEmail(email)) {
+            System.out.println("Email không hợp lệ");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/Login.jsp");
+			dispatcher.forward(request, response);
+            return; // hoặc ném một Exception
+        }
 
 		RegisterDAO registerAccount = new RegisterDAO();
 		if (registerAccount.checkEmailExists(email)) {
