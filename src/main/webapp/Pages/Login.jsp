@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
  <%@page import="Models.Account"%>
+
+ 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,6 +16,7 @@
     <link rel="stylesheet" href="../Access/Style/css/root/root.css" />
     
 	<body>
+	<% response.setHeader("X-Frame-Options", "SAMEORIGIN"); %> 
 	<%
 		String err_register = (String) request.getAttribute("error_register");
 		String err_login = (String) request.getAttribute("error_login");
@@ -31,6 +34,7 @@
       <div class="form-container sign-up-container">
         <form action="<%=request.getContextPath()%>/pro/Register" method="post" onsubmit="return checkPassword()" accept-charset="UTF-8">
           <h1>Tạo tài khoản</h1>
+   <!--        <div class="social-container">
    <!--        <div class="social-container">
             <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
@@ -50,6 +54,7 @@
         </form>
       </div>
       <div class="form-container sign-in-container">
+      
         <form action="<%=request.getContextPath()%>/pro/Login" method = "post" accept-charset="UTF-8">
           <h1>Đăng nhập</h1>
 			<input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
@@ -81,12 +86,14 @@
     </div>
 
 
+
     <footer>
       <p>
         Created with <i class="fa fa-heart"></i> by
         <a target="_blank" href="https://www.facebook.com/hoang.congthien.1612">TTTPKL</a>
       </p>
     </footer>
+
 
     <!-- partial -->
     <script src="../Access/Style/js/login.js"></script>
@@ -116,5 +123,6 @@
    
     /////////////////
     </script>
+	
 	
 </html>

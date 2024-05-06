@@ -30,18 +30,20 @@ public class LoginController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		//Thoai Cookie SameSite
+		 response.addHeader("Set-Cookie", "JSESSIONID=" + request.getSession().getId() + "; HttpOnly; Secure; SameSite=Strict");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		//Thoai Cookie SameSite
+		 response.addHeader("Set-Cookie", "JSESSIONID=" + request.getSession().getId() + "; HttpOnly; Secure; SameSite=Strict");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		Account account = new Account();
 		account.setUsername(username);
 		account.setPassword(password);
-
+		
 		try {
 			Account acc =new Account();
 			acc =loginDAO.onLogin(account);
@@ -53,6 +55,7 @@ public class LoginController extends HttpServlet {
 			} else {
 				 session.setAttribute("errMsg", "Thông tin đăng nhập không chính xác");
 				 RequestDispatcher dispatcher= request.getRequestDispatcher("login.jsp");
+				 dispatcher.forward(request, response);
 //				 response.sendRedirect("login.jsp");
 			}
 		} catch (ClassNotFoundException e) {

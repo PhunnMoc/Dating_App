@@ -22,37 +22,41 @@ public class EmailController extends HttpServlet {
     public void init() {
         profileDAO = new ProfileDAO();
     }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String action = request.getPathInfo();
-		
-		request.setCharacterEncoding("UTF-8");
-		try {
-			switch (action) {
-			case "/send":
-				sendEmail(request, response);
-				break;
-			case "/createCSRF":
-            	getCSRFtoken(request, response);
-				break;
-			}
-		}catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            throws ServletException, IOException {
+        String action = request.getPathInfo();
+
+        request.setCharacterEncoding("UTF-8");
+        try {
+            switch (action) {
+                case "/send":
+                    sendEmail(request, response);
+                    break;
+                case "/createCSRF":
+                    getCSRFtoken(request, response);
+                    break;
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         doGet(request, response);
     }
-    private void getCSRFtoken(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession();
-    	
+
+    private void getCSRFtoken(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         String csrfToken = (String) session.getAttribute("csrf_token");
-        
+
         if (csrfToken == null) {
-        	System.out.print("csrfToken: ");
-            
-            
+            System.out.print("csrfToken: ");
+
             csrfToken = UUID.randomUUID().toString();
             System.out.print(csrfToken);
             session.setAttribute("csrf_token", csrfToken);
@@ -61,9 +65,11 @@ public class EmailController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Pages/FogetPass.jsp");
         dispatcher.forward(request, response);
     }
-    private void sendEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession();
-    	String csrfToken = (String) session.getAttribute("csrf_token");
+
+    private void sendEmail(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String csrfToken = (String) session.getAttribute("csrf_token");
         // Láº¥y token CSRF tá»« form
         String csrfTokenFromForm = request.getParameter("csrf_token");
         // Kiá»ƒm tra tÃ­nh há»£p lá»‡ cá»§a token CSRF

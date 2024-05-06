@@ -4,6 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,18 +27,14 @@ import DAO.LoginDAO;
 import DAO.MatchDAO;
 import DAO.ProfileDAO;
 import DAO.RegisterDAO;
+import Handle.FarseToJSON;
+import Handle.ImageHandle;
 import Models.Account;
 import Models.Hobby;
 import Models.Match;
 import Models.Message;
 import Models.Profile;
 import Models.UserHobby;
-import Handle.FarseToJSON;
-import Handle.ImageHandle;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 /**
  * Servlet implementation class ProfileControllers
@@ -47,6 +46,7 @@ public class ProfileControllers extends HttpServlet {
 	private ProfileDAO profileDAO;
 	private LoginDAO loginDao;
 	private MatchDAO matchDAO;
+	private ChatDAO chatDAO;
 	private ChatDAO chatDAO;
 
 	/**
@@ -80,53 +80,53 @@ public class ProfileControllers extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		try {
 			switch (action) {
-			case "/update":
-				updateProfile(request, response);
-				break;
-			case "/changePassword":
-				HandleChangePassword(request, response);
-				break;
-			case "/updateHobby":
-				updateHobby(request, response);
-				break;
-			case "/list":
-				System.out.println("hehe");
-				ShowProfile(request, response);
-				break;
-			case "/Login":
-				System.out.println("hehe");
-				authenticate(request, response);
-				break;
-			case "/Logout":
-				System.out.println("hehe");
-				HandleLogout(request, response);
-				break;
-			case "/Register":
-				System.out.println("hehe");
-				HandleRegister(request, response);
-				break;
-			case "/listMatch":
-				ListProfileMatch(request, response);
-				break;
-			case "/deleteMatch":
-				DeleteProfileMatch(request, response);
-				break;
-			case "/sayHello":
-				SayHello(request, response);
-				break;
+				case "/update":
+					updateProfile(request, response);
+					break;
+				case "/changePassword":
+					HandleChangePassword(request, response);
+					break;
+				case "/updateHobby":
+					updateHobby(request, response);
+					break;
+				case "/list":
+					System.out.println("hehe");
+					ShowProfile(request, response);
+					break;
+				case "/Login":
+					System.out.println("hehe");
+					authenticate(request, response);
+					break;
+				case "/Logout":
+					System.out.println("hehe");
+					HandleLogout(request, response);
+					break;
+				case "/Register":
+					System.out.println("hehe");
+					HandleRegister(request, response);
+					break;
+				case "/listMatch":
+					ListProfileMatch(request, response);
+					break;
+				case "/deleteMatch":
+					DeleteProfileMatch(request, response);
+					break;
+				case "/sayHello":
+					SayHello(request, response);
+					break;
 
-			case "/showCard":
-				ListProfile(request, response);
-				break;
-			case "/message":
-				HandleMessage(request, response);
-				break;
-			case "/listFavorite":
-				ListProfileFavorite(request, response);
-				break;
-			default:
-				System.out.println("df");
-				break;
+				case "/showCard":
+					ListProfile(request, response);
+					break;
+				case "/message":
+					HandleMessage(request, response);
+					break;
+				case "/listFavorite":
+					ListProfileFavorite(request, response);
+					break;
+				default:
+					System.out.println("df");
+					break;
 			}
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
@@ -152,6 +152,10 @@ public class ProfileControllers extends HttpServlet {
 
 		if ("HandleMatch".equals(requestType)) {
 			try {
+		String requestType = request.getHeader("X-Request-Type");
+		
+	    if ("HandleMatch".equals(requestType)) {
+	    	try {
 				HandleMatch(request, response);
 			} catch (ClassNotFoundException | SQLException | IOException | ServletException e) {
 				// TODO Auto-generated catch block
@@ -257,9 +261,9 @@ public class ProfileControllers extends HttpServlet {
 
 	private void authenticate(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ClassNotFoundException {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -269,11 +273,11 @@ public class ProfileControllers extends HttpServlet {
 		String url = "";
 		if (account != null) {
 			String csrfToken = UUID.randomUUID().toString();
-            System.out.print(csrfToken);
-            session.setAttribute("csrf_token", csrfToken);
+			System.out.print(csrfToken);
+			session.setAttribute("csrf_token", csrfToken);
 			if ("admin".equals(account.getRole())) {
 				url = "/AdminRole/list";
-	
+
 				session.setAttribute("admin", account);
 			} else {
 				session.setAttribute("account", account);
@@ -371,7 +375,7 @@ public class ProfileControllers extends HttpServlet {
 
 		String userID = account.getUserID();
 		List<Profile> ListProfile = profileDAO.GeListProfile(userID);
-//        request.setAttribute("listImage", listImage);
+		// request.setAttribute("listImage", listImage);
 		request.setAttribute("ListProfile", ListProfile);
 		Profile profile1 = new Profile();
 		profile1 = profileDAO.GetProfile(account);
@@ -391,7 +395,7 @@ public class ProfileControllers extends HttpServlet {
 			request.setAttribute("MyOwnProfile", profile);
 		}
 		List<Profile> ListProfileMatch = profileDAO.GeListProfileMatch(userID);
-//        request.setAttribute("listImage", listImage);
+		// request.setAttribute("listImage", listImage);
 		request.setAttribute("ListProfileMatch", ListProfileMatch);
 		Profile profile1 = new Profile();
 		profile1 = profileDAO.GetProfile(account);
@@ -440,7 +444,7 @@ public class ProfileControllers extends HttpServlet {
 		Account account = (Account) session.getAttribute("account");
 		String userID1 = account.getUserID();
 		String userID2 = request.getParameter("userID");
-//		System.out.print(userID2);
+		// System.out.print(userID2);
 		Match match = new Match(LocalDate.now(), userID1, userID2);
 		// Call DAO to save the user ID to the database
 		try {

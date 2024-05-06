@@ -14,14 +14,14 @@ public class JDBCUtil {
 
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
-			
-			 String url = "jdbc:mysql://localhost:3306/datingapp";
-			 String username = "root"; 
-			 String password = "123456";
-			
-//			String url = "jdbc:mysql://teenther.ckck8862sjqz.us-east-1.rds.amazonaws.com:3306/datingapp";
-//			String username = "admin";
-//			String password = "123456";
+			String url = "jdbc:mysql://localhost:3306/datingapp";
+			String username = "root";
+			String password = "123456";
+
+			// String url =
+			// "jdbc:mysql://teenther.ckck8862sjqz.us-east-1.rds.amazonaws.com:3306/datingapp";
+			// String username = "admin";
+			// String password = "123456";
 			conn = DriverManager.getConnection(url, username, password);
 
 			System.out.println("Connection Successfully");
@@ -45,13 +45,15 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 	}
+
 	public static void main() {
 		System.out.println(" aaaa!");
-		Connection a= getConnection();
+		Connection a = getConnection();
 		System.out.println(" cfcfcccf!");
-		
+
 	}
+
 	public static Date getSQLDate(LocalDate date) {
-        return java.sql.Date.valueOf(date);
-    }
+		return java.sql.Date.valueOf(date);
+	}
 }

@@ -45,6 +45,7 @@
 
 </head>
 <body>
+	<% response.setHeader("X-Frame-Options", "SAMEORIGIN"); %>
 	<%
 	Account admin = (Account) session.getAttribute("admin");
 	Account account = (Account) session.getAttribute("account");

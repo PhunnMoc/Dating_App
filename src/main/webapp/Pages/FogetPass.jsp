@@ -121,6 +121,7 @@ input {
 
 </style>
 <body>
+	<% response.setHeader("X-Frame-Options", "SAMEORIGIN"); %>
   <form action="<%=request.getContextPath()%>/send-email/send" method="post" accept-charset="UTF-8">
             <h1>Quên mật khẩu</h1>
             <input type="hidden" name="csrf_token" value="<%= session.getAttribute("csrf_token") %>">
