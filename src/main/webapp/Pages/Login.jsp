@@ -4,22 +4,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Login</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" >
-<style>
-	.red{
-		color: red;
-	}
-	.text{
-		text-decoration: underline;
-	}
-</style>
-<link rel="stylesheet" href="../Access/Style/css/Login.css" />
-<link rel="stylesheet" href="../Access/Style/css/root/root.css" />
-
-<meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' ; font-src https://fonts.gstatic.com/s/montserrat/v26/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/; script-src  'self' 'nonce-ABC123' ;  form-action 'self' ;">
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+		
+	<style>
+		.red {
+			color: red;
+		}
+		
+		.text {
+			text-decoration: underline;
+		}
+	</style>
+	
+	<link rel="stylesheet" href="../Access/Style/css/Login.css" />
+	<link rel="stylesheet" href="../Access/Style/css/root/root.css" />
+	
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self'  ; 
+	    font-src https://fonts.gstatic.com/s/montserrat/v26/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/;
+	    script-src  'self' 'nonce-ABC123' ;  form-action 'self' ;" />
 
 </head>
 <body>
@@ -67,8 +73,8 @@
 				accept-charset="UTF-8">
 				<h1>Đăng nhập</h1>
 
-				<input type="email" placeholder="Email" id="email" name="email" /> <input
-					type="password" placeholder="Mật khẩu" id="password"
+				<input type="email" placeholder="Email" id="email" name="email" />
+				<input type="password" placeholder="Mật khẩu" id="password"
 					name="password" />
 				<% if (err_login != null) { %>
 				<div class="red">
@@ -106,8 +112,8 @@
 	</footer>
 
 	<!-- partial -->
-	<script nonce= "ABC123" src="../Access/Style/js/login.js"></script>
-	<script nonce= "ABC123">
+	<script nonce="ABC123" src="../Access/Style/js/login.js"></script>
+	<script nonce="ABC123">
     function checkPassword(){
     	password = document.getElementById("password").value;
     	repassword = document.getElementById("re_password").value;
