@@ -1,8 +1,15 @@
-Web mạng xã hội học tập tinder  ( mạng xã hội hẹn hò) 
-Chức năng :
-  +Lướt thẻ tìm bạn ( tìm mặc định hoặc theo sở thích ( Có thể thích hoặc không thích)
-  +Khi 2 bên thích nhau, có thể nhắn tin 
-  +Điều chỉnh profile ....
+
+#INTRO
+Teenther offers a vibrant and interactive platform with two distinct roles: User and Admin.
+
+| For Users|Swipe to Find Friends: Browse profiles based on default settings or personalized interests. You can like or dislike profiles as you go.
+Mutual Matching: If both users like each other, they can start chatting and build connections.
+Profile Management: Easily adjust and update your profile to reflect your personality and preferences.|
+|For Admins|
+|User Management: Access and manage the user list efficiently.
+Interest Groups Updates: Keep the platform dynamic by updating and managing new interest groups regularly.
+Join Teenther today and experience a seamless and enjoyable way to meet new friends and potential matches!|
 
 
-Code web java, môi trường eclipse, đã upload thành công lên aws ( nhưng chịu không nổi tiền nên xóa acc r ), Database : Mysql
+#TOOL
+ dating website coded in Java, utilizing MySQL for database management and Java Servlet MVC for API integration.
